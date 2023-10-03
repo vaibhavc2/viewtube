@@ -8,9 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "start": "node dist/src/index.js",
-    "dev": "nodemon src/index.ts",
-    "dev-tsnode": "ts-node-dev --respawn --deps --rs src/index.ts"
+    "start": "npx tsc && node dist/index.js",
+    "dev": "nodemon src/index.ts"
   },
   "author": "Vaibhav Chopra",
   "license": "ISC",
