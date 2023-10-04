@@ -23,6 +23,8 @@
     "mongoose": "^7.5.3"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.248",
+    "@swc/helpers": "^0.5.2",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.4",
     "@types/cors": "^2.8.14",
@@ -34,6 +36,7 @@
     "eslint": "^8.50.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
+    "regenerator-runtime": "^0.14.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
