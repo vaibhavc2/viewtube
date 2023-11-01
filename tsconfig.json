@@ -4,13 +4,25 @@
     "module": "NodeNext",
     "rootDir": "./src/",
     "moduleResolution": "NodeNext",
-    "typeRoots": ["types", "./node_modules/@types"],
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types"],
     "outDir": "./dist",
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "useDefineForClassFields": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
   "ts-node": {
     "esm": true,
