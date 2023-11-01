@@ -6,7 +6,7 @@ import { errorMiddleware } from "../middlewares/error.js";
 
 export const app: Application = express();
 
-// middlewares
+// using middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -18,9 +18,15 @@ app.use(
     credentials: true
   })
 );
-app.use(errorMiddleware);
+
+// using routes
+// app.use("/api/v1/users", usersRouter);
+// app.use("/api/v1/persons", personsRouter);
 
 app.get("/", (req: Request, res: Response) => {
   req.body = "Hello World";
   res.send("Welcome to Express & TypeScript Server");
 });
+
+// error handler middleware
+app.use(errorMiddleware);
