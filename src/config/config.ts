@@ -22,3 +22,5 @@ if (!NODE_ENV) {
 export const PORT = env.get("PORT").default(5000).asPortNumber();
 
 export const MONGO_URI = env.get("MONGO_URI").required().asString();
+
+export const FRONTEND_URI = env.get("FRONTEND_URI").required().asString();

@@ -1,12 +1,8 @@
-import express, { Application, Request, Response } from "express";
+import { app } from "./app/app.js";
 import { NODE_ENV, PORT } from "./config/config.js";
+import { connectDB } from "./database/connect-db.js";
 
-const app: Application = express();
-
-app.get("/", (req: Request, res: Response) => {
-  req.body;
-  res.send("Welcome to Express & TypeScript Server");
-});
+connectDB();
 
 app.listen(PORT, () => {
   console.log(
