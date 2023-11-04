@@ -28,5 +28,5 @@ export function getErrorMessage(error: unknown) {
 }
 
 export function printErrorMessage(error: unknown, functionName?: string) {
-  console.log(`Error at ${functionName} :: ${getErrorMessage(error)}`);
+  console.log(`ERROR :: ${functionName} :: ${getErrorMessage(error)}`);
 }
