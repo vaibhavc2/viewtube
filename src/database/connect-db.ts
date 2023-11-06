@@ -8,13 +8,13 @@ export const connectDB = async () => {
       dbName: DB_NAME,
     })
     .catch((error) => {
-      printErrorMessage(error, " :: at connectDB()");
+      printErrorMessage(error, "MONGODB Connection FAILED :: at connectDB()");
       process.exit(1);
     });
 
   if (connectionInstance) {
     console.log(
-      `MongoDB Database connected successfully. DB HOST: ${connectionInstance.connection.host}`
+      `==> MongoDB Database connected successfully!! DB HOST: ${connectionInstance.connection.host}`
     );
   }
 };

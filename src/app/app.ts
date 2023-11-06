@@ -7,15 +7,19 @@ import { errorMiddleware } from "../middlewares/error.js";
 export const app: Application = express();
 
 // using middlewares
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(
   cors({
     origin: [FRONTEND_URI],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+    credentials: true,
+    // methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 

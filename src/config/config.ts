@@ -1,17 +1,12 @@
 import dotenv from "dotenv";
 import env from "env-var";
-import path from "path";
-import { fileURLToPath } from "url";
+import { __env } from "../constants/index.js";
 
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config({ path: __env });
 
 export const NODE_ENV = env
   .get("NODE_ENV")
-  .required()
+  .default("production")
   .asString()
   .match(/^(development|production)$/)?.[0];
 
@@ -19,7 +14,7 @@ if (!NODE_ENV) {
   throw new Error("NODE_ENV must be either 'development' or 'production'.");
 }
 
-export const PORT = env.get("PORT").default(5000).asPortNumber();
+export const PORT = env.get("PORT").default(8000).asPortNumber();
 
 export const MONGO_URI = env.get("MONGO_URI").required().asString();
 
