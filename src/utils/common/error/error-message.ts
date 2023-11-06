@@ -2,6 +2,7 @@ type ErrorWithMessage = {
   message: string;
 };
 
+// If error has other properties in addition to message, it doesn't affect the result of the function. The function is only concerned with whether error has a message property of type string.
 function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
   return (
     typeof error === "object" &&
