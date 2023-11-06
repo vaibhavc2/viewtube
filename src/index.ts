@@ -1,7 +1,7 @@
 import { app } from "./app/app.js";
 import { NODE_ENV, PORT } from "./config/config.js";
 import { connectDB } from "./database/connect-db.js";
-import { printErrorMessage } from "./utils/error/error-message.js";
+import { printErrorMessage } from "./utils/server/error/print-error-message.js";
 
 connectDB()
   .then(() => {

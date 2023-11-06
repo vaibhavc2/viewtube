@@ -2,19 +2,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
 import { FRONTEND_URI } from "../config/config.js";
+import { __limit } from "../constants/express/index.js";
 import { errorMiddleware } from "../middlewares/error.js";
 
 export const app: Application = express();
 
-// using middlewares
-app.use(
-  express.json({
-    limit: "50mb",
-  })
-);
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+// using main middlewares
 app.use(
   cors({
     origin: [FRONTEND_URI],
@@ -22,6 +15,14 @@ app.use(
     // methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+app.use(cookieParser());
+app.use(
+  express.json({
+    limit: __limit,
+  })
+);
+app.use(express.urlencoded({ extended: true, limit: __limit }));
+app.use(express.static("public"));
 
 // using routes
 // app.use("/api/v1/users", usersRouter);

@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 import env from "env-var";
-import { __env } from "../constants/index.js";
+import { __env } from "../constants/path/index.js";
 
 dotenv.config({ path: __env });
+// console.log(__env);
 
 export const NODE_ENV = env
   .get("NODE_ENV")

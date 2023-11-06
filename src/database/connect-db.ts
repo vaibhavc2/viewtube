@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { DB_NAME, MONGO_URI } from "../config/config.js";
-import { printErrorMessage } from "../utils/error/error-message.js";
+import { printErrorMessage } from "../utils/server/error/print-error-message.js";
 
 export const connectDB = async () => {
   const connectionInstance = await mongoose

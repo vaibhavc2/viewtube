@@ -26,7 +26,3 @@ function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
 export function getErrorMessage(error: unknown) {
   return toErrorWithMessage(error).message;
 }
-
-export function printErrorMessage(error: unknown, functionName?: string) {
-  console.log(`⚠️ ERROR :: ${functionName} :: ${getErrorMessage(error)}`);
-}
