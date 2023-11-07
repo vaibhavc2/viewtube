@@ -3,11 +3,12 @@ import cors from "cors";
 import express, { Application, Request, Response } from "express";
 import { FRONTEND_URI } from "../config/config.js";
 import { __limit } from "../constants/express/index.js";
-import { errorMiddleware } from "../middlewares/error.js";
+import { apiErrorMiddleware } from "../middlewares/error/api-error-middleware.js";
+import { errorMiddleware } from "../middlewares/error/error-middleware.js";
 
 export const app: Application = express();
 
-// using main middlewares
+// using pre-built middlewares
 app.use(
   cors({
     origin: [FRONTEND_URI],
@@ -24,6 +25,9 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: __limit }));
 app.use(express.static("public"));
 
+// using custom middlewares
+// app.use(authMiddleware);
+
 // using routes
 // app.use("/api/v1/users", usersRouter);
 // app.use("/api/v1/persons", personsRouter);
@@ -33,5 +37,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Express & TypeScript Server");
 });
 
-// error handler middleware
+// error handler middlewares
+app.use(apiErrorMiddleware);
 app.use(errorMiddleware);
