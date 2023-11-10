@@ -5,7 +5,7 @@ export const errorMiddleware = (
   req: Request,
   res: Response
 ) => {
-  console.error(`⚠️ Error occurred on the route: ${req.path} :: `, error); //
+  console.error(`⚠️   Error occurred on the route: ${req.path} :: `, error); //
 
   const errorMessage = "Internal Server Error";
   const statusCode = 500;

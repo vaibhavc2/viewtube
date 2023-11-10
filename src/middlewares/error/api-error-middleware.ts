@@ -8,7 +8,7 @@ export const apiErrorMiddleware = (
   next: NextFunction
 ) => {
   if (error instanceof ApiError) {
-    console.error(`⚠️ Error occurred on the route: ${req.path} :: `, error); //
+    console.error(`⚠️   Error occurred on the route: ${req.path} :: `, error); //
     return res.status(error.statusCode).json({
       success: false,
       message: error.message,
@@ -17,7 +17,7 @@ export const apiErrorMiddleware = (
     next(error);
   } else {
     console.error(
-      `⚠️💀 Something went wrong!! Terribly !! Error occurred on the route: ${req.path} :: `,
+      `⚠️💀   Something went wrong!! Terribly !! Error occurred on the route: ${req.path} :: `,
       error
     );
     return res.status(500).json({
