@@ -30,12 +30,13 @@ app.use(express.static("public"));
 
 // using routes
 // app.use("/api/v1/users", usersRouter);
-// app.use("/api/v1/persons", personsRouter);
 
 app.get("/", (req: Request, res: Response) => {
   req.body = "Hello World";
   res.send("Welcome to Express & TypeScript Server");
 });
+
+app.get("/favicon.ico", (req: Request, res: Response) => res.status(204));
 
 // error handler middlewares
 app.use(apiErrorMiddleware);
