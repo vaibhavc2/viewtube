@@ -22,3 +22,25 @@ export const MONGO_URI = env.get("MONGO_URI").required().asString();
 export const FRONTEND_URI = env.get("FRONTEND_URI").required().asString();
 
 export const DB_NAME = env.get("DB_NAME").required().asString();
+
+export const SECRET_KEY = env.get("SECRET_KEY").required().asString();
+
+export const ACCESS_TOKEN_SECRET = env
+  .get("ACCESS_TOKEN_SECRET")
+  .required()
+  .asString();
+
+export const ACCESS_TOKEN_EXPIRY = env
+  .get("ACCESS_TOKEN_EXPIRY")
+  .required()
+  .asString();
+
+export const REFRESH_TOKEN_SECRET = env
+  .get("REFRESH_TOKEN_SECRET")
+  .required()
+  .asString();
+
+export const REFRESH_TOKEN_EXPIRY = env
+  .get("REFRESH_TOKEN_EXPIRY")
+  .required()
+  .asString();
