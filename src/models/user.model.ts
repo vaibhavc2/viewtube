@@ -34,7 +34,7 @@ UserSchema.methods.comparePassword = async function (
   });
 };
 
-UserSchema.methods.generateRefreshToken = function () {
+UserSchema.methods.generateRefreshToken = async function () {
   const user = this;
   const refreshToken = jwt.sign(
     {
