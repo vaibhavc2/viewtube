@@ -7,7 +7,7 @@ dotenv.config({ path: __env });
 
 export const NODE_ENV = env
   .get("NODE_ENV")
-  .default("production")
+  .default("development")
   .asString()
   .match(/^(development|production)$/)?.[0];
 
