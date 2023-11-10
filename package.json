@@ -1,8 +1,8 @@
 {
-  "name": "rssb-backend",
+  "name": "youtube-backend",
   "private": true,
   "version": "1.0.0",
-  "description": "This is the backend of the RSSB Registry Application",
+  "description": "Backend of a Youtube-like application built in Express",
   "main": "index.js",
   "type": "module",
   "scripts": {
