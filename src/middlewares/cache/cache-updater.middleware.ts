@@ -14,10 +14,14 @@ export const cacheUpdater = (
     const { cacheData } = res.locals;
     const stringifiedData = JSON.stringify(cacheData);
 
-    // check if cached data is same as the new data
-    if (cache.has(cacheKey) && cache.get(cacheKey) === stringifiedData)
-      return next();
+    if (cache.has(cacheKey)) {
+      // check if cached data is same as the new data
+      if (cache.get(cacheKey) === stringifiedData) return next();
+      // delete already existing stale cache
+      else cache.del(cacheKey);
+    }
 
+    // set new cache for the route with the new data
     const setCache = cache.set(cacheKey, stringifiedData);
 
     if (NODE_ENV === "development") {
