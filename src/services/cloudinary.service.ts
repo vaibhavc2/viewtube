@@ -5,7 +5,7 @@ import {
   CLOUDINARY_API_SECRET,
   CLOUDINARY_CLOUD_NAME,
 } from "../config/config.js";
-import { getErrorMessage } from "../utils/common/error/error-message.js";
+import { getErrorMessage } from "../utils/common/error/error-message.util.js";
 
 cloudinary.config({
   cloud_name: CLOUDINARY_CLOUD_NAME,

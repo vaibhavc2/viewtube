@@ -30,6 +30,8 @@ app.use(express.static("public"));
 // app.use(authMiddleware);
 app.use(uploadFileLocally.single("file"));
 
+// TODO: implement caching to the routes: check cache folder in the /src/helpers directory
+
 // using routes
 // app.use("/api/v1/users", usersRouter);
 
