@@ -44,3 +44,18 @@ export const REFRESH_TOKEN_EXPIRY = env
   .get("REFRESH_TOKEN_EXPIRY")
   .required()
   .asString();
+
+export const CLOUDINARY_CLOUD_NAME = env
+  .get("CLOUDINARY_CLOUD_NAME")
+  .required()
+  .asString();
+
+export const CLOUDINARY_API_KEY = env
+  .get("CLOUDINARY_API_KEY")
+  .required()
+  .asString();
+
+export const CLOUDINARY_API_SECRET = env
+  .get("CLOUDINARY_API_SECRET")
+  .required()
+  .asString();
