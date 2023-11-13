@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
 
 export const cacheSetter = (
@@ -17,10 +18,12 @@ export const cacheSetter = (
 
     const setCache = cache.set(cacheKey, stringifiedData);
 
-    if (setCache) {
-      console.log(`✅🚀   Cache set for the route: ${req.path}`);
-    } else {
-      console.log(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
+    if (NODE_ENV === "development") {
+      if (setCache) {
+        console.log(`✅🚀   Cache set for the route: ${req.path}`);
+      } else {
+        console.log(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
+      }
     }
   }
 

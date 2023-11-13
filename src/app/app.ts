@@ -1,7 +1,8 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
-import { FRONTEND_URI } from "../config/config.js";
+import morgan from "morgan";
+import { FRONTEND_URI, NODE_ENV } from "../config/config.js";
 import { __limit } from "../constants/express/index.js";
 import { authMiddleware } from "../middlewares/auth/auth.middleware.js";
 import { cacheGetter } from "../middlewares/cache/cache-getter.middleware.js";
@@ -29,6 +30,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true, limit: __limit }));
 app.use(express.static("public"));
+if (NODE_ENV === "development") app.use(morgan("combined"));
 
 // authentication middleware
 app.use(authMiddleware);

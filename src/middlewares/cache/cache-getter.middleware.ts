@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
 
 export const cacheGetter = (
@@ -17,10 +18,14 @@ export const cacheGetter = (
   const cachedData = JSON.parse(cachedResponse);
 
   if (cachedData) {
-    console.log(`✅🚀   Cache hit for the route: ${req.path}`);
+    if (NODE_ENV === "development")
+      console.log(`✅🚀   Cache hit for the route: ${req.path}`);
+
     return res.status(200).json(cachedData);
-  } else {
-    console.log(`⚠️🚀   Cache miss for the route: ${req.path}`);
-    next();
   }
+
+  if (NODE_ENV === "development")
+    console.log(`⚠️🚀   Cache miss for the route: ${req.path}`);
+
+  next();
 };
