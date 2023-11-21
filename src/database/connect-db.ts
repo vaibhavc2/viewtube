@@ -14,7 +14,7 @@ export const connectDB = async () => {
 
   if (connectionInstance) {
     console.log(
-      `==> MongoDB Database connected successfully!! DB HOST: ${connectionInstance.connection.host}`
+      `✅  MongoDB Database connected successfully!! DB HOST: ${connectionInstance.connection.host}`
     );
   }
 };

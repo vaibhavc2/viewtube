@@ -11,6 +11,7 @@ import { cacheUpdater } from "../middlewares/cache/cache-updater.middleware.js";
 import { uploadFileLocally } from "../middlewares/config/multer.middleware.js";
 import { apiErrorMiddleware } from "../middlewares/error/api-error.middleware.js";
 import { errorMiddleware } from "../middlewares/error/error.middleware.js";
+import { usersRouter } from "../routes/users.routes.js";
 
 export const app: Application = express();
 
@@ -47,17 +48,13 @@ app.use(cacheGetter);
 // TODO: check caching for routes!
 
 // using routes
-// app.use("/api/v1/users", usersRouter);
-
-app.get("/", (req: Request, res: Response) => {
-  req.body = "Hello World";
-  res.send("Welcome to Express & TypeScript Server");
-});
+app.use("/api/v1/users", usersRouter);
 
 // cache setter and updater middlewares
 app.use(cacheSetter);
 app.use(cacheUpdater);
 
+// handle favicon requests
 app.get("/favicon.ico", (req: Request, res: Response) => res.status(204));
 
 // error handler middlewares
