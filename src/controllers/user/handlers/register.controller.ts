@@ -31,10 +31,7 @@ export const _register = async (
   const { fullName, username, email, password } = req.body;
 
   // validation is handled by the middleware
-  if (req.body) {
-    console.log(req.body);
-    return;
-  }
+  // console.log(req.body);
 
   // check if user exists: email, username
   const existedUser = await User.findOne({
@@ -47,7 +44,7 @@ export const _register = async (
 
   // check for images: avatar, cover : avatar is compulsory
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-  console.log(files);
+  // console.log(files);
   const avatarLocalPath = files?.avatar[0]?.path;
   const coverLocalPath = files?.cover[0]?.path;
 

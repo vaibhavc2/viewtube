@@ -8,7 +8,6 @@ const usersRouter = Router();
 
 // using multer middleware before the controller
 usersRouter.route("/register").post(
-  zodValidation(RegisterValidation),
   uploadFileLocally.fields([
     {
       name: "avatar",
@@ -19,6 +18,7 @@ usersRouter.route("/register").post(
       maxCount: 1,
     },
   ]),
+  zodValidation(RegisterValidation),
   registerUser
 );
 
