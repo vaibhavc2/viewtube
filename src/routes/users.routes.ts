@@ -1,8 +1,25 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/user.controller.js";
+import { registerUser } from "../controllers/user/user.controllers.js";
+import { uploadFileLocally } from "../middlewares/config/multer.middleware.js";
+import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
+import { RegisterValidation } from "../models/validation/register.validation.js";
 
 const usersRouter = Router();
 
-usersRouter.route("/register").post(registerUser);
+// using multer middleware before the controller
+usersRouter.route("/register").post(
+  zodValidation(RegisterValidation),
+  uploadFileLocally.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+    {
+      name: "cover",
+      maxCount: 1,
+    },
+  ]),
+  registerUser
+);
 
 export { usersRouter };

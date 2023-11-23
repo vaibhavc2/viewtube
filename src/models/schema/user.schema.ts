@@ -30,7 +30,10 @@ export const userSchema = {
     type: String,
     required: true,
   },
-  coverImage: String,
+  cover: {
+    type: String,
+    required: false,
+  },
   watchHistory: [
     {
       type: Schema.Types.ObjectId,

@@ -13,9 +13,12 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-export const uploadFile = async (localFilePath: string) => {
+export const uploadFileToCloudinary = async (localFilePath: string) => {
   try {
-    if (!localFilePath) throw new Error("💀⚠️   No File Path Found!!");
+    if (!localFilePath || localFilePath.length < 1) {
+      console.error("💀⚠️   No File Path Found!!");
+      return null;
+    }
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
@@ -24,7 +27,7 @@ export const uploadFile = async (localFilePath: string) => {
 
     return response;
   } catch (error) {
-    return getErrorMessage(error);
+    console.error(`💀⚠️   ${getErrorMessage(error)}`);
   } finally {
     // fs.unlinkSync(localFilePath); // remove temp file on local server: synchronously
     fs.unlink(localFilePath, function (err) {
