@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import {
   CLOUDINARY_API_KEY,
@@ -13,6 +13,8 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
+let cloudinaryResponse: UploadApiResponse | null = null;
+
 export const uploadFileToCloudinary = async (localFilePath: string) => {
   try {
     if (!localFilePath || localFilePath.length < 1) {
@@ -25,7 +27,7 @@ export const uploadFileToCloudinary = async (localFilePath: string) => {
 
     console.log(`✅   File is uploaded on Cloudinary: ${response.url}`);
 
-    return response;
+    cloudinaryResponse = response;
   } catch (error) {
     console.error(`💀⚠️   ${getErrorMessage(error)}`);
   } finally {
@@ -47,6 +49,7 @@ export const uploadFileToCloudinary = async (localFilePath: string) => {
         );
       }
     });
-    return null;
+
+    return cloudinaryResponse;
   }
 };
