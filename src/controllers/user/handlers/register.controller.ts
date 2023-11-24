@@ -1,4 +1,3 @@
-import { UploadApiResponse } from "cloudinary";
 import { NextFunction, Request, Response } from "express";
 import { __img_valid_mime_types } from "../../../constants/middlewares/index.js";
 import { User } from "../../../models/user.model.js";
@@ -33,7 +32,6 @@ export const _register = async (
   const { fullName, username, email, password } = req.body;
 
   // validation is handled by the middleware
-  // console.log(req.body);
 
   // check if user exists: email, username
   const existedUser = await User.findOne({
@@ -47,8 +45,15 @@ export const _register = async (
   // check for images: avatar, cover : avatar is compulsory
   const files = req?.files as { [fieldname: string]: Express.Multer.File[] };
   // console.log(files);
-  const avatarLocalPath = files?.avatar[0]?.path;
-  const coverLocalPath = files?.cover[0]?.path;
+  let avatarLocalPath: string | undefined = undefined;
+  let coverLocalPath: string | undefined = undefined;
+
+  if (files && Array.isArray(files.avatar) && files.avatar.length > 0) {
+    avatarLocalPath = files.avatar[0].path;
+  }
+  if (files && Array.isArray(files.cover) && files.cover.length > 0) {
+    coverLocalPath = files.cover[0].path;
+  }
 
   if (!avatarLocalPath) throw new ApiError(400, "Avatar Image is required!");
 
@@ -63,15 +68,13 @@ export const _register = async (
   }
 
   // upload images to cloudinary
-  const avatar: UploadApiResponse | null =
-    await uploadFileToCloudinary(avatarLocalPath);
-  let cover: UploadApiResponse | null = null;
+  const avatar = await uploadFileToCloudinary(avatarLocalPath);
+  let cover = null;
   if (coverLocalPath) {
     cover = await uploadFileToCloudinary(coverLocalPath);
   }
 
   // check if avatar and cover are valid images: avatar is compulsory
-  // console.log(avatar);
   if (!avatar)
     throw new ApiError(
       500,

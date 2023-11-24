@@ -6,8 +6,13 @@ import { RegisterValidation } from "../models/validation/register.validation.js"
 
 const usersRouter = Router();
 
-usersRouter
-  .route("/register")
-  .post(uploadImagesLocally, zodValidation(RegisterValidation), registerUser);
+usersRouter.route("/register").post(
+  uploadImagesLocally.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "cover", maxCount: 1 },
+  ]),
+  zodValidation(RegisterValidation),
+  registerUser
+);
 
 export { usersRouter };
