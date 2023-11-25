@@ -34,9 +34,9 @@ class RequiredBodyError extends ApiError {
   constructor(notIncludedFields: string[]) {
     super(400);
     this.statusCode = 400;
-    this.message = `Request must include the fields: ${notIncludedFields.join(
+    this.message = `Missing fields: ${notIncludedFields.join(
       ", "
-    )}.`;
+    )}. Please fill in all the required fields.`;
   }
 }
 

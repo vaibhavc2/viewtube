@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AnyZodObject } from "zod";
+import { AnyZodObject, ZodError } from "zod";
 import ApiError from "../../utils/api/error/api-error.util.js";
 import { getErrorMessage } from "../../utils/common/error/error-message.util.js";
 
@@ -15,8 +15,16 @@ export const zodValidation =
       });
 
       return next();
-    } catch (error) {
-      console.error(`💀⚠️   ${getErrorMessage(error)}`);
-      next(new ApiError(400, `${getErrorMessage(error)}`));
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        next(
+          new ApiError(
+            400,
+            `${error.issues.map((issue) => issue.message).join(" ")}`
+          )
+        );
+      } else {
+        next(new ApiError(400, `${getErrorMessage(error)}`));
+      }
     }
   };
