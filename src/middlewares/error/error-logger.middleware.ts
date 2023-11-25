@@ -10,13 +10,11 @@ export const errorLogger = (
 ) => {
   if (error instanceof Error || error instanceof ApiError) {
     wLogger.error(
-      `⚠️   Error occurred on the route: ${req.path}\n`,
-      error.stack
+      `⚠️   Error occurred on the route: ${req.path}.\n ${error.stack}`
     );
   } else {
     wLogger.error(
-      `⚠️💀   Something went wrong!! Terribly !!\nError occurred on the route: ${req.path} :: `,
-      error
+      `💀   Something went wrong!! Terribly !!\n ⚠️   Error occurred on the route: ${req.path}.\n ${error}`
     );
   }
 

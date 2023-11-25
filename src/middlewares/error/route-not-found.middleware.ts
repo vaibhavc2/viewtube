@@ -7,6 +7,6 @@ export const routeNotFound = (
   res: Response,
   next: NextFunction
 ) => {
-  wLogger.error("⚠️   Route not found: ", req.path);
+  wLogger.error(`⚠️   Route not found: ${req.path}`);
   return res.status(404).json(new NotFoundResponse("Route not found."));
 };
