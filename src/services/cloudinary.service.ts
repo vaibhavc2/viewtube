@@ -6,6 +6,8 @@ import {
   CLOUDINARY_CLOUD_NAME,
 } from "../config/config.js";
 import { getErrorMessage } from "../utils/common/error/error-message.util.js";
+import { wLogger } from "../utils/log/logger.util.js";
+import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
 
 cloudinary.config({
   cloud_name: CLOUDINARY_CLOUD_NAME,
@@ -18,33 +20,41 @@ let cloudinaryResponse: UploadApiResponse | null = null;
 export const uploadFileToCloudinary = async (localFilePath: string) => {
   try {
     if (!localFilePath || localFilePath.length < 1) {
-      console.error("💀⚠️   No File Path Found!!");
+      printErrorMessage(
+        "💀⚠️   No File Path Found!!",
+        "uploadFileToCloudinary()"
+      );
       return null;
     }
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
 
-    console.log(`✅   File is uploaded on Cloudinary: ${response.url}`);
+    wLogger.info(`✅   File is uploaded on Cloudinary: ${response.url}`);
 
     cloudinaryResponse = response;
   } catch (error) {
-    console.error(`💀⚠️   ${getErrorMessage(error)}`);
+    printErrorMessage(
+      `💀⚠️   ${getErrorMessage(error)}`,
+      "uploadFileToCloudinary()"
+    );
   } finally {
     // fs.unlinkSync(localFilePath); // remove temp file on local server: synchronously
     fs.unlink(localFilePath, function (err) {
       if (err && err.code == "ENOENT") {
-        // file doens't exist
-        console.info(
-          `⚠️   File doesn't exist on the path provided: ${localFilePath}`
+        // file doesn't exist
+        printErrorMessage(
+          `⚠️   File doesn't exist on the path provided: ${localFilePath}`,
+          "fs.unlink()"
         );
       } else if (err) {
         // other errors, e.g. maybe we don't have enough permission
-        console.error(
-          `⚠️   Error occurred while trying to remove the file on the local server. File Path: ${localFilePath} \n💀   Error: ${err}`
+        printErrorMessage(
+          `⚠️   Error occurred while trying to remove the file on the local server. File Path: ${localFilePath} \n💀   Error: ${err}`,
+          "fs.unlink()"
         );
       } else {
-        console.info(
+        wLogger.info(
           `✅   File removed from the local server. File Path: ${localFilePath}`
         );
       }

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { DB_NAME, MONGO_URI } from "../config/config.js";
+import { wLogger } from "../utils/log/logger.util.js";
 import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
 
 export const connectDB = async () => {
@@ -13,7 +14,7 @@ export const connectDB = async () => {
     });
 
   if (connectionInstance) {
-    console.log(
+    wLogger.info(
       `✅  MongoDB Database connected successfully!! DB HOST: ${connectionInstance.connection.host}`
     );
   }

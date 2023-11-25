@@ -46,7 +46,6 @@ export const _register = async (
 
   // check for images: avatar, cover : avatar is compulsory
   const files = req?.files as { [fieldname: string]: Express.Multer.File[] };
-  // console.log(files);
   let avatarLocalPath: string | undefined = undefined;
   let coverLocalPath: string | undefined = undefined;
 

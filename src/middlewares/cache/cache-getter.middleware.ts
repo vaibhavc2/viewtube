@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
+import { wLogger } from "../../utils/log/logger.util.js";
 
 export const cacheGetter = (
   req: Request,
@@ -19,13 +20,13 @@ export const cacheGetter = (
 
   if (cachedData) {
     if (NODE_ENV === "development")
-      console.log(`✅🚀   Cache hit for the route: ${req.path}`);
+      wLogger.info(`✅🚀   Cache hit for the route: ${req.path}`);
 
     return res.status(200).json(cachedData);
   }
 
   if (NODE_ENV === "development")
-    console.log(`⚠️🚀   Cache miss for the route: ${req.path}`);
+    wLogger.error(`⚠️🚀   Cache miss for the route: ${req.path}`);
 
   next();
 };

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
+import { wLogger } from "../../utils/log/logger.util.js";
 
 export const cacheUpdater = (
   req: Request,
@@ -26,9 +27,11 @@ export const cacheUpdater = (
 
     if (NODE_ENV === "development") {
       if (setCache) {
-        console.log(`✅🚀   Cache updated for the route: ${req.path}`);
+        wLogger.info(`✅🚀   Cache updated for the route: ${req.path}`);
       } else {
-        console.log(`⚠️🚀   Unable to update Cache for the route: ${req.path}`);
+        wLogger.error(
+          `⚠️🚀   Unable to update Cache for the route: ${req.path}`
+        );
       }
     }
   }

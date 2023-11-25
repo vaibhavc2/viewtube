@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ApiError from "../../utils/api/error/api-error.util.js";
+import { wLogger } from "../../utils/log/logger.util.js";
 
 export const errorLogger = (
   error: unknown,
@@ -8,12 +9,12 @@ export const errorLogger = (
   next: NextFunction
 ) => {
   if (error instanceof Error || error instanceof ApiError) {
-    console.error(
+    wLogger.error(
       `⚠️   Error occurred on the route: ${req.path}\n`,
       error.stack
     );
   } else {
-    console.error(
+    wLogger.error(
       `⚠️💀   Something went wrong!! Terribly !!\nError occurred on the route: ${req.path} :: `,
       error
     );

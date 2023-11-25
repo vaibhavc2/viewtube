@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
+import { wLogger } from "../../utils/log/logger.util.js";
 
 export const cacheSetter = (
   req: Request,
@@ -20,9 +21,9 @@ export const cacheSetter = (
 
     if (NODE_ENV === "development") {
       if (setCache) {
-        console.log(`✅🚀   Cache set for the route: ${req.path}`);
+        wLogger.info(`✅🚀   Cache set for the route: ${req.path}`);
       } else {
-        console.log(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
+        wLogger.error(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
       }
     }
   }
