@@ -3,7 +3,9 @@ import { __img_valid_mime_types } from "../../../constants/middlewares/index.js"
 import { User } from "../../../models/user.model.js";
 import { uploadFileToCloudinary } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
-import ApiResponse from "../../../utils/api/res/api-response.util.js";
+import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
+
+// TODO: improve performance by using Promise.all() for uploading images to cloudinary or use a queue or something async method to update the loaded images later after the user is created
 
 /**
  * @desc    STEPS: Register a new user
@@ -110,5 +112,5 @@ export const _register = async (
   // send response
   return res
     .status(201)
-    .json(new ApiResponse(201, "User registered successfully!", createdUser));
+    .json(new CreatedResponse("User registered successfully!", createdUser));
 };

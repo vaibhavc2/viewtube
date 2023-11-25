@@ -9,6 +9,7 @@ import { cacheSetter } from "../middlewares/cache/cache-setter.middleware.js";
 import { cacheUpdater } from "../middlewares/cache/cache-updater.middleware.js";
 import { apiErrorMiddleware } from "../middlewares/error/api-error.middleware.js";
 import { errorMiddleware } from "../middlewares/error/error.middleware.js";
+import { routeNotFoundMiddleware } from "../middlewares/error/not-found.middleware.js";
 import { usersRouter } from "../routes/users.routes.js";
 
 export const app: Application = express();
@@ -18,17 +19,15 @@ app.use(
   cors({
     origin: [FRONTEND_URI],
     credentials: true,
-    // methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
-app.use(cookieParser());
-app.use(
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
+  }),
+  cookieParser(),
   express.json({
     limit: __limit,
-  })
+  }),
+  express.urlencoded({ extended: true, limit: __limit }),
+  express.static("public")
 );
-app.use(express.urlencoded({ extended: true, limit: __limit }));
-app.use(express.static("public"));
 // logs requests in development mode
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
@@ -37,16 +36,13 @@ if (NODE_ENV === "development") app.use(morgan("combined"));
 
 // cache getter middleware
 app.use(cacheGetter);
-
 // TODO: check caching for routes!
 
 // using routes
 app.use("/api/v1/users", usersRouter);
 
 // cache setter and updater middlewares
-app.use(cacheSetter);
-app.use(cacheUpdater);
+app.use(cacheSetter, cacheUpdater);
 
 // error handler middlewares
-app.use(apiErrorMiddleware);
-app.use(errorMiddleware);
+app.use(routeNotFoundMiddleware, apiErrorMiddleware, errorMiddleware);

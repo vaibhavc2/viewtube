@@ -4,53 +4,53 @@ class ApiResponse {
   message: string;
   data: any;
 
-  constructor(statusCode: number, message = "success", data: any) {
+  constructor(statusCode: number, message?: string, data?: any) {
     this.statusCode = statusCode;
-    this.message = message;
+    this.message = message || "No message provided";
     this.data = data;
     this.success = statusCode < 400;
   }
 }
 
 export class SuccessResponse extends ApiResponse {
-  constructor(message = "success", data: any) {
-    super(200, message, data);
+  constructor(message?: string, data?: any) {
+    super(200, message || "Success", data);
+  }
+}
+
+export class CreatedResponse extends ApiResponse {
+  constructor(message?: string, data?: any) {
+    super(201, message || "Created", data);
   }
 }
 
 export class BadRequestResponse extends ApiResponse {
-  constructor(message = "Bad Request", data: any) {
-    super(400, message, data);
+  constructor(message?: string, data?: any) {
+    super(400, message || "Bad Request", data);
   }
 }
 
 export class UnauthorizedResponse extends ApiResponse {
-  constructor(message = "Unauthorized", data: any) {
-    super(401, message, data);
+  constructor(message?: string, data?: any) {
+    super(401, message || "Unauthorized", data);
   }
 }
 
 export class ForbiddenResponse extends ApiResponse {
-  constructor(message = "Forbidden", data: any) {
-    super(403, message, data);
+  constructor(message?: string, data?: any) {
+    super(403, message || "Forbidden", data);
   }
 }
 
 export class NotFoundResponse extends ApiResponse {
-  constructor(message = "Not Found", data: any) {
-    super(404, message, data);
+  constructor(message?: string, data?: any) {
+    super(404, message || "Not Found", data);
   }
 }
 
 export class InternalServerErrorResponse extends ApiResponse {
-  constructor(message = "Internal Server Error", data: any) {
-    super(500, message, data);
-  }
-}
-
-export class NotImplementedResponse extends ApiResponse {
-  constructor(message = "Not Implemented", data: any) {
-    super(501, message, data);
+  constructor(message?: string, data?: any) {
+    super(500, message || "Internal Server Error", data);
   }
 }
 

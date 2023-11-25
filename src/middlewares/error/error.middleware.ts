@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { InternalServerErrorResponse } from "../../utils/api/res/api-response.util.js";
 
 export const errorMiddleware = (
   error: unknown,
@@ -7,11 +8,5 @@ export const errorMiddleware = (
 ) => {
   console.error(`⚠️   Error occurred on the route: ${req.path} :: `, error); //
 
-  const errorMessage = "Internal Server Error";
-  const statusCode = 500;
-
-  return res.status(statusCode).json({
-    success: false,
-    message: errorMessage,
-  });
+  return res.status(500).json(new InternalServerErrorResponse());
 };
