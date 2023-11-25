@@ -7,9 +7,9 @@ import { __limit } from "../constants/express/index.js";
 import { cacheGetter } from "../middlewares/cache/cache-getter.middleware.js";
 import { cacheSetter } from "../middlewares/cache/cache-setter.middleware.js";
 import { cacheUpdater } from "../middlewares/cache/cache-updater.middleware.js";
-import { apiErrorMiddleware } from "../middlewares/error/api-error.middleware.js";
-import { errorMiddleware } from "../middlewares/error/error.middleware.js";
-import { routeNotFoundMiddleware } from "../middlewares/error/not-found.middleware.js";
+import { errorHandler } from "../middlewares/error/error-handler.middleware.js";
+import { errorLogger } from "../middlewares/error/error-logger.middleware.js";
+import { routeNotFound } from "../middlewares/error/route-not-found.middleware.js";
 import { usersRouter } from "../routes/users.routes.js";
 
 export const app: Application = express();
@@ -45,4 +45,4 @@ app.use("/api/v1/users", usersRouter);
 app.use(cacheSetter, cacheUpdater);
 
 // error handler middlewares
-app.use(routeNotFoundMiddleware, apiErrorMiddleware, errorMiddleware);
+app.use(errorLogger, errorHandler, routeNotFound);

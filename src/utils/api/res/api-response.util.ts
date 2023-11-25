@@ -50,7 +50,7 @@ export class NotFoundResponse extends ApiResponse {
 
 export class InternalServerErrorResponse extends ApiResponse {
   constructor(message?: string, data?: any) {
-    super(500, message || "Internal Server Error", data);
+    super(500, message || "Something went wrong.", data);
   }
 }
 

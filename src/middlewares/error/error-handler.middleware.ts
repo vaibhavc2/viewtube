@@ -4,24 +4,17 @@ import ApiResponse, {
   InternalServerErrorResponse,
 } from "../../utils/api/res/api-response.util.js";
 
-export const apiErrorMiddleware = (
+export const errorHandler = (
   error: unknown,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   if (error instanceof ApiError) {
-    console.error(`⚠️   Error occurred on the route: ${req.path} :: `, error); //
     return res
       .status(error.statusCode)
       .json(new ApiResponse(error.statusCode, error.message));
-  } else if (error instanceof Error) {
-    next(error);
   } else {
-    console.error(
-      `⚠️💀   Something went wrong!! Terribly !! Error occurred on the route: ${req.path} :: `,
-      error
-    );
     return res.status(500).json(new InternalServerErrorResponse());
   }
 };
