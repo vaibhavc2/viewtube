@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { __img_valid_mime_types } from "../../../constants/middlewares/index.js";
 import { User } from "../../../models/user.model.js";
 import { uploadFileToCloudinary } from "../../../services/cloudinary.service.js";
@@ -25,11 +25,7 @@ import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
  *
  */
 
-export const _register = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const _register = async (req: Request, res: Response) => {
   // get user details from frontend
   const { fullName, username, email, password } = req.body;
 

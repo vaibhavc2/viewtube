@@ -31,9 +31,6 @@ app.use(
 // logs requests in development mode
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
-// authentication middleware
-// app.use(authMiddleware);
-
 // cache getter middleware
 app.use(cacheGetter);
 // TODO: check caching for routes!
