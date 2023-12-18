@@ -1,5 +1,5 @@
 import * as argon2 from "argon2";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import mongoose, { Schema } from "mongoose";
 import {
   ACCESS_TOKEN_EXPIRY,
@@ -36,7 +36,7 @@ UserSchema.methods.comparePassword = async function (
 
 UserSchema.methods.generateRefreshToken = async function () {
   const user = this;
-  const refreshToken = jwt.sign(
+  const refreshToken = await jwt.sign(
     {
       _id: user._id,
       username: user.username,
@@ -53,7 +53,7 @@ UserSchema.methods.generateRefreshToken = async function () {
 
 UserSchema.methods.generateAccessToken = async function () {
   const user = this;
-  const accessToken = jwt.sign(
+  const accessToken = await jwt.sign(
     {
       _id: user._id,
     },
