@@ -22,7 +22,6 @@ import { generateTokens } from "../../../utils/generateTokens.util.js";
 export const _login = async (req: Request, res: Response) => {
   // request body -> data
   const { email, username, password } = req.body;
-  console.log(email, username, password);
 
   if (!email && !username) {
     throw new ApiError(400, "Username or Email is required!");
