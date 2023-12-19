@@ -36,7 +36,7 @@ UserSchema.methods.comparePassword = async function (
 
 UserSchema.methods.generateRefreshToken = async function () {
   const user = this;
-  const refreshToken = await jwt.sign(
+  const refreshToken = jwt.sign(
     {
       _id: user._id,
       username: user.username,
@@ -53,7 +53,7 @@ UserSchema.methods.generateRefreshToken = async function () {
 
 UserSchema.methods.generateAccessToken = async function () {
   const user = this;
-  const accessToken = await jwt.sign(
+  const accessToken = jwt.sign(
     {
       _id: user._id,
     },

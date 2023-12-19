@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   loginUser,
   logoutUser,
+  refreshAccessToken,
   registerUser,
 } from "../controllers/user/user.controllers.js";
 import { verifyAuthentication } from "../middlewares/auth/auth.middleware.js";
@@ -23,6 +24,8 @@ usersRouter.route("/register").post(
 );
 
 usersRouter.route("/login").post(loginUser);
+
+usersRouter.route("/refresh").post(refreshAccessToken);
 
 // secured routes : authentication middleware is compulsory
 usersRouter.route("/logout").post(verifyAuthentication, logoutUser);
