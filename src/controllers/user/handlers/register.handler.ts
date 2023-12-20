@@ -41,15 +41,17 @@ export const _register = async (req: Request, res: Response) => {
   }
 
   // check for images: avatar, cover : avatar is compulsory
-  const files = req?.files as { [fieldname: string]: Express.Multer.File[] };
+  const files = req?.files as GlobalTypes.MulterFiles;
   let avatarLocalPath: string | undefined = undefined;
   let coverLocalPath: string | undefined = undefined;
 
-  if (files && Array.isArray(files.avatar) && files.avatar.length > 0) {
-    avatarLocalPath = files.avatar[0].path;
-  }
-  if (files && Array.isArray(files.cover) && files.cover.length > 0) {
-    coverLocalPath = files.cover[0].path;
+  if (files) {
+    if (Array.isArray(files.avatar) && files.avatar.length > 0) {
+      avatarLocalPath = files.avatar[0].path;
+    }
+    if (Array.isArray(files.cover) && files.cover.length > 0) {
+      coverLocalPath = files.cover[0].path;
+    }
   }
 
   if (!avatarLocalPath) throw new ApiError(400, "Avatar Image is required!");
@@ -72,14 +74,14 @@ export const _register = async (req: Request, res: Response) => {
   }
 
   // check if avatar and cover are valid images: avatar is compulsory
-  if (!avatar)
+  if (!avatar?.secure_url)
     throw new ApiError(
       500,
       "Something went wrong while uploading Avatar Image to server!"
     );
 
   if (coverLocalPath) {
-    if (!cover)
+    if (!cover?.secure_url)
       throw new ApiError(
         500,
         "Something went wrong while uploading Cover Image to server!"
@@ -92,8 +94,8 @@ export const _register = async (req: Request, res: Response) => {
     username,
     email,
     password,
-    avatar: avatar.url,
-    cover: cover?.url || "",
+    avatar: avatar.secure_url,
+    cover: cover?.secure_url || "",
   });
 
   // check for user creation

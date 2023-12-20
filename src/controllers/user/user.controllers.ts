@@ -1,10 +1,20 @@
 import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js";
+import { _changePassword } from "./handlers/change-password.handler.js";
+import { _getUser } from "./handlers/get-user.handler.js";
 import { _login } from "./handlers/login.handler.js";
 import { _logout } from "./handlers/logout.handler.js";
 import { _refresh } from "./handlers/refresh.handler.js";
 import { _register } from "./handlers/register.handler.js";
+import { _updateAvatar } from "./handlers/update-avatar.handler.js";
+import { _updateCover } from "./handlers/update-cover.handler.js";
+import { _updateUser } from "./handlers/update-user.handler.js";
 
 export const registerUser = asyncHandler(_register);
 export const loginUser = asyncHandler(_login);
 export const logoutUser = asyncHandler(_logout);
 export const refreshAccessToken = asyncHandler(_refresh);
+export const changePassword = asyncHandler(_changePassword);
+export const getUserProfile = asyncHandler(_getUser);
+export const updateUserProfile = asyncHandler(_updateUser);
+export const updateUserAvatar = asyncHandler(_updateAvatar);
+export const updateUserCover = asyncHandler(_updateCover);

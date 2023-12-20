@@ -4,4 +4,8 @@ declare global {
       user?: any;
     }
   }
+
+  namespace GlobalTypes {
+    type MulterFiles = { [fieldname: string]: Express.Multer.File[] };
+  }
 }
