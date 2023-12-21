@@ -99,19 +99,17 @@ export const _register = async (req: Request, res: Response) => {
   });
 
   // check for user creation
-  // select only the required fields: password, refreshToken are not needed
+  // select only the required fields: password, refreshToken, __v are not needed here
   const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
+    "-password -refreshToken -__v"
   );
   if (!user || !createdUser)
     throw new ApiError(500, "Something went wrong while creating the user!");
 
   // send response
-  return res
-    .status(201)
-    .json(
-      new CreatedResponse("User registered successfully!", {
-        user: createdUser,
-      })
-    );
+  return res.status(201).json(
+    new CreatedResponse("User registered successfully!", {
+      user: createdUser,
+    })
+  );
 };

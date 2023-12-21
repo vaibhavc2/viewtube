@@ -24,7 +24,7 @@ export const verifyAuthentication = asyncHandler(
 
     // find user in db using the decoded token
     const user = await User.findOne({ _id: decodedToken?._id }).select(
-      "-password -refreshToken"
+      "-password -refreshToken -__v"
     );
 
     // if user not found, throw error

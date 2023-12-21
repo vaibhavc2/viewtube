@@ -17,7 +17,7 @@ export const _updateUser = async (req: Request, res: Response) => {
     {
       new: true,
     }
-  ).select("-password");
+  ).select("-password -refreshToken -__v");
 
   return res
     .status(200)
