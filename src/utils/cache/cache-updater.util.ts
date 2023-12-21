@@ -21,9 +21,13 @@ export const cacheUpdater = async (
 
   if (NODE_ENV === "development") {
     if (setCache) {
-      wLogger.info(`✅🚀   Cache updated for the route: ${reqPath}`);
+      wLogger.info(
+        `✅🚀   Cache updated for the route: ${reqPath}.\n🚀🚀   cache-key : "${cacheKey}"`
+      );
     } else {
-      wLogger.error(`⚠️🚀   Unable to update Cache for the route: ${reqPath}`);
+      wLogger.error(
+        `⚠️❌   Unable to update Cache for the route: ${reqPath}.\n🚀🚀   cache-key : "${cacheKey}"`
+      );
     }
   }
 };
