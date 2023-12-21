@@ -10,8 +10,6 @@ import {
   updateUserProfile,
 } from "../controllers/user/user.controllers.js";
 import { verifyAuthentication } from "../middlewares/auth/auth.middleware.js";
-import { userCacheGetter } from "../middlewares/cache/user/user-cache-getter.middleware.js";
-import { userCacheSetter } from "../middlewares/cache/user/user-cache-setter.middleware.js";
 import { uploadImagesLocally } from "../middlewares/multer/img-multer.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
 import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
@@ -38,9 +36,8 @@ usersRouter.route("/refresh").patch(refreshAccessToken);
 
 usersRouter.route("/logout").patch(verifyAuthentication, logoutUser);
 
-usersRouter
-  .route("/me")
-  .get(userCacheGetter, verifyAuthentication, userCacheSetter, getUserProfile);
+usersRouter.route("/me").get(verifyAuthentication, getUserProfile);
+// .get(userCacheGetter, verifyAuthentication, userCacheSetter, getUserProfile);
 
 usersRouter.route("/update").patch(verifyAuthentication, updateUserProfile);
 
