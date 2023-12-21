@@ -4,9 +4,6 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import { FRONTEND_URI, NODE_ENV } from "../config/config.js";
 import { __limit } from "../constants/express/index.js";
-import { cacheGetter } from "../middlewares/cache/cache-getter.middleware.js";
-import { cacheSetter } from "../middlewares/cache/cache-setter.middleware.js";
-import { cacheUpdater } from "../middlewares/cache/cache-updater.middleware.js";
 import { errorHandler } from "../middlewares/error/error-handler.middleware.js";
 import { errorLogger } from "../middlewares/error/error-logger.middleware.js";
 import { routeNotFound } from "../middlewares/error/route-not-found.middleware.js";
@@ -31,15 +28,8 @@ app.use(
 // logs requests in development mode
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
-// cache getter middleware
-app.use(cacheGetter);
-// TODO: check caching for routes!
-
 // using routes
 app.use("/api/v1/users", usersRouter);
-
-// cache setter and updater middlewares
-app.use(cacheSetter, cacheUpdater);
 
 // error handler middlewares
 app.use(errorLogger, errorHandler, routeNotFound);

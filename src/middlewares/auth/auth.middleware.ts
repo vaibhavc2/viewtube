@@ -7,6 +7,8 @@ import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js"
 
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
+    if (req.user) return next();
+
     // check if token exists
     const token =
       req.cookies?.accessToken ||

@@ -1,11 +1,17 @@
 import { Router } from "express";
 import {
+  getUserProfile,
   loginUser,
   logoutUser,
   refreshAccessToken,
   registerUser,
+  updateUserAvatar,
+  updateUserCover,
+  updateUserProfile,
 } from "../controllers/user/user.controllers.js";
 import { verifyAuthentication } from "../middlewares/auth/auth.middleware.js";
+import { userCacheGetter } from "../middlewares/cache/user/user-cache-getter.middleware.js";
+import { userCacheSetter } from "../middlewares/cache/user/user-cache-setter.middleware.js";
 import { uploadImagesLocally } from "../middlewares/multer/img-multer.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
 import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
@@ -23,11 +29,35 @@ usersRouter.route("/register").post(
   registerUser
 );
 
-usersRouter.route("/login").post(loginUser);
+usersRouter.route("/login").patch(loginUser);
 
-usersRouter.route("/refresh").post(refreshAccessToken);
+usersRouter.route("/refresh").patch(refreshAccessToken);
 
-// secured routes : authentication middleware is compulsory
-usersRouter.route("/logout").post(verifyAuthentication, logoutUser);
+//! secured routes : authentication middleware is compulsory: verifyAuthentication
+// **************************************************
+
+usersRouter.route("/logout").patch(verifyAuthentication, logoutUser);
+
+usersRouter
+  .route("/me")
+  .get(userCacheGetter, verifyAuthentication, userCacheSetter, getUserProfile);
+
+usersRouter.route("/update").patch(verifyAuthentication, updateUserProfile);
+
+usersRouter
+  .route("/update/avatar")
+  .patch(
+    uploadImagesLocally.single("avatar"),
+    verifyAuthentication,
+    updateUserAvatar
+  );
+
+usersRouter
+  .route("/update/cover")
+  .patch(
+    uploadImagesLocally.single("cover"),
+    verifyAuthentication,
+    updateUserCover
+  );
 
 export { usersRouter };
