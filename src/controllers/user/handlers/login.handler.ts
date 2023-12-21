@@ -3,6 +3,7 @@ import { cookieOptions } from "../../../constants/res/index.js";
 import { User } from "../../../models/user.model.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
+import { cacheUpdater } from "../../../utils/cache/cache-updater.util.js";
 import { generateTokens } from "../../../utils/generateTokens.util.js";
 
 /**
@@ -44,6 +45,9 @@ export const _login = async (req: Request, res: Response) => {
   // access token and refresh token: generate, save refresh token to db
   // here, we are passing the user object to the generateTokens function: pass by reference
   const { accessToken, refreshToken } = await generateTokens(user);
+
+  // set or update cache
+  cacheUpdater(req.path, "user", user);
 
   // send response and cookies
   return res

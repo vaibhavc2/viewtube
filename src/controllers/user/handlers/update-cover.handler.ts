@@ -3,6 +3,7 @@ import { User } from "../../../models/user.model.js";
 import { uploadFileToCloudinary } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
+import { cacheUpdater } from "../../../utils/cache/cache-updater.util.js";
 
 export const _updateCover = async (req: Request, res: Response) => {
   const coverLocalPath = req.file?.path;
@@ -28,6 +29,8 @@ export const _updateCover = async (req: Request, res: Response) => {
       new: true,
     }
   ).select("-password -refreshToken -__v");
+
+  cacheUpdater(req.path, "user", user);
 
   return res
     .status(200)

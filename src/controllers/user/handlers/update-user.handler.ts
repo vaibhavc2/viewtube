@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../../../models/user.model.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
+import { cacheUpdater } from "../../../utils/cache/cache-updater.util.js";
 
 export const _updateUser = async (req: Request, res: Response) => {
   const { fullName, email, username } = req.body;
@@ -18,6 +19,8 @@ export const _updateUser = async (req: Request, res: Response) => {
       new: true,
     }
   ).select("-password -refreshToken -__v");
+
+  cacheUpdater(req.path, "user", user);
 
   return res
     .status(200)

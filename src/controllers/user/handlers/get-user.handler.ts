@@ -3,7 +3,6 @@ import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _getUser = async (req: Request, res: Response) => {
   const user = req.user;
-  // cacheSetter(req.path, user);
 
   return res
     .status(200)
