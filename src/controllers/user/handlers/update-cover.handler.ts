@@ -31,5 +31,7 @@ export const _updateCover = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new SuccessResponse("User Cover Image updated successfully!", user));
+    .json(
+      new SuccessResponse("User Cover Image updated successfully!", { user })
+    );
 };

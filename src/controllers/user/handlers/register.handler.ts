@@ -109,5 +109,9 @@ export const _register = async (req: Request, res: Response) => {
   // send response
   return res
     .status(201)
-    .json(new CreatedResponse("User registered successfully!", createdUser));
+    .json(
+      new CreatedResponse("User registered successfully!", {
+        user: createdUser,
+      })
+    );
 };

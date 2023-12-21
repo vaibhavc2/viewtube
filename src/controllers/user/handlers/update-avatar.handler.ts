@@ -31,5 +31,5 @@ export const _updateAvatar = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new SuccessResponse("User Avatar updated successfully!", user));
+    .json(new SuccessResponse("User Avatar updated successfully!", { user }));
 };

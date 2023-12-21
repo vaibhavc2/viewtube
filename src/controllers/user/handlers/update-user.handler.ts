@@ -21,5 +21,5 @@ export const _updateUser = async (req: Request, res: Response) => {
 
   return res
     .status(200)
-    .json(new SuccessResponse("User Details updated successfully!", user));
+    .json(new SuccessResponse("User Details updated successfully!", { user }));
 };
