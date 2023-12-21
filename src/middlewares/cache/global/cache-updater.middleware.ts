@@ -30,7 +30,7 @@ export const cacheUpdater = (
         wLogger.info(`✅🚀   Cache updated for the route: ${req.path}`);
       } else {
         wLogger.error(
-          `⚠️🚀   Unable to update Cache for the route: ${req.path}`
+          `⚠️❌   Unable to update Cache for the route: ${req.path}`
         );
       }
     }

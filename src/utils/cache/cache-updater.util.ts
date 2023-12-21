@@ -2,8 +2,11 @@ import { NODE_ENV } from "../../config/config.js";
 import { cache } from "../../helpers/cache/cache.helper.js";
 import { wLogger } from "../../utils/log/logger.util.js";
 
-export const cacheUpdater = async (reqPath: string, cacheData: string) => {
-  const cacheKey = `${reqPath}`;
+export const cacheUpdater = async (
+  reqPath: string,
+  cacheKey: string,
+  cacheData: string
+) => {
   const stringifiedData = JSON.stringify(cacheData);
 
   if (cache.has(cacheKey)) {

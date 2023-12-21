@@ -26,7 +26,7 @@ export const userCacheGetter = asyncHandler(
     }
 
     if (NODE_ENV === "development")
-      wLogger.error(`⚠️🚀   Cache miss for the route: ${req.path}`);
+      wLogger.error(`⚠️❌   Cache miss for the route: ${req.path}`);
 
     next();
   }

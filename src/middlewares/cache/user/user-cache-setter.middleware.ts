@@ -18,9 +18,13 @@ export const userCacheSetter = (
 
     if (NODE_ENV === "development") {
       if (setCache) {
-        wLogger.info(`✅🚀   Cache set for the route: ${req.path}`);
+        wLogger.info(
+          `✅🚀   Cache set with key: ${cacheKey}. Route: "${req.path}"`
+        );
       } else {
-        wLogger.error(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
+        wLogger.error(
+          `⚠️❌   Unable to set Cache with key: ${cacheKey}. Route: "${req.path}"`
+        );
       }
     }
   }

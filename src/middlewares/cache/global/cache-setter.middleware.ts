@@ -23,7 +23,7 @@ export const cacheSetter = (
       if (setCache) {
         wLogger.info(`✅🚀   Cache set for the route: ${req.path}`);
       } else {
-        wLogger.error(`⚠️🚀   Unable to set Cache for the route: ${req.path}`);
+        wLogger.error(`⚠️❌   Unable to set Cache for the route: ${req.path}`);
       }
     }
   }
