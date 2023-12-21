@@ -1,0 +1,7 @@
+PATCH http://localhost:5000/api/v1/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "sherjarnail@gmail.com",
+    "password": "pwd@123"
+}
