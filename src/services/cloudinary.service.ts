@@ -10,9 +10,11 @@ import { wLogger } from "../utils/log/logger.util.js";
 import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
 
 class CloudinaryService {
-  cloudinaryResponse: UploadApiResponse | null = null;
+  cloudinaryResponse: UploadApiResponse | null;
 
   constructor() {
+    this.cloudinaryResponse = null;
+
     cloudinary.config({
       cloud_name: CLOUDINARY_CLOUD_NAME,
       api_key: CLOUDINARY_API_KEY,
