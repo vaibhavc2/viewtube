@@ -92,7 +92,7 @@ class CloudinaryService {
 }
 
 export const cloudinaryService = new CloudinaryService(
+  CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET,
-  CLOUDINARY_CLOUD_NAME
+  CLOUDINARY_API_SECRET
 );
