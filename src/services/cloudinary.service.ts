@@ -12,14 +12,10 @@ import { printErrorMessage } from "../utils/server/error/print-error-message.uti
 class CloudinaryService {
   cloudinaryResponse: UploadApiResponse | null;
 
-  constructor() {
+  constructor(cloud_name: string, api_key: string, api_secret: string) {
     this.cloudinaryResponse = null;
 
-    cloudinary.config({
-      cloud_name: CLOUDINARY_CLOUD_NAME,
-      api_key: CLOUDINARY_API_KEY,
-      api_secret: CLOUDINARY_API_SECRET,
-    });
+    cloudinary.config({ cloud_name, api_key, api_secret });
   }
 
   uploadFileToCloudinary = async (localFilePath: string) => {
@@ -95,4 +91,8 @@ class CloudinaryService {
   };
 }
 
-export const cloudinaryService = new CloudinaryService();
+export const cloudinaryService = new CloudinaryService(
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  CLOUDINARY_CLOUD_NAME
+);
