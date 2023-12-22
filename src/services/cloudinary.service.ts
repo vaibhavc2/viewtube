@@ -9,57 +9,88 @@ import { getErrorMessage } from "../utils/common/error/error-message.util.js";
 import { wLogger } from "../utils/log/logger.util.js";
 import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
 
-cloudinary.config({
-  cloud_name: CLOUDINARY_CLOUD_NAME,
-  api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
-});
+class CloudinaryService {
+  cloudinaryResponse: UploadApiResponse | null = null;
 
-let cloudinaryResponse: UploadApiResponse | null = null;
+  constructor() {
+    cloudinary.config({
+      cloud_name: CLOUDINARY_CLOUD_NAME,
+      api_key: CLOUDINARY_API_KEY,
+      api_secret: CLOUDINARY_API_SECRET,
+    });
+  }
 
-export const uploadFileToCloudinary = async (localFilePath: string) => {
-  try {
-    if (!localFilePath || localFilePath.length < 1) {
+  uploadFileToCloudinary = async (localFilePath: string) => {
+    try {
+      if (!localFilePath || localFilePath.length < 1) {
+        printErrorMessage(
+          "💀⚠️   No File Path Found!!",
+          "uploadFileToCloudinary()"
+        );
+        return null;
+      }
+      const response = await cloudinary.uploader.upload(localFilePath, {
+        resource_type: "auto",
+      });
+
+      wLogger.info(`✅   File is uploaded on Cloudinary: ${response.url}`);
+
+      this.cloudinaryResponse = response;
+    } catch (error) {
       printErrorMessage(
-        "💀⚠️   No File Path Found!!",
+        `💀⚠️   ${getErrorMessage(error)}`,
         "uploadFileToCloudinary()"
       );
-      return null;
+    } finally {
+      // fs.unlinkSync(localFilePath); // remove temp file on local server: synchronously
+      fs.unlink(localFilePath, function (err) {
+        if (err && err.code == "ENOENT") {
+          // file doesn't exist
+          printErrorMessage(
+            `⚠️   File doesn't exist on the path provided: ${localFilePath}`,
+            "fs.unlink()"
+          );
+        } else if (err) {
+          // other errors, e.g. maybe we don't have enough permission
+          printErrorMessage(
+            `⚠️   Error occurred while trying to remove the file on the local server. File Path: ${localFilePath} \n💀   Error: ${err}`,
+            "fs.unlink()"
+          );
+        } else {
+          wLogger.info(
+            `✅   File removed from the local server. File Path: ${localFilePath}`
+          );
+        }
+      });
+
+      return this.cloudinaryResponse;
     }
-    const response = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "auto",
-    });
+  };
 
-    wLogger.info(`✅   File is uploaded on Cloudinary: ${response.url}`);
-
-    cloudinaryResponse = response;
-  } catch (error) {
-    printErrorMessage(
-      `💀⚠️   ${getErrorMessage(error)}`,
-      "uploadFileToCloudinary()"
-    );
-  } finally {
-    // fs.unlinkSync(localFilePath); // remove temp file on local server: synchronously
-    fs.unlink(localFilePath, function (err) {
-      if (err && err.code == "ENOENT") {
-        // file doesn't exist
+  deleteFileFromCloudinary = async (fileURL: string) => {
+    try {
+      if (!fileURL || fileURL.length < 1) {
         printErrorMessage(
-          `⚠️   File doesn't exist on the path provided: ${localFilePath}`,
-          "fs.unlink()"
+          "💀⚠️   No File URL Found!!",
+          "deleteFileFromCloudinary()"
         );
-      } else if (err) {
-        // other errors, e.g. maybe we don't have enough permission
-        printErrorMessage(
-          `⚠️   Error occurred while trying to remove the file on the local server. File Path: ${localFilePath} \n💀   Error: ${err}`,
-          "fs.unlink()"
-        );
-      } else {
-        wLogger.info(
-          `✅   File removed from the local server. File Path: ${localFilePath}`
-        );
+        return null;
       }
-    });
 
-    return cloudinaryResponse;
-  }
-};
+      const response = await cloudinary.uploader.destroy(fileURL);
+
+      wLogger.info(`✅   File is deleted from Cloudinary: ${response}`);
+
+      this.cloudinaryResponse = response;
+    } catch (error) {
+      printErrorMessage(
+        `💀⚠️   ${getErrorMessage(error)}`,
+        "deleteFileFromCloudinary()"
+      );
+    } finally {
+      return this.cloudinaryResponse;
+    }
+  };
+}
+
+export const cloudinaryService = new CloudinaryService();

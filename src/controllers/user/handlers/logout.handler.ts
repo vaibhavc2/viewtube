@@ -14,6 +14,7 @@ import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
  */
 
 export const _logout = async (req: Request, res: Response) => {
+  // clear refresh token from db
   await User.findByIdAndUpdate(
     req.user?._id,
     {
@@ -22,6 +23,7 @@ export const _logout = async (req: Request, res: Response) => {
     { new: true }
   );
 
+  // clear cookies and send response
   return res
     .status(200)
     .clearCookie("accessToken", cookieOptions)

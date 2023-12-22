@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { __img_valid_mime_types } from "../../../constants/middlewares/index.js";
 import { User } from "../../../models/user.model.js";
-import { uploadFileToCloudinary } from "../../../services/cloudinary.service.js";
+import { cloudinaryService } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
 
@@ -67,10 +67,11 @@ export const _register = async (req: Request, res: Response) => {
   }
 
   // upload images to cloudinary
-  const avatar = await uploadFileToCloudinary(avatarLocalPath);
+  const avatar =
+    await cloudinaryService.uploadFileToCloudinary(avatarLocalPath);
   let cover = null;
   if (coverLocalPath) {
-    cover = await uploadFileToCloudinary(coverLocalPath);
+    cover = await cloudinaryService.uploadFileToCloudinary(coverLocalPath);
   }
 
   // check if avatar and cover are valid images: avatar is compulsory
