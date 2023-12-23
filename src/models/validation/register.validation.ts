@@ -13,7 +13,10 @@ export const RegisterValidation = z.object({
     fullName: z
       .string({ required_error: requiredError("Full Name") })
       .min(3, { message: "Full Name must be at least 3 characters." })
-      .max(30, { message: largeStringError("Full Name", 30) }),
+      .max(30, { message: largeStringError("Full Name", 30) })
+      .regex(/^[a-zA-Z\s]*$/, {
+        message: "Full Name can only contain: letters and spaces",
+      }),
     username: z
       .string({ required_error: requiredError("Username") })
       .min(3, { message: "Username must be at least 3 characters." })
