@@ -29,6 +29,11 @@ export const _updateUser = async (req: Request, res: Response) => {
   }
 
   // check if username is valid
+  if (username && username.length < 3) {
+    return res
+      .status(400)
+      .json(new ApiResponse(400, "Username must be at least 3 characters."));
+  }
   const usernameRegex = /^[a-z\d_]*$/;
   if (username && !usernameRegex.test(username)) {
     return res
@@ -39,11 +44,6 @@ export const _updateUser = async (req: Request, res: Response) => {
           "Username can only contain: lowercase letters, numbers, and underscore characters"
         )
       );
-  }
-  if (username && username.length < 3) {
-    return res
-      .status(400)
-      .json(new ApiResponse(400, "Username must be at least 3 characters."));
   }
 
   // check if fullName is valid
