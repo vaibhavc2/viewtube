@@ -18,8 +18,9 @@ export const RegisterValidation = z.object({
       .string({ required_error: requiredError("Username") })
       .min(3, { message: "Username must be at least 3 characters." })
       .max(20, { message: largeStringError("Username", 20) })
-      .regex(/^[a-z\d]*$/, {
-        message: "Username can only contain lowercase letters and numbers.",
+      .regex(/^[a-z\d_]*$/, {
+        message:
+          "Username can only contain: lowercase letters, numbers, and underscore characters",
       }),
     email: z
       .string({ required_error: requiredError("Email") })
