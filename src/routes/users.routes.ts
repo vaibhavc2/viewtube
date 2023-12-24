@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getUserChannelProfile,
   getUserProfile,
   loginUser,
   logoutUser,
@@ -56,5 +57,9 @@ usersRouter
     verifyAuthentication,
     updateUserCover
   );
+
+usersRouter
+  .route("/channel/:username")
+  .get(verifyAuthentication, getUserChannelProfile);
 
 export { usersRouter };
