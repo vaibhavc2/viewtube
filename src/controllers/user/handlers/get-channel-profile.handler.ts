@@ -72,7 +72,7 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
         cover: 1,
         email: 1,
         subscribersCount: 1,
-        subscribedToCount: 1,
+        subscribedToCount: req.user?.username === username ? 1 : 0,
         isSubscribed: 1,
         subscribers: 0,
         subscribedTo: 0,
