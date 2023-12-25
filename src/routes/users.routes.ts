@@ -1,7 +1,9 @@
 import { Router } from "express";
 import {
+  changePassword,
   getUserChannelProfile,
   getUserProfile,
+  getUserWatchHistory,
   loginUser,
   logoutUser,
   refreshAccessToken,
@@ -18,6 +20,11 @@ import { RegisterValidation } from "../models/validation/register.validation.js"
 
 const usersRouter = Router();
 
+//! unsecured routes: no authentication middleware
+// **************************************************
+
+//! create routes: POST
+
 usersRouter.route("/register").post(
   uploadImagesLocally.fields([
     { name: "avatar", maxCount: 1 },
@@ -28,6 +35,8 @@ usersRouter.route("/register").post(
   registerUser
 );
 
+//! routes for login, logout and refresh tokens: PATCH or POST
+
 usersRouter.route("/login").patch(loginUser);
 
 usersRouter.route("/refresh").patch(refreshAccessToken);
@@ -37,29 +46,42 @@ usersRouter.route("/refresh").patch(refreshAccessToken);
 
 usersRouter.route("/logout").patch(verifyAuthentication, logoutUser);
 
-usersRouter.route("/me").get(verifyAuthentication, getUserProfile);
-// .get(userCacheGetter, verifyAuthentication, userCacheSetter, getUserProfile);
+//! update routes: PATCH
 
-usersRouter.route("/update").patch(verifyAuthentication, updateUserProfile);
+usersRouter
+  .route("/change-password")
+  .patch(verifyAuthentication, changePassword);
+
+usersRouter
+  .route("/update/profile")
+  .patch(verifyAuthentication, updateUserProfile);
 
 usersRouter
   .route("/update/avatar")
   .patch(
-    uploadImagesLocally.single("avatar"),
     verifyAuthentication,
+    uploadImagesLocally.single("avatar"),
     updateUserAvatar
   );
 
 usersRouter
   .route("/update/cover")
   .patch(
-    uploadImagesLocally.single("cover"),
     verifyAuthentication,
+    uploadImagesLocally.single("cover"),
     updateUserCover
   );
+
+//! read routes: GET
 
 usersRouter
   .route("/channel/:username")
   .get(verifyAuthentication, getUserChannelProfile);
+
+usersRouter.route("/me/profile").get(verifyAuthentication, getUserProfile);
+
+usersRouter
+  .route("/me/watch-history")
+  .get(verifyAuthentication, getUserWatchHistory);
 
 export { usersRouter };
