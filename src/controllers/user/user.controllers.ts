@@ -2,6 +2,7 @@ import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js"
 import { _changePassword } from "./handlers/change-password.handler.js";
 import { _getChannelProfile } from "./handlers/get-channel-profile.handler.js";
 import { _getUser } from "./handlers/get-user.handler.js";
+import { _getWatchHistory } from "./handlers/get-watch-history.handler.js";
 import { _login } from "./handlers/login.handler.js";
 import { _logout } from "./handlers/logout.handler.js";
 import { _refresh } from "./handlers/refresh.handler.js";
@@ -20,3 +21,4 @@ export const updateUserProfile = asyncHandler(_updateUser);
 export const updateUserAvatar = asyncHandler(_updateAvatar);
 export const updateUserCover = asyncHandler(_updateCover);
 export const getUserChannelProfile = asyncHandler(_getChannelProfile);
+export const getUserWatchHistory = asyncHandler(_getWatchHistory);
