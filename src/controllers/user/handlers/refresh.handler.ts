@@ -20,7 +20,13 @@ export const _refresh = async (req: Request, res: Response) => {
   // if found, verify token
   const decodedToken: any = jwt.verify(
     incomingRefreshToken,
-    REFRESH_TOKEN_SECRET
+    REFRESH_TOKEN_SECRET,
+    (err: unknown, decoded: any) => {
+      if (err) {
+        throw new ApiError(401, "Invalid Access Token!");
+      }
+      return decoded;
+    }
   );
 
   // find user in db using the refresh token

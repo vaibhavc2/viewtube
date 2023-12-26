@@ -7,8 +7,6 @@ import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js"
 
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    // if (req.user) return next();
-
     // check if token exists
     const token =
       req.cookies?.accessToken ||
@@ -20,7 +18,16 @@ export const verifyAuthentication = asyncHandler(
     }
 
     // if yes, verify token
-    const decodedToken: any = jwt.verify(token, JWT_SECRET);
+    const decodedToken: any = jwt.verify(
+      token,
+      JWT_SECRET,
+      (err: unknown, decoded: any) => {
+        if (err) {
+          throw new ApiError(401, "Invalid Access Token!");
+        }
+        return decoded;
+      }
+    );
 
     // find user in db using the decoded token
     const user = await User.findOne({ _id: decodedToken?._id }).select(
