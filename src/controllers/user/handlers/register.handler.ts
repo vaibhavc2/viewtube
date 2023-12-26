@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { __img_valid_mime_types } from "../../../constants/middlewares/index.js";
+import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
 import { User } from "../../../models/user.model.js";
 import { cloudinaryService } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { cookieOptions } from "../../../constants/res/index.js";
+import { __cookie_options } from "../../../constants/res/index.js";
 import { User } from "../../../models/user.model.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
@@ -26,7 +26,7 @@ export const _logout = async (req: Request, res: Response) => {
   // clear cookies and send response
   return res
     .status(200)
-    .clearCookie("accessToken", cookieOptions)
-    .clearCookie("refreshToken", cookieOptions)
+    .clearCookie("accessToken", __cookie_options)
+    .clearCookie("refreshToken", __cookie_options)
     .json(new SuccessResponse("User logged out successfully!", {}));
 };

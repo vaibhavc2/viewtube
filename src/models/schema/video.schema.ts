@@ -31,6 +31,10 @@ export const videoSchema = {
     type: Boolean,
     default: true,
   },
+  private: {
+    type: Boolean,
+    default: false,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",

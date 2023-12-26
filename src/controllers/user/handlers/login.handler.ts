@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { cookieOptions } from "../../../constants/res/index.js";
+import { __cookie_options } from "../../../constants/res/index.js";
 import { User } from "../../../models/user.model.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
@@ -51,8 +51,8 @@ export const _login = async (req: Request, res: Response) => {
   // send response and cookies
   return res
     .status(200)
-    .cookie("accessToken", accessToken, cookieOptions)
-    .cookie("refreshToken", refreshToken, cookieOptions)
+    .cookie("accessToken", accessToken, __cookie_options)
+    .cookie("refreshToken", refreshToken, __cookie_options)
     .json(
       new SuccessResponse("User logged in successfully!", {
         user: {
