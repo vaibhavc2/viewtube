@@ -6,7 +6,7 @@ export const __img_valid_mime_types = [
   "image/tiff",
   "image/bmp",
   "image/svg+xml",
-] as const;
+];
 
 export const __video_valid_mime_types = [
   "video/mp4",
@@ -21,7 +21,7 @@ export const __video_valid_mime_types = [
   "video/x-ms-wmv",
   "video/x-flv",
   "video/x-m4v",
-] as const;
+];
 
 export const __audio_valid_mime_types = [
   "audio/mpeg",
@@ -32,13 +32,13 @@ export const __audio_valid_mime_types = [
   "audio/x-m4a",
   "audio/x-matroska",
   "audio/x-ms-wma",
-] as const;
+];
 
 export const __valid_mime_types = [
   ...__img_valid_mime_types,
   ...__video_valid_mime_types,
   ...__audio_valid_mime_types,
-] as const;
+];
 
 export const __valid_mime_types_regex = new RegExp(
   `(${__valid_mime_types.join("|")})`,
@@ -51,4 +51,4 @@ export const __valid_mime_types_str = __valid_mime_types.join(", ");
 
 export const __valid_mime_types_regex_str_with_g = `(${__valid_mime_types.join(
   "|"
-)})` as const;
+)})`;
