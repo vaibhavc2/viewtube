@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
 import { User } from "../../../models/user.model.js";
 import { cloudinaryService } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
@@ -11,6 +12,11 @@ export const _updateCover = async (req: Request, res: Response) => {
   // check if cover file is missing
   if (!coverLocalPath) {
     throw new ApiError(400, "Cover file is missing!");
+  }
+
+  // check if cover is a valid image
+  if (!__img_valid_mime_types.includes(req.file?.mimetype as string)) {
+    throw new ApiError(400, "Invalid Cover Image!");
   }
 
   // upload cover to cloudinary

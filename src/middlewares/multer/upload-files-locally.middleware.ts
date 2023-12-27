@@ -11,4 +11,4 @@ const storage = multer.diskStorage({
   },
 });
 
-export const uploadImagesLocally = multer({ storage });
+export const uploadFilesLocally = multer({ storage });

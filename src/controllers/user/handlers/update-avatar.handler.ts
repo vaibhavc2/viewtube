@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
 import { User } from "../../../models/user.model.js";
 import { cloudinaryService } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
@@ -11,6 +12,11 @@ export const _updateAvatar = async (req: Request, res: Response) => {
   // check if avatar file is missing
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is missing!");
+  }
+
+  // check if avatar is a valid image
+  if (!__img_valid_mime_types.includes(req.file?.mimetype as string)) {
+    throw new ApiError(400, "Invalid Avatar Image!");
   }
 
   // upload avatar to cloudinary

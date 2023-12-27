@@ -16,7 +16,7 @@ import {
   updateUserProfile,
   updateWatchHistory,
 } from "../controllers/user/user.controllers.js";
-import { uploadImagesLocally } from "../middlewares/multer/img-multer.middleware.js";
+import { uploadFilesLocally } from "../middlewares/multer/upload-files-locally.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
 import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
 import { RegisterValidation } from "../models/validation/register.validation.js";
@@ -26,7 +26,7 @@ const router = Router();
 //! create routes: POST
 
 router.route("/register").post(
-  uploadImagesLocally.fields([
+  uploadFilesLocally.fields([
     { name: "avatar", maxCount: 1 },
     { name: "cover", maxCount: 1 },
   ]),
@@ -51,11 +51,11 @@ router.route("/update/profile").patch(updateUserProfile);
 
 router
   .route("/update/avatar")
-  .patch(uploadImagesLocally.single("avatar"), updateUserAvatar);
+  .patch(uploadFilesLocally.single("avatar"), updateUserAvatar);
 
 router
   .route("/update/cover")
-  .patch(uploadImagesLocally.single("cover"), updateUserCover);
+  .patch(uploadFilesLocally.single("cover"), updateUserCover);
 
 router.route("/update/channel/description").patch(updateChannelDescription);
 
