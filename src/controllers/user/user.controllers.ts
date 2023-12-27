@@ -12,6 +12,7 @@ import { _updateAvatar } from "./handlers/update-avatar.handler.js";
 import { _updateChannelDescription } from "./handlers/update-channel-description.handler.js";
 import { _updateCover } from "./handlers/update-cover.handler.js";
 import { _updateUser } from "./handlers/update-user.handler.js";
+import { _updateWatchHistory } from "./handlers/update-watch-history.handler.js";
 
 export const registerUser = asyncHandler(_register);
 export const loginUser = asyncHandler(_login);
@@ -26,3 +27,4 @@ export const getUserChannelProfile = asyncHandler(_getChannelProfile);
 export const getUserWatchHistory = asyncHandler(_getWatchHistory);
 export const getChannelDescription = asyncHandler(_getChannelDescription);
 export const updateChannelDescription = asyncHandler(_updateChannelDescription);
+export const updateWatchHistory = asyncHandler(_updateWatchHistory);

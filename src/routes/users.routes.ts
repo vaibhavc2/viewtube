@@ -13,6 +13,7 @@ import {
   updateUserAvatar,
   updateUserCover,
   updateUserProfile,
+  updateWatchHistory,
 } from "../controllers/user/user.controllers.js";
 import { uploadImagesLocally } from "../middlewares/multer/img-multer.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
@@ -66,5 +67,7 @@ router.route("/me/watch-history").get(getUserWatchHistory);
 router.route("/channel-description").get(getChannelDescription);
 
 router.route("/update/channel/description").patch(updateChannelDescription);
+
+router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
 
 export default router;
