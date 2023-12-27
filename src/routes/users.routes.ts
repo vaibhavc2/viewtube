@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   changePassword,
+  deleteUser,
   getChannelDescription,
   getUserChannelProfile,
   getUserProfile,
@@ -56,6 +57,10 @@ router
   .route("/update/cover")
   .patch(uploadImagesLocally.single("cover"), updateUserCover);
 
+router.route("/update/channel/description").patch(updateChannelDescription);
+
+router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
+
 //! read routes: GET
 
 router.route("/channel/:username").get(getUserChannelProfile);
@@ -66,8 +71,8 @@ router.route("/me/watch-history").get(getUserWatchHistory);
 
 router.route("/channel-description").get(getChannelDescription);
 
-router.route("/update/channel/description").patch(updateChannelDescription);
+// ! delete routes: DELETE
 
-router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
+router.route("/delete").delete(deleteUser);
 
 export default router;
