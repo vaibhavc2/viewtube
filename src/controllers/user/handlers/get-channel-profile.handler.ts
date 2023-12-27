@@ -74,8 +74,7 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
         subscribersCount: 1,
         subscribedToCount: req.user?.username === username ? 1 : 0,
         isSubscribed: 1,
-        subscribers: 0,
-        subscribedTo: 0,
+        channelDescription: 1,
       },
     },
     // aggregation pipeline ends here

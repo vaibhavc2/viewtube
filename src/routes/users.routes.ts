@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   changePassword,
+  getChannelDescription,
   getUserChannelProfile,
   getUserProfile,
   getUserWatchHistory,
@@ -8,6 +9,7 @@ import {
   logoutUser,
   refreshAccessToken,
   registerUser,
+  updateChannelDescription,
   updateUserAvatar,
   updateUserCover,
   updateUserProfile,
@@ -60,5 +62,9 @@ router.route("/channel/:username").get(getUserChannelProfile);
 router.route("/me/profile").get(getUserProfile);
 
 router.route("/me/watch-history").get(getUserWatchHistory);
+
+router.route("/channel-description").get(getChannelDescription);
+
+router.route("/update/channel/description").patch(updateChannelDescription);
 
 export default router;
