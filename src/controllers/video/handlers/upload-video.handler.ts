@@ -4,6 +4,7 @@ import { Video } from "../../../models/video.model.js";
 import { cloudinaryService } from "../../../services/cloudinary.service.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
+import { getVideoLength } from "../../../utils/video/get-video-length.util.js";
 
 export const _uploadVideo = async (req: Request, res: Response) => {
   // get video local path
@@ -17,6 +18,14 @@ export const _uploadVideo = async (req: Request, res: Response) => {
   // check if video is a valid video file
   if (!__video_valid_mime_types.includes(req.file?.mimetype as string)) {
     throw new ApiError(400, "Invalid Video File!");
+  }
+
+  // get the duration of the video: videoLength
+  const videoLength = await getVideoLength(videoLocalPath);
+
+  // check if video length is available
+  if (!videoLength) {
+    throw new ApiError(400, "Could not extract the length of the video!");
   }
 
   // upload video to cloudinary
@@ -33,10 +42,11 @@ export const _uploadVideo = async (req: Request, res: Response) => {
     {
       $set: {
         videoUrl: video.secure_url,
+        duration: videoLength,
       },
     },
     { new: true }
-  ).select("videoUrl");
+  );
 
   // send response
   return res.status(200).json(

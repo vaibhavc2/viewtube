@@ -37,7 +37,7 @@ export const _uploadThumbnail = async (req: Request, res: Response) => {
       },
     },
     { new: true }
-  ).select("thumbnail");
+  );
 
   // send response
   return res.status(200).json(
