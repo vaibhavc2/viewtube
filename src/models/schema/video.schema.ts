@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 
 export const videoSchema = {
-  videoFile: {
+  videoUrl: {
     type: String,
     required: true,
   },
@@ -30,6 +30,10 @@ export const videoSchema = {
   isPublished: {
     type: Boolean,
     default: true,
+  },
+  private: {
+    type: Boolean,
+    default: false,
   },
   owner: {
     type: Schema.Types.ObjectId,

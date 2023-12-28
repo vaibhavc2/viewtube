@@ -1,13 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "../../config/config.js";
+import { __jwt_callback } from "../../constants/jwt/index.js";
+import {
+  __unsecured_subscription_routes,
+  __unsecured_user_routes,
+  __unsecured_video_routes,
+} from "../../constants/middlewares/unsecured-routes.js";
 import { User } from "../../models/user.model.js";
 import ApiError from "../../utils/api/error/api-error.util.js";
 import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js";
 
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    // if (req.user) return next();
+    // check if route is unsecured, if yes, skip authentication
+    if (
+      __unsecured_user_routes.includes(req.path) ||
+      __unsecured_video_routes.includes(req.path) ||
+      __unsecured_subscription_routes.includes(req.path)
+    ) {
+      return next();
+    }
 
     // check if token exists
     const token =
@@ -20,7 +33,7 @@ export const verifyAuthentication = asyncHandler(
     }
 
     // if yes, verify token
-    const decodedToken: any = jwt.verify(token, JWT_SECRET);
+    const decodedToken: any = jwt.verify(token, JWT_SECRET, __jwt_callback);
 
     // find user in db using the decoded token
     const user = await User.findOne({ _id: decodedToken?._id }).select(

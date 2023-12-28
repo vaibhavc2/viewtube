@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {
   changePassword,
+  deleteUser,
+  getChannelDescription,
   getUserChannelProfile,
   getUserProfile,
   getUserWatchHistory,
@@ -8,25 +10,23 @@ import {
   logoutUser,
   refreshAccessToken,
   registerUser,
+  updateChannelDescription,
   updateUserAvatar,
   updateUserCover,
   updateUserProfile,
+  updateWatchHistory,
 } from "../controllers/user/user.controllers.js";
-import { verifyAuthentication } from "../middlewares/auth/auth.middleware.js";
-import { uploadImagesLocally } from "../middlewares/multer/img-multer.middleware.js";
+import { uploadFilesLocally } from "../middlewares/multer/upload-files-locally.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
 import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
 import { RegisterValidation } from "../models/validation/register.validation.js";
 
-const usersRouter = Router();
-
-//! unsecured routes: no authentication middleware
-// **************************************************
+const router = Router();
 
 //! create routes: POST
 
-usersRouter.route("/register").post(
-  uploadImagesLocally.fields([
+router.route("/register").post(
+  uploadFilesLocally.fields([
     { name: "avatar", maxCount: 1 },
     { name: "cover", maxCount: 1 },
   ]),
@@ -37,51 +37,42 @@ usersRouter.route("/register").post(
 
 //! routes for login, logout and refresh tokens: PATCH or POST
 
-usersRouter.route("/login").patch(loginUser);
+router.route("/login").patch(loginUser);
 
-usersRouter.route("/refresh").patch(refreshAccessToken);
+router.route("/refresh").patch(refreshAccessToken);
 
-//! secured routes : authentication middleware is compulsory: verifyAuthentication
-// **************************************************
-
-usersRouter.route("/logout").patch(verifyAuthentication, logoutUser);
+router.route("/logout").patch(logoutUser);
 
 //! update routes: PATCH
 
-usersRouter
-  .route("/change-password")
-  .patch(verifyAuthentication, changePassword);
+router.route("/change-password").patch(changePassword);
 
-usersRouter
-  .route("/update/profile")
-  .patch(verifyAuthentication, updateUserProfile);
+router.route("/update/profile").patch(updateUserProfile);
 
-usersRouter
+router
   .route("/update/avatar")
-  .patch(
-    verifyAuthentication,
-    uploadImagesLocally.single("avatar"),
-    updateUserAvatar
-  );
+  .patch(uploadFilesLocally.single("avatar"), updateUserAvatar);
 
-usersRouter
+router
   .route("/update/cover")
-  .patch(
-    verifyAuthentication,
-    uploadImagesLocally.single("cover"),
-    updateUserCover
-  );
+  .patch(uploadFilesLocally.single("cover"), updateUserCover);
+
+router.route("/update/channel/description").patch(updateChannelDescription);
+
+router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
 
 //! read routes: GET
 
-usersRouter
-  .route("/channel/:username")
-  .get(verifyAuthentication, getUserChannelProfile);
+router.route("/channel/:username").get(getUserChannelProfile);
 
-usersRouter.route("/me/profile").get(verifyAuthentication, getUserProfile);
+router.route("/me/profile").get(getUserProfile);
 
-usersRouter
-  .route("/me/watch-history")
-  .get(verifyAuthentication, getUserWatchHistory);
+router.route("/me/watch-history").get(getUserWatchHistory);
 
-export { usersRouter };
+router.route("/channel-description").get(getChannelDescription);
+
+// ! delete routes: DELETE
+
+router.route("/delete").delete(deleteUser);
+
+export default router;

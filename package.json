@@ -14,7 +14,6 @@
   "author": "Vaibhav Chopra",
   "license": "ISC",
   "dependencies": {
-    "@types/uuid": "^9.0.7",
     "argon2": "^0.31.1",
     "cloudinary": "^1.41.0",
     "cookie-parser": "^1.4.6",
@@ -46,6 +45,7 @@
     "@types/node": "^20.8.2",
     "@types/nodemon": "^1.19.5",
     "@types/regenerator-runtime": "^0.13.4",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "eslint": "^8.50.0",

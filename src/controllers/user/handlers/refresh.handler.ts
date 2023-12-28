@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { REFRESH_TOKEN_SECRET } from "../../../config/config.js";
-import { cookieOptions } from "../../../constants/res/index.js";
+import { __jwt_callback } from "../../../constants/jwt/index.js";
+import { __cookie_options } from "../../../constants/res/index.js";
 import { User } from "../../../models/user.model.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
-import { generateTokens } from "../../../utils/generateTokens.util.js";
+import { generateTokens } from "../../../utils/tokens/generate-tokens.util.js";
 
 export const _refresh = async (req: Request, res: Response) => {
   // get refresh token from cookies
@@ -20,7 +21,8 @@ export const _refresh = async (req: Request, res: Response) => {
   // if found, verify token
   const decodedToken: any = jwt.verify(
     incomingRefreshToken,
-    REFRESH_TOKEN_SECRET
+    REFRESH_TOKEN_SECRET,
+    __jwt_callback
   );
 
   // find user in db using the refresh token
@@ -41,8 +43,8 @@ export const _refresh = async (req: Request, res: Response) => {
   // send response and cookies
   return res
     .status(200)
-    .cookie("accessToken", newTokens.accessToken, cookieOptions)
-    .cookie("refreshToken", newTokens.refreshToken, cookieOptions)
+    .cookie("accessToken", newTokens.accessToken, __cookie_options)
+    .cookie("refreshToken", newTokens.refreshToken, __cookie_options)
     .json(
       new SuccessResponse("Tokens refreshed successfully!", {
         user: {

@@ -34,6 +34,10 @@ export const userSchema = {
     type: String,
     required: false,
   },
+  channelDescription: {
+    type: String,
+    required: false,
+  },
   watchHistory: [
     {
       type: Schema.Types.ObjectId,

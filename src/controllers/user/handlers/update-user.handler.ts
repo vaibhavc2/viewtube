@@ -61,14 +61,18 @@ export const _updateUser = async (req: Request, res: Response) => {
       );
   }
 
+  // check if any of the details are valid
+  let validDetails = [];
+  if (fullName) validDetails.push(fullName);
+  if (email) validDetails.push(email);
+  if (username) validDetails.push(username);
+
   // update user details: get id from req.user object
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
-        fullName,
-        email,
-        username,
+        ...validDetails,
       },
     },
     {
