@@ -6,7 +6,7 @@ import { __cookie_options } from "../../../constants/res/index.js";
 import { User } from "../../../models/user.model.js";
 import ApiError from "../../../utils/api/error/api-error.util.js";
 import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
-import { generateTokens } from "../../../utils/generateTokens.util.js";
+import { generateTokens } from "../../../utils/tokens/generate-tokens.util.js";
 
 export const _refresh = async (req: Request, res: Response) => {
   // get refresh token from cookies

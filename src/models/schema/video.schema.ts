@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 
 export const videoSchema = {
-  videoFile: {
+  videoUrl: {
     type: String,
     required: true,
   },
