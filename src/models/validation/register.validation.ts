@@ -1,12 +1,8 @@
 import * as z from "zod";
-
-const requiredError = (fieldName: string) => {
-  return fieldName + " can't be empty! Please fill in all the required fields.";
-};
-
-const largeStringError = (fieldName: string, max: number) => {
-  return fieldName + " must not exceed " + max + " characters.";
-};
+import {
+  largeStringError,
+  requiredError,
+} from "../../helpers/validation/zod-error-messages.helper.js";
 
 export const RegisterValidation = z.object({
   body: z.object({
