@@ -8,7 +8,7 @@ import {
 import { uploadFilesLocally } from "../middlewares/multer/upload-files-locally.middleware.js";
 import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
 import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
-import { VideoDetailsValidation } from "../models/validation/video-details.validation.js";
+import { VideoDetailsValidation } from "../validation/video-details.validation.js";
 
 const router = Router();
 

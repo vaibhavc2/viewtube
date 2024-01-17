@@ -3,7 +3,7 @@ import {
   largeStringError,
   minStringError,
   requiredError,
-} from "../../helpers/validation/zod-error-messages.helper.js";
+} from "../helpers/validation/zod-error-messages.helper.js";
 
 export const RegisterValidation = z.object({
   body: z.object({

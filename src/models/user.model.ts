@@ -8,11 +8,58 @@ import {
   REFRESH_TOKEN_SECRET,
   SECRET_KEY,
 } from "../config/config.js";
-import { userSchema } from "./schema/user.schema.js";
 
-const UserSchema: Schema = new Schema(userSchema, {
-  timestamps: true,
-});
+const UserSchema: Schema = new Schema(
+  {
+    fullName: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      index: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+      required: true,
+    },
+    cover: {
+      type: String,
+      required: false,
+    },
+    channelDescription: {
+      type: String,
+      required: false,
+    },
+    watchHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Video",
+      },
+    ],
+    refreshToken: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // UserSchema.index({ username: "text", fullName: "text" });
 
