@@ -5,14 +5,20 @@
   "description": "Backend of a Youtube-like application built in Express",
   "main": "dist/index.js",
   "scripts": {
-    "new_build": "rm -rf dist/ && npx tsc && npx tsc-alias -p tsconfig.json",
     "build": "npx tsc && npx tsc-alias -p tsconfig.json",
+    "build:new": "rm -rf dist/ && npm run build",
+    "build:watch": "npm run build:new && (concurrently \"npx tsc -w\" \"npx tsc-alias -w\")",
     "start": "node dist/index.js",
-    "dev": "nodemon"
+    "dev:nodemon": "nodemon",
+    "test:types": "npx tsc --noEmit",
+    "dev": "concurrently \"tsx watch src/index.ts\" \"npm run test:types\""
   },
   "nodemonConfig": "nodemon.json",
   "author": "Vaibhav Chopra",
   "license": "ISC",
+  "engines": {
+    "node": "20.x"
+  },
   "keywords": [
     "backend",
     "typescript",
@@ -42,6 +48,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@swc/core": "^1.3.104",
+    "@swc/helpers": "^0.5.3",
     "@types/cookie-parser": "^1.4.4",
     "@types/cors": "^2.8.14",
     "@types/eslint": "^8.44.7",
@@ -56,13 +64,17 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "concurrently": "^8.2.2",
     "eslint": "^8.50.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "nodemon": "^3.0.3",
     "prettier": "^3.0.3",
     "regenerator-runtime": "^0.14.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }

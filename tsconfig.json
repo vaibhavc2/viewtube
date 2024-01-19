@@ -21,5 +21,12 @@
   },
   "include": ["src/**/*", "src/types/**/*"],
   "exclude": ["node_modules", "dist"],
-  "files": ["src/types/global.d.ts"]
+  "files": ["src/types/global.d.ts"],
+  "tsc-alias": {
+    "verbose": false,
+    "resolveFullPaths": true
+  },
+  "ts-node": {
+    "swc": true
+  }
 }
