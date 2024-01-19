@@ -1,7 +1,7 @@
+import { DB_NAME, MONGO_URI } from "@/config/config";
+import { wLogger } from "@/utils/log/logger.util";
+import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
 import mongoose from "mongoose";
-import { DB_NAME, MONGO_URI } from "../config/config.js";
-import { wLogger } from "../utils/log/logger.util.js";
-import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
 
 export const connectDB = async () => {
   const connectionInstance = await mongoose

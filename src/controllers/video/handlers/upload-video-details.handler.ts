@@ -1,7 +1,7 @@
+import { Video } from "@/models/video.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { Video } from "../../../models/video.model.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _uploadVideoDetails = async (req: Request, res: Response) => {
   // get video details from request body

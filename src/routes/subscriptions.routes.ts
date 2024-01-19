@@ -1,8 +1,8 @@
-import { Router } from "express";
 import {
   addSubscription,
   removeSubscription,
-} from "../controllers/subscription/subscription.controller.js";
+} from "@/controllers/subscription/subscription.controller";
+import { Router } from "express";
 
 const router = Router();
 

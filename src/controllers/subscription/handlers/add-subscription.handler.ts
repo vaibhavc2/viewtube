@@ -1,9 +1,9 @@
+import { Subscription } from "@/models/subscription.model";
+import { User } from "@/models/user.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { Subscription } from "../../../models/subscription.model.js";
-import { User } from "../../../models/user.model.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _addSubscription = async (req: Request, res: Response) => {
   // get username of the channel subscribed to from params

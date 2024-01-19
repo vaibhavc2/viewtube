@@ -1,15 +1,15 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "../../config/config.js";
-import { __jwt_callback } from "../../constants/jwt/index.js";
+import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "@/config/config";
+import { __jwt_callback } from "@/constants/jwt/index";
 import {
   __unsecured_subscription_routes,
   __unsecured_user_routes,
   __unsecured_video_routes,
-} from "../../constants/middlewares/unsecured-routes.js";
-import { User } from "../../models/user.model.js";
-import ApiError from "../../utils/api/error/api-error.util.js";
-import { asyncHandler } from "../../utils/server/handlers/async-handler.util.js";
+} from "@/constants/middlewares/unsecured-routes";
+import { User } from "@/models/user.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {

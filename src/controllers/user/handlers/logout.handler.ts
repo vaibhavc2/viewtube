@@ -1,7 +1,7 @@
+import { __cookie_options } from "@/constants/res/index";
+import { User } from "@/models/user.model";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { __cookie_options } from "../../../constants/res/index.js";
-import { User } from "../../../models/user.model.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 /**
  * @desc    STEPS: Logout user

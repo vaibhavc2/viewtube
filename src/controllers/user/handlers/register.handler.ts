@@ -1,9 +1,9 @@
+import { __img_valid_mime_types } from "@/constants/middlewares/mime-types";
+import { User } from "@/models/user.model";
+import { cloudinaryService } from "@/services/cloudinary.service";
+import ApiError from "@/utils/api/error/api-error.util";
+import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
-import { User } from "../../../models/user.model.js";
-import { cloudinaryService } from "../../../services/cloudinary.service.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { CreatedResponse } from "../../../utils/api/res/api-response.util.js";
 
 // TODO: improve performance by using Promise.all() for uploading images to cloudinary or use a queue or something async method to update the loaded images later after the user is created
 

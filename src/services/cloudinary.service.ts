@@ -1,13 +1,13 @@
-import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
-import fs from "fs";
 import {
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
   CLOUDINARY_CLOUD_NAME,
-} from "../config/config.js";
-import { getErrorMessage } from "../utils/common/error/error-message.util.js";
-import { wLogger } from "../utils/log/logger.util.js";
-import { printErrorMessage } from "../utils/server/error/print-error-message.util.js";
+} from "@/config/config";
+import { getErrorMessage } from "@/utils/common/error/error-message.util";
+import { wLogger } from "@/utils/log/logger.util";
+import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
+import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 
 class CloudinaryService {
   cloudinaryResponse: UploadApiResponse | null;

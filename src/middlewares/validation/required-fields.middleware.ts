@@ -1,5 +1,5 @@
+import { RequiredBodyError } from "@/utils/api/error/api-error.util";
 import { NextFunction, Request, Response } from "express";
-import { RequiredBodyError } from "../../utils/api/error/api-error.util.js";
 
 export const requiredFields = (fields: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {

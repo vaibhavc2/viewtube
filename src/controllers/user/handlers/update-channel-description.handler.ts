@@ -1,6 +1,6 @@
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _updateChannelDescription = async (
   req: Request,
@@ -20,11 +20,9 @@ export const _updateChannelDescription = async (
     throw new ApiError(500, "Unable to update channel description");
   }
 
-  return res
-    .status(200)
-    .json(
-      new SuccessResponse("Channel description updated successfully", {
-        channelDescription: result.channelDescription,
-      })
-    );
+  return res.status(200).json(
+    new SuccessResponse("Channel description updated successfully", {
+      channelDescription: result.channelDescription,
+    })
+  );
 };

@@ -1,6 +1,6 @@
-import { NODE_ENV } from "../../config/config.js";
-import { cache } from "../../helpers/cache/cache.helper.js";
-import { wLogger } from "../../utils/log/logger.util.js";
+import { NODE_ENV } from "@/config/config";
+import { cache } from "@/helpers/cache/cache.helper";
+import { wLogger } from "@/utils/log/logger.util";
 
 export const cacheUpdater = async (
   reqPath: string,

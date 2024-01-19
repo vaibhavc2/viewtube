@@ -1,7 +1,7 @@
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _updateWatchHistory = async (req: Request, res: Response) => {
   // get the video id from the request params

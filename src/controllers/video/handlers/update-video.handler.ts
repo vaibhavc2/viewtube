@@ -1,11 +1,10 @@
+import { __video_valid_mime_types } from "@/constants/middlewares/mime-types";
+import { Video } from "@/models/video.model";
+import { cloudinaryService } from "@/services/cloudinary.service";
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { getVideoLength } from "@/utils/video/get-video-length.util";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
-import { __video_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
-import { Video } from "../../../models/video.model.js";
-import { cloudinaryService } from "../../../services/cloudinary.service.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
-import { getVideoLength } from "../../../utils/video/get-video-length.util.js";
 
 export const _uploadVideo = async (req: Request, res: Response) => {
   // get video local path
@@ -43,7 +42,7 @@ export const _uploadVideo = async (req: Request, res: Response) => {
   // save video url to database
   const savedVideo = await Video.findOneAndUpdate(
     {
-      _id: new mongoose.Types.ObjectId(videoId),
+      id: videoId,
       owner: req.user?._id,
     },
     {

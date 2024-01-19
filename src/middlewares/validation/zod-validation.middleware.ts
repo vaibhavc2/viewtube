@@ -1,7 +1,7 @@
+import ApiError from "@/utils/api/error/api-error.util";
+import { getErrorMessage } from "@/utils/common/error/error-message.util";
 import { NextFunction, Request, Response } from "express";
 import { AnyZodObject, ZodError } from "zod";
-import ApiError from "../../utils/api/error/api-error.util.js";
-import { getErrorMessage } from "../../utils/common/error/error-message.util.js";
 
 export const zodValidation =
   (schema: AnyZodObject) =>

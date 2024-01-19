@@ -1,6 +1,6 @@
+import { Video } from "@/models/video.model";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { Video } from "../../../models/video.model.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _getVideo = async (req: Request, res: Response) => {
   // get videoId from request params

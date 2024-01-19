@@ -1,4 +1,4 @@
-import ApiError from "../../utils/api/error/api-error.util.js";
+import ApiError from "@/utils/api/error/api-error.util";
 
 export const __jwt_callback = (err: unknown, decoded: any) => {
   if (err) {

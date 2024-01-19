@@ -1,16 +1,16 @@
+import { FRONTEND_URI, NODE_ENV } from "@/config/config";
+import { __limit } from "@/constants/express/index";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
+import { errorHandler } from "@/middlewares/error/error-handler.middleware";
+import { errorLogger } from "@/middlewares/error/error-logger.middleware";
+import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
+import subscriptionsRouter from "@/routes/subscriptions.routes";
+import usersRouter from "@/routes/users.routes";
+import videosRouter from "@/routes/videos.routes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application } from "express";
 import morgan from "morgan";
-import { FRONTEND_URI, NODE_ENV } from "../config/config.js";
-import { __limit } from "../constants/express/index.js";
-import { verifyAuthentication } from "../middlewares/auth/auth.middleware.js";
-import { errorHandler } from "../middlewares/error/error-handler.middleware.js";
-import { errorLogger } from "../middlewares/error/error-logger.middleware.js";
-import { routeNotFound } from "../middlewares/error/route-not-found.middleware.js";
-import subscriptionsRouter from "../routes/subscriptions.routes.js";
-import usersRouter from "../routes/users.routes.js";
-import videosRouter from "../routes/videos.routes.js";
 
 export const app: Application = express();
 

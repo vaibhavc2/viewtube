@@ -1,4 +1,3 @@
-import { Router } from "express";
 import {
   changePassword,
   deleteUser,
@@ -15,11 +14,12 @@ import {
   updateUserCover,
   updateUserProfile,
   updateWatchHistory,
-} from "../controllers/user/user.controllers.js";
-import { uploadFilesLocally } from "../middlewares/multer/upload-files-locally.middleware.js";
-import { requiredFields } from "../middlewares/validation/required-fields.middleware.js";
-import { zodValidation } from "../middlewares/validation/zod-validation.middleware.js";
-import { RegisterValidation } from "../validation/register.validation.js";
+} from "@/controllers/user/user.controllers";
+import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
+import { requiredFields } from "@/middlewares/validation/required-fields.middleware";
+import { zodValidation } from "@/middlewares/validation/zod-validation.middleware";
+import { RegisterValidation } from "@/validation/register.validation";
+import { Router } from "express";
 
 const router = Router();
 

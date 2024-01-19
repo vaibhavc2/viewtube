@@ -1,7 +1,7 @@
+import { User } from "@/models/user.model";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { User } from "../../../models/user.model.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _getWatchHistory = async (req: Request, res: Response) => {
   const user = await User.aggregate([
@@ -51,11 +51,9 @@ export const _getWatchHistory = async (req: Request, res: Response) => {
     },
   ]);
 
-  return res
-    .status(200)
-    .json(
-      new SuccessResponse("Watch history fetched successfully!", {
-        watchHistory: user[0].watchHistory,
-      })
-    );
+  return res.status(200).json(
+    new SuccessResponse("Watch history fetched successfully!", {
+      watchHistory: user[0].watchHistory,
+    })
+  );
 };

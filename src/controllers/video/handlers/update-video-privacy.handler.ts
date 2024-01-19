@@ -1,8 +1,7 @@
+import { Video } from "@/models/video.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
-import { Video } from "../../../models/video.model.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _updateVideoPrivacy = async (req: Request, res: Response) => {
   // get video privacy from request body
@@ -19,7 +18,7 @@ export const _updateVideoPrivacy = async (req: Request, res: Response) => {
   // save video privacy to database
   const video = await Video.findOneAndUpdate(
     {
-      _id: new mongoose.Types.ObjectId(videoId),
+      id: videoId,
       owner: req.user?._id,
     },
     {

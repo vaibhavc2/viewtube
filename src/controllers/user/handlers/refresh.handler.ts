@@ -1,12 +1,12 @@
+import { REFRESH_TOKEN_SECRET } from "@/config/config";
+import { __jwt_callback } from "@/constants/jwt/index";
+import { __cookie_options } from "@/constants/res/index";
+import { User } from "@/models/user.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { generateTokens } from "@/utils/tokens/generate-tokens.util";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { REFRESH_TOKEN_SECRET } from "../../../config/config.js";
-import { __jwt_callback } from "../../../constants/jwt/index.js";
-import { __cookie_options } from "../../../constants/res/index.js";
-import { User } from "../../../models/user.model.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
-import { generateTokens } from "../../../utils/tokens/generate-tokens.util.js";
 
 export const _refresh = async (req: Request, res: Response) => {
   // get refresh token from cookies

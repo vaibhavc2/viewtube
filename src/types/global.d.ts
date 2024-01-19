@@ -9,3 +9,5 @@ declare global {
     type MulterFiles = { [fieldname: string]: Express.Multer.File[] };
   }
 }
+
+export {};

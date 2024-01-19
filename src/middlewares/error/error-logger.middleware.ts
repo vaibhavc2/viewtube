@@ -1,6 +1,6 @@
+import ApiError from "@/utils/api/error/api-error.util";
+import { wLogger } from "@/utils/log/logger.util";
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../../utils/api/error/api-error.util.js";
-import { wLogger } from "../../utils/log/logger.util.js";
 
 export const errorLogger = (
   error: unknown,

@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import ApiError from "../../utils/api/error/api-error.util.js";
+import ApiError from "@/utils/api/error/api-error.util";
 import ApiResponse, {
   InternalServerErrorResponse,
-} from "../../utils/api/res/api-response.util.js";
+} from "@/utils/api/res/api-response.util";
+import { NextFunction, Request, Response } from "express";
 
 export const errorHandler = (
   error: unknown,

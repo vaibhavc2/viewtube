@@ -1,9 +1,9 @@
-import * as z from "zod";
 import {
   largeStringError,
   minStringError,
   requiredError,
-} from "../helpers/validation/zod-error-messages.helper.js";
+} from "@/helpers/validation/zod-error-messages.helper";
+import * as z from "zod";
 
 export const VideoDetailsValidation = z.object({
   body: z.object({

@@ -1,8 +1,8 @@
-import { app } from "./app/app.js";
-import { NODE_ENV, PORT } from "./config/config.js";
-import { connectDB } from "./database/connect-db.js";
-import { wLogger } from "./utils/log/logger.util.js";
-import { printErrorMessage } from "./utils/server/error/print-error-message.util.js";
+import { app } from "@/app/app";
+import { NODE_ENV, PORT } from "@/config/config";
+import { connectDB } from "@/database/connect-db";
+import { wLogger } from "@/utils/log/logger.util";
+import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
 
 connectDB()
   .then(() => {

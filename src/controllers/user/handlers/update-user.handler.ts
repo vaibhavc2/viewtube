@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { User } from "../../../models/user.model.js";
+import { User } from "@/models/user.model";
 import ApiResponse, {
   SuccessResponse,
-} from "../../../utils/api/res/api-response.util.js";
+} from "@/utils/api/res/api-response.util";
+import { Request, Response } from "express";
 
 export const _updateUser = async (req: Request, res: Response) => {
   // get details from req body

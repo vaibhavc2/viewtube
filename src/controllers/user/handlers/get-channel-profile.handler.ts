@@ -1,7 +1,7 @@
+import { User } from "@/models/user.model";
+import ApiError from "@/utils/api/error/api-error.util";
+import ApiResponse from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { User } from "../../../models/user.model.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import ApiResponse from "../../../utils/api/res/api-response.util.js";
 
 export const _getChannelProfile = async (req: Request, res: Response) => {
   // get the channel profile of the user with the given username

@@ -1,6 +1,6 @@
+import { NotFoundResponse } from "@/utils/api/res/api-response.util";
+import { wLogger } from "@/utils/log/logger.util";
 import { NextFunction, Request, Response } from "express";
-import { NotFoundResponse } from "../../utils/api/res/api-response.util.js";
-import { wLogger } from "../../utils/log/logger.util.js";
 
 export const routeNotFound = (
   req: Request,

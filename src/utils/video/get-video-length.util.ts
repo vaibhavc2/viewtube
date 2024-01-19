@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import { printErrorMessage } from "../server/error/print-error-message.util.js";
 
-const buff = Buffer.alloc(100);
-const header = Buffer.from("mvhd");
+// const buff = Buffer.alloc(100);
+// const header = Buffer.from("mvhd");
 
 export const getVideoLength = async (path: string) => {
   try {

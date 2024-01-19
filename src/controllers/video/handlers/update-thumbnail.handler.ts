@@ -1,10 +1,9 @@
+import { __img_valid_mime_types } from "@/constants/middlewares/mime-types.js";
+import { Video } from "@/models/video.model.js";
+import { cloudinaryService } from "@/services/cloudinary.service.js";
+import ApiError from "@/utils/api/error/api-error.util.js";
+import { SuccessResponse } from "@/utils/api/res/api-response.util.js";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
-import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
-import { Video } from "../../../models/video.model.js";
-import { cloudinaryService } from "../../../services/cloudinary.service.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _uploadThumbnail = async (req: Request, res: Response) => {
   // get thumbnail local path
@@ -35,7 +34,7 @@ export const _uploadThumbnail = async (req: Request, res: Response) => {
   // save thumbnail url to database
   const video = await Video.findOneAndUpdate(
     {
-      _id: new mongoose.Types.ObjectId(videoId),
+      id: videoId,
       owner: req.user?._id,
     },
     {

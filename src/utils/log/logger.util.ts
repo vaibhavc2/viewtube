@@ -1,5 +1,5 @@
+import { NODE_ENV } from "@/config/config";
 import * as winston from "winston";
-import { NODE_ENV } from "../../config/config.js";
 
 export const wLogger = winston.createLogger({
   level: "info",

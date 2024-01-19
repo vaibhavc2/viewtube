@@ -1,9 +1,9 @@
+import { __img_valid_mime_types } from "@/constants/middlewares/mime-types";
+import { User } from "@/models/user.model";
+import { cloudinaryService } from "@/services/cloudinary.service";
+import ApiError from "@/utils/api/error/api-error.util";
+import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import { __img_valid_mime_types } from "../../../constants/middlewares/mime-types.js";
-import { User } from "../../../models/user.model.js";
-import { cloudinaryService } from "../../../services/cloudinary.service.js";
-import ApiError from "../../../utils/api/error/api-error.util.js";
-import { SuccessResponse } from "../../../utils/api/res/api-response.util.js";
 
 export const _updateCover = async (req: Request, res: Response) => {
   const coverLocalPath = req.file?.path;
