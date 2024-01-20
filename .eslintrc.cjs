@@ -1,15 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: false, es2020: true },
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:import/errors",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended",
-    "prettier"
-  ],
+  extends: ["eslint:recommended", "plugin:import/errors", "prettier"],
   ignorePatterns: ["dist", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
   plugins: ["import"],
@@ -17,7 +9,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
     project: ["./tsconfig.json"],
-    tsconfigRootDir: __dirname
+    tsconfigRootDir: __dirname,
   },
   rules: {
     indent: ["error", 2],
@@ -26,6 +18,6 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-use-before-define": "off",
-    "no-multiple-empty-lines": [2, { max: 3, maxEOF: 1 }]
-  }
+    "no-multiple-empty-lines": [2, { max: 3, maxEOF: 1 }],
+  },
 };

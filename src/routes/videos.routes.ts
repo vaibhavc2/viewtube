@@ -1,7 +1,12 @@
 import {
+  deleteVideo,
   getAllVideos,
   getRandomVideos,
+  getVideo,
   increaseViews,
+  togglePublishStatus,
+  updateVideoDetails,
+  updateVideoPrivacy,
   uploadThumbnail,
   uploadVideo,
   uploadVideoDetails,
@@ -16,7 +21,9 @@ const router = Router();
 
 //! get routes: GET
 
-router.route("/all-videos").get(getAllVideos);
+router.route("/:userId/videos").get(getAllVideos);
+
+router.route("/:videoId").get(getVideo);
 
 router.route("/random-videos").get(getRandomVideos);
 
@@ -41,5 +48,15 @@ router
   .patch(uploadFilesLocally.single("thumbnail"), uploadThumbnail);
 
 router.route("/:videoId/increase-views").patch(increaseViews);
+
+router.route("/:videoId/toggle-publish-status").patch(togglePublishStatus);
+
+router.route("/:videoId/update-details").patch(updateVideoDetails);
+
+router.route("/:videoId/update-privacy").patch(updateVideoPrivacy);
+
+//! delete routes: DELETE
+
+router.route("/:videoId").delete(deleteVideo);
 
 export default router;

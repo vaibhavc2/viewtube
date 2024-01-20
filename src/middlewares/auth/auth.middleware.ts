@@ -1,10 +1,6 @@
 import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "@/config/config";
 import { __jwt_callback } from "@/constants/jwt/index";
-import {
-  __unsecured_subscription_routes,
-  __unsecured_user_routes,
-  __unsecured_video_routes,
-} from "@/constants/middlewares/unsecured-routes";
+import { __unsecured_routes } from "@/constants/middlewares/unsecured-routes";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -14,13 +10,13 @@ import jwt from "jsonwebtoken";
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // check if route is unsecured, if yes, skip authentication
+    // Express's req.route.path property, which gives you the route string that was matched. This is useful for dynamic routes.
+    // req.path is for static routes
     if (
-      __unsecured_user_routes.includes(req.path) ||
-      __unsecured_video_routes.includes(req.path) ||
-      __unsecured_subscription_routes.includes(req.path)
-    ) {
+      (req.route && __unsecured_routes.has(req.route.path)) ||
+      __unsecured_routes.has(req.path)
+    )
       return next();
-    }
 
     // check if token exists
     const token =

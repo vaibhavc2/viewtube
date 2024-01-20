@@ -1,5 +1,5 @@
 import { FRONTEND_URI, NODE_ENV } from "@/config/config";
-import { __limit } from "@/constants/express/index";
+import { __limit, __prefix_api_version } from "@/constants/express";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
@@ -32,9 +32,13 @@ app.use(
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
 // using routes
-app.use("/api/v1/users", verifyAuthentication, usersRouter);
-app.use("/api/v1/videos", verifyAuthentication, videosRouter);
-app.use("/api/v1/subscriptions", verifyAuthentication, subscriptionsRouter);
+app.use(`${__prefix_api_version}/users`, verifyAuthentication, usersRouter);
+app.use(`${__prefix_api_version}/videos`, verifyAuthentication, videosRouter);
+app.use(
+  `${__prefix_api_version}/subscriptions`,
+  verifyAuthentication,
+  subscriptionsRouter
+);
 
 // error handler middlewares
 app.use(errorLogger, errorHandler, routeNotFound);
