@@ -5,20 +5,19 @@
   "description": "Backend of a Youtube-like application built in Express",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsc && npx tsc-alias -p tsconfig.json",
-    "build:new": "rm -rf dist/ && npm run build",
-    "build:watch": "npm run build:new && (concurrently \"npx tsc -w\" \"npx tsc-alias -w\")",
+    "build": "rm -rf dist/ && npx tsc && npx tsc-alias -p tsconfig.json",
+    "build:watch": "npm run build && (concurrently \"tsc -w\" \"tsc-alias -w\")",
     "start": "node dist/index.js",
     "dev:nodemon": "nodemon",
     "test:types": "npx tsc --noEmit",
-    "dev": "concurrently \"tsx watch src/index.ts\" \"npm run test:types\"",
+    "dev": "concurrently \"tsc -w --noEmit\" \"tsx watch src/index.ts\"",
     "lint": "eslint --fix . --ext .ts",
     "test": "npm run lint && npm run test:types",
     "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.ts": [
-      "bash -c tsc --noEmit"
+      "bash -c \"tsc-files --noEmit\""
     ]
   },
   "nodemonConfig": "nodemon.json",
