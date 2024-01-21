@@ -14,7 +14,11 @@ const likeSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Tweet",
     },
-    likedBy: {
+    value: {
+      type: Number,
+      enum: [-1, 1], // 1: like, -1: dislike
+    },
+    owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },

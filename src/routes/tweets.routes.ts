@@ -10,10 +10,10 @@ const router = Router();
 
 router.route("/create").post(createTweet);
 
-router.route("/:tweetId/delete").get(deleteTweet);
+router.route("/:tweetId/delete").delete(deleteTweet);
 
 router.route("/get-tweets").get(getUserTweets);
 
-router.route("/:tweetId/update").get(updateTweet);
+router.route("/:tweetId/update").patch(updateTweet);
 
 export default router;

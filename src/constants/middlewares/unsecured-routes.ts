@@ -9,6 +9,8 @@ const unsecured_video_routes = ["/all-videos", "/random-videos"];
 
 const unsecured_tweet_routes = ["/get-tweets", "/create"];
 
+const unsecured_like_routes = ["/get-count"];
+
 //? DYNAMIC ROUTES
 // ***************************************************
 
@@ -33,7 +35,8 @@ const unsecured_app_health_dynamic_routes = [`${__prefix_api_version}/:text`];
 export const __unsecured_routes = new Set(
   ...unsecured_user_routes,
   ...unsecured_video_routes,
-  ...unsecured_tweet_routes
+  ...unsecured_tweet_routes,
+  ...unsecured_like_routes
 );
 
 export const __unsecured_dynamic_routes = new Set(
