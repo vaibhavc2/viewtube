@@ -4,6 +4,7 @@ import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
+import appHealthRouter from "@/routes/app-health.routes";
 import subscriptionsRouter from "@/routes/subscriptions.routes";
 import tweetsRouter from "@/routes/tweets.routes";
 import usersRouter from "@/routes/users.routes";
@@ -29,6 +30,7 @@ app.use(
   express.urlencoded({ extended: true, limit: __limit }),
   express.static("public")
 );
+
 // logs requests in development mode
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
@@ -41,6 +43,9 @@ app.use(
   subscriptionsRouter
 );
 app.use(`${__prefix_api_version}/tweets`, verifyAuthentication, tweetsRouter);
+
+// app health route
+app.get(`${__prefix_api_version}`, appHealthRouter);
 
 // error handler middlewares
 app.use(errorLogger, errorHandler, routeNotFound);
