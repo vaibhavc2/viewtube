@@ -18,8 +18,7 @@
   },
   "lint-staged": {
     "**/*.ts": [
-      "eslint --fix",
-      "tsc-files --noEmit"
+      "npm run test:types"
     ]
   },
   "nodemonConfig": "nodemon.json",
