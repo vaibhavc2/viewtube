@@ -33,14 +33,6 @@ export const _getRandomVideos = async (req: Request, res: Response) => {
       .status(200)
       .json(new SuccessResponse("Videos fetched successfully!", { videos }));
   } catch (error) {
-    // Send a 500 Internal Server Error response with the error
-    res
-      .status(500)
-      .json(
-        new ApiError(
-          500,
-          "Internal server error occurred while retrieving videos"
-        )
-      );
+    throw new ApiError(500);
   }
 };

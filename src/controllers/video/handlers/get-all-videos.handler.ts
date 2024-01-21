@@ -11,7 +11,7 @@ export const _getAllVideos = async (req: Request, res: Response) => {
     limit = 10,
     query,
     sortBy = "createdAt",
-    sortType = -1,
+    sortType = "desc",
     userId,
   } = req.query;
 
@@ -53,14 +53,6 @@ export const _getAllVideos = async (req: Request, res: Response) => {
       })
     );
   } catch (error) {
-    // send a 500 Internal Server Error response with the error
-    res
-      .status(500)
-      .json(
-        new ApiError(
-          500,
-          "Internal server error occurred while retrieving videos"
-        )
-      );
+    throw new ApiError(500);
   }
 };

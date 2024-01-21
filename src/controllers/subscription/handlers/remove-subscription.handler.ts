@@ -3,7 +3,6 @@ import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 
 export const _removeSubscription = async (req: Request, res: Response) => {
   // get username of the channel subscribed to from params
@@ -17,16 +16,10 @@ export const _removeSubscription = async (req: Request, res: Response) => {
     throw new ApiError(404, "Channel not found");
   }
 
-  // get id of the channel subscribed to
-  const channelId = new mongoose.Types.ObjectId(user._id);
-
-  // get id of the user subscribing from the request
-  const subscriberId = new mongoose.Types.ObjectId(req.user._id);
-
   // check if the user is subscribed to the channel or not
   const subscription = await Subscription.findOne({
-    subscriber: subscriberId,
-    channel: channelId,
+    subscriber: req.user._id,
+    channel: user._id,
   });
 
   // if not subscribed, throw error

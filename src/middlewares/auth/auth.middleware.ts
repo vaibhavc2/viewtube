@@ -1,6 +1,9 @@
 import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "@/config/config";
 import { __jwt_callback } from "@/constants/jwt/index";
-import { __unsecured_routes } from "@/constants/middlewares/unsecured-routes";
+import {
+  __unsecured_dynamic_routes,
+  __unsecured_routes,
+} from "@/constants/middlewares/unsecured-routes";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -13,8 +16,8 @@ export const verifyAuthentication = asyncHandler(
     // Express's req.route.path property, which gives you the route string that was matched. This is useful for dynamic routes.
     // req.path is for static routes
     if (
-      (req.route && __unsecured_routes.has(req.route.path)) ||
-      __unsecured_routes.has(req.path)
+      __unsecured_routes.has(req.path) ||
+      (req.route && __unsecured_dynamic_routes.has(req.route.path))
     )
       return next();
 

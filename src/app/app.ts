@@ -5,6 +5,7 @@ import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
 import subscriptionsRouter from "@/routes/subscriptions.routes";
+import tweetsRouter from "@/routes/tweets.routes";
 import usersRouter from "@/routes/users.routes";
 import videosRouter from "@/routes/videos.routes";
 import cookieParser from "cookie-parser";
@@ -39,6 +40,7 @@ app.use(
   verifyAuthentication,
   subscriptionsRouter
 );
+app.use(`${__prefix_api_version}/tweets`, verifyAuthentication, tweetsRouter);
 
 // error handler middlewares
 app.use(errorLogger, errorHandler, routeNotFound);
