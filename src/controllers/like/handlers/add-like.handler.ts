@@ -1,4 +1,7 @@
+import { Comment } from "@/models/comment.model";
 import { Like } from "@/models/like.model";
+import { Tweet } from "@/models/tweet.model";
+import { Video } from "@/models/video.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -24,13 +27,22 @@ export const _addLike = async (req: Request, res: Response) => {
     );
   }
 
-  // get userId from req.user
-  const userId = req.user._id;
+  // check if the ids are real
+  if (videoId) {
+    const video = await Video.findById(videoId);
+    if (video) throw new ApiError(400, "Wrong Video ID!");
+  } else if (tweetId) {
+    const tweet = await Tweet.findById(tweetId);
+    if (tweet) throw new ApiError(400, "Wrong Tweet ID!");
+  } else if (commentId) {
+    const comment = await Comment.findById(commentId);
+    if (comment) throw new ApiError(400, "Wrong Comment ID!");
+  }
 
   // create like
   const like = await Like.create({
     value,
-    owner: userId,
+    owner: req.user?._id,
     ...(tweetId && { tweet: tweetId }),
     ...(videoId && { video: videoId }),
     ...(commentId && { comment: commentId }),
