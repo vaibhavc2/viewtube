@@ -1,11 +1,11 @@
 import ApiError from "@/utils/api/error/api-error.util";
 import { getErrorMessage } from "@/utils/common/error/error-message.util";
+import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { NextFunction, Request, Response } from "express";
 import { AnyZodObject, ZodError } from "zod";
 
-export const zodValidation =
-  (schema: AnyZodObject) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+export const zodValidation = (schema: AnyZodObject) =>
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
       await schema.parseAsync({
         body: req.body,
@@ -26,4 +26,4 @@ export const zodValidation =
         next(new ApiError(400, `${getErrorMessage(error)}`));
       }
     }
-  };
+  });

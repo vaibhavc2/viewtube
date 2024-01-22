@@ -1,8 +1,9 @@
 import { RequiredBodyError } from "@/utils/api/error/api-error.util";
+import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { NextFunction, Request, Response } from "express";
 
-export const requiredFields = (fields: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const requiredFields = (fields: string[]) =>
+  asyncHandler((req: Request, res: Response, next: NextFunction) => {
     const missingFields = [];
     const keys = Object.keys(req.body); // Included fields
 
@@ -15,5 +16,4 @@ export const requiredFields = (fields: string[]) => {
 
     // If no missing fields then run router code
     return next();
-  };
-};
+  });
