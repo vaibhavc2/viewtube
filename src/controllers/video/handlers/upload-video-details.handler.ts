@@ -15,22 +15,27 @@ export const _uploadVideoDetails = async (req: Request, res: Response) => {
     throw new ApiError(400, "Title and Description are required!");
   }
 
-  // save video details to database
-  const video = await Video.create(
-    {
-      owner: req.user?._id,
-      title,
-      description,
-      videoUrl: "/",
-      thumbnail: "/",
-    },
-    { new: true }
-  );
+  // create video
+  const video = await Video.create({
+    owner: req.user?._id,
+    title,
+    description,
+    videoUrl: "/",
+    thumbnail: "/",
+  });
+
+  // verify if created
+  const createdVideo = await Video.findById(video._id);
+
+  // final verification
+  if (!video || !createdVideo) {
+    throw new ApiError(500, "Something went wrong!");
+  }
 
   // send response
   return res.status(201).json(
     new CreatedResponse("Video details uploaded successfully!", {
-      video,
+      video: createdVideo,
     })
   );
 };

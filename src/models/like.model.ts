@@ -17,10 +17,12 @@ const likeSchema = new Schema(
     value: {
       type: Number,
       enum: [-1, 1], // 1: like, -1: dislike
+      required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
   },
   { timestamps: true }

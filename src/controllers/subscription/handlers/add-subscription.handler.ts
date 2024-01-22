@@ -28,20 +28,23 @@ export const _addSubscription = async (req: Request, res: Response) => {
   }
 
   // create new subscription
-  const subscription = new Subscription({
+  const subscription = await Subscription.create({
     subscriber: req.user._id,
     channel: user._id,
   });
 
+  // check if created
+  const createdSubscription = await Subscription.findById(subscription._id);
+
   // if not created, throw error
-  if (!subscription) {
+  if (!subscription || !createdSubscription) {
     throw new ApiError(500, "Unexpected Error while subscribing!");
   }
 
   // send response
   res.status(201).json(
     new CreatedResponse("Subscription created successfully", {
-      subscription,
+      subscription: createdSubscription,
     })
   );
 };

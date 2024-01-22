@@ -21,10 +21,18 @@ export const _createTweet = async (req: Request, res: Response) => {
     owner: _id,
   });
 
+  // check if created
+  const createdTweet = await Tweet.findById(newTweet._id);
+
+  // final verification
+  if (!newTweet || !createdTweet) {
+    throw new ApiError(500, "Something went wrong!");
+  }
+
   // send response
   return res.status(201).json(
     new CreatedResponse("Tweet created successfully!", {
-      tweet: newTweet,
+      tweet: createdTweet,
     })
   );
 };

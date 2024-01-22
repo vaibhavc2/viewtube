@@ -36,10 +36,18 @@ export const _addLike = async (req: Request, res: Response) => {
     ...(commentId && { comment: commentId }),
   });
 
+  // check if created
+  const createdLike = await Like.findById(like._id);
+
+  // final verification
+  if (!like || !createdLike) {
+    throw new ApiError(500, "Something went wrong while adding like!");
+  }
+
   // send response
   res.status(201).json(
     new CreatedResponse("Like created successfully", {
-      like,
+      like: createdLike,
     })
   );
 };
