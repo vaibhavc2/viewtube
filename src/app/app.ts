@@ -5,6 +5,7 @@ import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
 import appHealthRouter from "@/routes/app-health.routes";
+import commentsRouter from "@/routes/comments.routes";
 import likesRouter from "@/routes/likes.routes";
 import subscriptionsRouter from "@/routes/subscriptions.routes";
 import tweetsRouter from "@/routes/tweets.routes";
@@ -44,10 +45,15 @@ app.use(
   subscriptionsRouter
 );
 app.use(`${__prefix_api_version}/tweets`, verifyAuthentication, tweetsRouter);
-app.use(`${__prefix_api_version}/likes`, likesRouter);
+app.use(`${__prefix_api_version}/likes`, verifyAuthentication, likesRouter);
+app.use(
+  `${__prefix_api_version}/comments`,
+  verifyAuthentication,
+  commentsRouter
+);
 
 // app health route
-app.get(`${__prefix_api_version}`, appHealthRouter);
+app.use(`${__prefix_api_version}`, appHealthRouter);
 
 // error handler middlewares
 app.use(errorLogger, errorHandler, routeNotFound);

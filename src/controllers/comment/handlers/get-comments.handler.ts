@@ -1,11 +1,11 @@
-import { Tweet } from "@/models/tweet.model";
+import { Comment } from "@/models/comment.model";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _getUserTweets = async (req: Request, res: Response) => {
-  // get userId, page, limit, sortBy, sortType, query from req.query
+export const _getComments = async (req: Request, res: Response) => {
+  // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
   const {
     page = 1,
     limit = 10,
@@ -13,6 +13,9 @@ export const _getUserTweets = async (req: Request, res: Response) => {
     sortBy = "createdAt",
     sortType = -1,
     userId,
+    commentId,
+    videoId,
+    tweetId,
   } = req.query;
 
   // Define the options for pagination and sorting
@@ -24,29 +27,34 @@ export const _getUserTweets = async (req: Request, res: Response) => {
     },
   };
 
-  // Define the match object for the MongoDB query. This will be used to filter tweets.
+  // validate the ids using middleware!
+
+  // Define the match object for the MongoDB query. This will be used to filter comments.
+  // $options: "i" makes the query case-insensitive
   const match = {
+    ...(commentId && { comment: commentId }),
+    ...(videoId && { video: videoId }),
+    ...(tweetId && { tweet: tweetId }),
     content: { $regex: (query as string) || "", $options: "i" },
   };
 
   // If a userId is provided in the query parameters, add it to the match object.
-  // This will filter tweets to only return those owned by the specified user.
+  // This will filter comments to only return those owned by the specified user.
   if (userId) {
     const user = await User.findById(userId);
     if (user) (match as any)["owner"] = user._id;
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 
-  // get tweets from database
-  const tweets = await Tweet.aggregatePaginate(
-    Tweet.aggregate([{ $match: match }]),
+  const comments = await Comment.aggregatePaginate(
+    Comment.aggregate([{ $match: match }]),
     options
   );
 
   // send response
-  return res.status(200).json(
-    new SuccessResponse("User tweets retrieved successfully!", {
-      tweets,
+  res.status(200).json(
+    new SuccessResponse("Comments fetched successfully!", {
+      comments,
     })
   );
 };

@@ -1,3 +1,4 @@
+import { User } from "@/models/user.model";
 import { Video } from "@/models/video.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
@@ -34,25 +35,23 @@ export const _getAllVideos = async (req: Request, res: Response) => {
   // If a userId is provided in the query parameters, add it to the match object.
   // This will filter the videos to only return those owned by the specified user.
   if (userId) {
-    (match as any)["owner"] = userId;
+    const user = await User.findById(userId);
+    if (user) (match as any)["owner"] = user._id;
+    else throw new ApiError(404, "User not found! Wrong userId!");
   }
 
-  try {
-    // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the videos.
-    // The first argument is a Mongoose aggregation that uses the match object to filter the videos.
-    // The second argument is the options object, which sets the pagination and sorting options.
-    const videos = await Video.aggregatePaginate(
-      Video.aggregate([{ $match: match }]),
-      options
-    );
+  // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the videos.
+  // The first argument is a Mongoose aggregation that uses the match object to filter the videos.
+  // The second argument is the options object, which sets the pagination and sorting options.
+  const videos = await Video.aggregatePaginate(
+    Video.aggregate([{ $match: match }]),
+    options
+  );
 
-    // Send a 200 OK response with the videos and a success message.
-    res.status(200).json(
-      new SuccessResponse("Videos fetched successfully!", {
-        videos,
-      })
-    );
-  } catch (error) {
-    throw new ApiError(500);
-  }
+  // Send a 200 OK response with the videos and a success message.
+  res.status(200).json(
+    new SuccessResponse("Videos fetched successfully!", {
+      videos,
+    })
+  );
 };

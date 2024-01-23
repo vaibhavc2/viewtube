@@ -1,13 +1,13 @@
-import * as argon2 from "argon2";
-import jwt from "jsonwebtoken";
-import mongoose, { Schema } from "mongoose";
 import {
   ACCESS_TOKEN_EXPIRY,
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_EXPIRY,
   REFRESH_TOKEN_SECRET,
   SECRET_KEY,
-} from "../config/config.js";
+} from "@/config/config";
+import * as argon2 from "argon2";
+import jwt from "jsonwebtoken";
+import mongoose, { Schema } from "mongoose";
 
 const UserSchema: Schema = new Schema(
   {

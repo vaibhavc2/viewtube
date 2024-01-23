@@ -19,11 +19,6 @@ const commentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Comment",
     },
-    main: {
-      // for handling replies and separating them from main comments
-      type: Boolean,
-      default: true,
-    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",

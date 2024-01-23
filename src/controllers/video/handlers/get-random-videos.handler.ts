@@ -1,5 +1,4 @@
 import { Video } from "@/models/video.model";
-import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -14,25 +13,21 @@ export const _getRandomVideos = async (req: Request, res: Response) => {
     limit: parseInt(limit as string, 10),
   };
 
-  try {
-    // Use the aggregate function to get a random set of videos
-    // The first argument is a Mongoose aggregation that uses the $match and $sample operators to filter and get a random set of videos.
-    // The second argument is the options object, which sets the pagination options.
-    // The third argument is the callback function.
-    // skip() is used to skip the videos that have already been retrieved.
-    // exec() is used to execute the aggregation.
-    const videos = await Video.aggregate([
-      { $match: { isPublished: true, private: false } },
-      { $sample: { size: options.limit } },
-    ])
-      .skip((options.page - 1) * options.limit)
-      .exec();
+  // Use the aggregatePaginate function (plugin) to get a random set of videos that match the given match object.
+  const videos = await Video.aggregatePaginate(
+    Video.aggregate([
+      {
+        $match: {
+          isPublished: true,
+          private: false,
+        },
+      },
+    ]),
+    options
+  );
 
-    // Send a 200 OK response with the videos and a success message.
-    res
-      .status(200)
-      .json(new SuccessResponse("Videos fetched successfully!", { videos }));
-  } catch (error) {
-    throw new ApiError(500);
-  }
+  // Send a 200 OK response with the videos and a success message.
+  res
+    .status(200)
+    .json(new SuccessResponse("Videos fetched successfully!", { videos }));
 };

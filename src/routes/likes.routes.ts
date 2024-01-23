@@ -12,6 +12,6 @@ router.route("/add").post(validateIds, addLike);
 
 router.route("/remove").delete(removeLike);
 
-router.route("/get-count").get(getLikesCount);
+router.route("/get-count").get(validateIds, getLikesCount);
 
 export default router;
