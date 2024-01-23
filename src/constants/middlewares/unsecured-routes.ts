@@ -5,7 +5,7 @@ import { __prefix_api_version } from "@/constants/express";
 
 const unsecured_user_routes = ["/register", "/login", "/refresh"];
 
-const unsecured_video_routes = ["/all-videos", "/random-videos"];
+const unsecured_video_routes = ["/videos", "/random-videos"];
 
 const unsecured_tweet_routes = ["/get-tweets"];
 
@@ -21,7 +21,6 @@ const unsecured_comment_routes = ["get-comments"];
 const unsecured_video_dynamic_routes = [
   `${__prefix_api_version}/videos/:videoId`,
   `${__prefix_api_version}/videos/:videoId/increase-views`,
-  `${__prefix_api_version}/videos/:userId/videos`,
 ];
 
 const unsecured_app_health_dynamic_routes = [`${__prefix_api_version}/:text`];

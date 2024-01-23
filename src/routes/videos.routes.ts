@@ -21,7 +21,7 @@ const router = Router();
 
 //! get routes: GET
 
-router.route("/:userId/videos").get(getAllVideos);
+router.route("/videos").get(getAllVideos);
 
 router.route("/:videoId").get(getVideo);
 
