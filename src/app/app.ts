@@ -6,6 +6,7 @@ import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
 import appHealthRouter from "@/routes/app-health.routes";
 import commentsRouter from "@/routes/comments.routes";
+import dashboardRouter from "@/routes/dashboard.routes";
 import likesRouter from "@/routes/likes.routes";
 import playlistsRouter from "@/routes/playlists.routes";
 import subscriptionsRouter from "@/routes/subscriptions.routes";
@@ -56,6 +57,11 @@ app.use(
   `${__prefix_api_version}/playlists`,
   verifyAuthentication,
   playlistsRouter
+);
+app.use(
+  `${__prefix_api_version}/dashboard`,
+  verifyAuthentication,
+  dashboardRouter
 );
 
 // app health route

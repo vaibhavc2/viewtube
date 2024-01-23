@@ -1,3 +1,9 @@
+import {
+  __page,
+  __page_limit,
+  __sort_by,
+  __sort_type,
+} from "@/constants/pagination";
 import { Comment } from "@/models/comment.model";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
@@ -7,11 +13,11 @@ import { Request, Response } from "express";
 export const _getComments = async (req: Request, res: Response) => {
   // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
   const {
-    page = 1,
-    limit = 10,
+    page = __page,
+    limit = __page_limit,
     query,
-    sortBy = "createdAt",
-    sortType = -1,
+    sortBy = __sort_by,
+    sortType = __sort_type,
     userId,
     commentId,
     videoId,

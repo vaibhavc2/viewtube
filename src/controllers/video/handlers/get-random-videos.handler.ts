@@ -1,3 +1,4 @@
+import { __page, __page_limit } from "@/constants/pagination";
 import { Video } from "@/models/video.model";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -5,7 +6,7 @@ import { Request, Response } from "express";
 // get random videos with pagination
 export const _getRandomVideos = async (req: Request, res: Response) => {
   // Destructure the page and limit query parameters from the request
-  const { page = 1, limit = 10 } = req.query;
+  const { page = __page, limit = __page_limit } = req.query;
 
   // Define the options for pagination
   const options = {
