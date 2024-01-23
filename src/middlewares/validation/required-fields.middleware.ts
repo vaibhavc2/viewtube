@@ -3,7 +3,7 @@ import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { NextFunction, Request, Response } from "express";
 
 export const requiredFields = (fields: string[]) =>
-  asyncHandler((req: Request, res: Response, next: NextFunction) => {
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const missingFields = [];
     const keys = Object.keys(req.body); // Included fields
 

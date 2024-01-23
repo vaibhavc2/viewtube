@@ -11,7 +11,9 @@ const unsecured_tweet_routes = ["/get-tweets"];
 
 const unsecured_like_routes = ["/get-count"];
 
-const unsecured_comment_routes = ["get-comments"];
+const unsecured_comment_routes = ["/get-comments"];
+
+const unsecured_playlist_routes = ["/get-playlist", "/search-playlist"];
 
 //? DYNAMIC ROUTES
 // ***************************************************
@@ -33,7 +35,8 @@ export const __unsecured_routes = new Set(
   ...unsecured_video_routes,
   ...unsecured_tweet_routes,
   ...unsecured_like_routes,
-  ...unsecured_comment_routes
+  ...unsecured_comment_routes,
+  ...unsecured_playlist_routes
 );
 
 export const __unsecured_dynamic_routes = new Set(
