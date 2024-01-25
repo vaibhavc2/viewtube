@@ -25,6 +25,10 @@ const unsecured_video_dynamic_routes = [
   `${__prefix_api_version}/videos/:videoId/increase-views`,
 ];
 
+const unsecured_subscription_dynamic_routes = [
+  `${__prefix_api_version}/subscriptions/:userId/get-total-subscribers`,
+];
+
 const unsecured_app_health_dynamic_routes = [`${__prefix_api_version}/:text`];
 
 //? EXPORTS
@@ -41,5 +45,6 @@ export const __unsecured_routes = new Set(
 
 export const __unsecured_dynamic_routes = new Set(
   ...unsecured_video_dynamic_routes,
-  ...unsecured_app_health_dynamic_routes
+  ...unsecured_app_health_dynamic_routes,
+  ...unsecured_subscription_dynamic_routes
 );

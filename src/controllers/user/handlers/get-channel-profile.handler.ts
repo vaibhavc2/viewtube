@@ -25,7 +25,7 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
     // lookup the subscriptions collection to get the subscribers of the user with the given username
     {
       $lookup: {
-        from: "subsriptions",
+        from: "subscriptions",
         localField: "_id",
         foreignField: "channel",
         as: "subscribers",
@@ -34,7 +34,7 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
     // lookup the subscriptions collection to get the channels subscribed to by the user with the given username
     {
       $lookup: {
-        from: "subsriptions",
+        from: "subscriptions",
         localField: "_id",
         foreignField: "subscriber",
         as: "subscribedTo",
