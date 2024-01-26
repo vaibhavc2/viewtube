@@ -1,9 +1,11 @@
 import { FRONTEND_URI, NODE_ENV } from "@/config/config";
 import { __limit, __prefix_api_version } from "@/constants/express";
+import { verifyAdminAuth } from "@/middlewares/auth/auth-admin.middleware";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
+import adminRouter from "@/routes/admin.routes";
 import appHealthRouter from "@/routes/app-health.routes";
 import commentsRouter from "@/routes/comments.routes";
 import dashboardRouter from "@/routes/dashboard.routes";
@@ -62,6 +64,14 @@ app.use(
   `${__prefix_api_version}/dashboard`,
   verifyAuthentication,
   dashboardRouter
+);
+
+// admin routes
+app.use(
+  `${__prefix_api_version}/admin`,
+  verifyAuthentication,
+  verifyAdminAuth,
+  adminRouter
 );
 
 // app health route

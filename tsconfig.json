@@ -16,17 +16,17 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+    },
   },
   "include": ["src/**/*", "src/types/**/*"],
   "exclude": ["node_modules", "dist"],
   "files": ["src/types/global.d.ts"],
   "tsc-alias": {
     "verbose": false,
-    "resolveFullPaths": true
+    "resolveFullPaths": true,
   },
   "ts-node": {
-    "swc": true
-  }
+    "swc": true,
+  },
 }

@@ -16,8 +16,8 @@ export const verifyAuthentication = asyncHandler(
     // Express's req.route.path property, which gives you the route string that was matched. This is useful for dynamic routes.
     // req.path is for static routes
     if (
-      __unsecured_routes.has(req.path) ||
-      (req.route && __unsecured_dynamic_routes.has(req.route.path))
+      __unsecured_routes.includes(req.path) ||
+      (req.route && __unsecured_dynamic_routes.includes(req.route.path))
     )
       return next();
 

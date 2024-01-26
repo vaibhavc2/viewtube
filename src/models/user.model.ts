@@ -48,6 +48,11 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: false,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     watchHistory: [
       {
         type: Schema.Types.ObjectId,
