@@ -53,6 +53,10 @@ const UserSchema: Schema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     watchHistory: [
       {
         type: Schema.Types.ObjectId,

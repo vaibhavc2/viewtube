@@ -1,6 +1,6 @@
 import {
   changePassword,
-  deleteUser,
+  disableUser,
   getChannelDescription,
   getUserChannelProfile,
   getUserProfile,
@@ -73,6 +73,6 @@ router.route("/channel-description").get(getChannelDescription);
 
 // ! delete routes: DELETE
 
-router.route("/delete").delete(deleteUser);
+router.route("/disable").delete(disableUser);
 
 export default router;

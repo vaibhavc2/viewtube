@@ -1,6 +1,6 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { _changePassword } from "./handlers/change-password.handler";
-import { _deleteUser } from "./handlers/delete-user.handler";
+import { _disableUser } from "./handlers/disable-user.handler";
 import { _getChannelDescription } from "./handlers/get-channel-description.handler";
 import { _getChannelProfile } from "./handlers/get-channel-profile.handler";
 import { _getUser } from "./handlers/get-user.handler";
@@ -20,7 +20,7 @@ export const loginUser = asyncHandler(_login);
 export const logoutUser = asyncHandler(_logout);
 export const refreshAccessToken = asyncHandler(_refresh);
 export const changePassword = asyncHandler(_changePassword);
-export const deleteUser = asyncHandler(_deleteUser);
+export const disableUser = asyncHandler(_disableUser);
 export const getUserProfile = asyncHandler(_getUser);
 export const updateUserProfile = asyncHandler(_updateUser);
 export const updateUserAvatar = asyncHandler(_updateAvatar);
