@@ -66,27 +66,33 @@ export const _register = async (req: Request, res: Response) => {
     }
   }
 
-  // upload images to cloudinary
+  // upload avatar to cloudinary
   const avatar =
     await cloudinaryService.uploadFileToCloudinary(avatarLocalPath);
+
+  // check if avatar upload failed
+  if (!avatar?.secure_url) {
+    throw new ApiError(
+      500,
+      "Something went wrong while uploading Avatar Image to server!"
+    );
+  }
+
+  // upload cover to cloudinary
   let cover = null;
   if (coverLocalPath) {
     cover = await cloudinaryService.uploadFileToCloudinary(coverLocalPath);
   }
 
-  // check if avatar and cover are valid images: avatar is compulsory
-  if (!avatar?.secure_url)
-    throw new ApiError(
-      500,
-      "Something went wrong while uploading Avatar Image to server!"
-    );
-
+  // check if cover upload failed
   if (coverLocalPath) {
-    if (!cover?.secure_url)
+    if (!cover?.secure_url) {
+      await cloudinaryService.deleteFileFromCloudinary(avatar.secure_url);
       throw new ApiError(
         500,
         "Something went wrong while uploading Cover Image to server!"
       );
+    }
   }
 
   // create user object - create entry in db (hashing of pwd is done in the model)

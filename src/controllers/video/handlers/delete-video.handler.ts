@@ -9,7 +9,7 @@ export const _deleteVideo = async (req: Request, res: Response) => {
 
   // delete video from database
   const result = await Video.findOneAndDelete({
-    id: videoId,
+    _id: videoId,
     owner: req.user?._id,
   });
 

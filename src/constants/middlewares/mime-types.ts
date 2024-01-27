@@ -21,6 +21,8 @@ export const __video_valid_mime_types = [
   "video/x-ms-wmv",
   "video/x-flv",
   "video/x-m4v",
+  "video/mpeg",
+  "video/mov",
 ];
 
 export const __audio_valid_mime_types = [

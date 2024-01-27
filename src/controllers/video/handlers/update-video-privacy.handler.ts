@@ -18,7 +18,7 @@ export const _updateVideoPrivacy = async (req: Request, res: Response) => {
   // save video privacy to database
   const video = await Video.findOneAndUpdate(
     {
-      id: videoId,
+      _id: videoId,
       owner: req.user?._id,
     },
     {

@@ -14,17 +14,20 @@ export const _updateVideoDetails = async (req: Request, res: Response) => {
   const { videoId } = req.params;
 
   // validate details here also
-  if (!title || !description) {
-    throw new ApiError(400, "Title and Description are required!");
+  if (!title && !description) {
+    throw new ApiError(
+      400,
+      "Atleast one of Title and Description are required!"
+    );
   }
 
   // validate title
-  if (title.length < 3) {
+  if (title && title.length < 3) {
     throw new ApiError(400, "Title must be at least 3 characters.");
   }
 
   // validate description
-  if (description.length < 3) {
+  if (description && description.length < 3) {
     throw new ApiError(400, "Description must be at least 3 characters.");
   }
 
@@ -36,7 +39,7 @@ export const _updateVideoDetails = async (req: Request, res: Response) => {
   // save video details to database
   const video = await Video.findOneAndUpdate(
     {
-      id: videoId,
+      _id: videoId,
       owner: req.user?._id,
     },
     {

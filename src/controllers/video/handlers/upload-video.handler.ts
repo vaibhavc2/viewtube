@@ -1,57 +1,60 @@
-import { __video_valid_mime_types } from "@/constants/middlewares/mime-types";
 import { Video } from "@/models/video.model";
-import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { getVideoLength } from "@/utils/video/get-video-length.util";
+import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
 export const _uploadVideo = async (req: Request, res: Response) => {
-  // get video local path
-  const videoLocalPath = req.file?.path;
-
-  // check if video file is missing
-  if (!videoLocalPath) {
-    throw new ApiError(400, "Video file is missing!");
-  }
-
-  // check if video is a valid video file
-  if (!__video_valid_mime_types.includes(req.file?.mimetype as string)) {
-    throw new ApiError(400, "Invalid Video File!");
-  }
-
-  // get the duration of the video: videoLength
-  const videoLength = await getVideoLength(videoLocalPath);
-
-  // check if video length is available
-  if (!videoLength) {
-    throw new ApiError(400, "Could not extract the length of the video!");
-  }
-
-  // upload video to cloudinary
-  const video = await cloudinaryService.uploadFileToCloudinary(videoLocalPath);
+  // get video details from request body
+  const {
+    title,
+    description,
+    videoUrl,
+    duration,
+    imageUrl: thumbnail,
+  } = req.body as {
+    title: string;
+    description: string;
+    videoUrl: string;
+    duration: number;
+    imageUrl: string;
+  };
 
   // check if video upload failed
-  if (!video?.secure_url) {
-    throw new ApiError(400, "Video upload failed!");
+  if (!videoUrl || !duration) {
+    throw new ApiError(500, "Video upload failed!");
   }
 
-  // save video url to database
-  const savedVideo = await Video.findOneAndUpdate(
-    { owner: req.user?._id },
-    {
-      $set: {
-        videoUrl: video.secure_url,
-        duration: videoLength,
-      },
-    },
-    { new: true }
-  );
+  if (!thumbnail) {
+    throw new ApiError(500, "Thumbnail upload failed!");
+  }
+
+  // validate details here also
+  if (!title || !description) {
+    throw new ApiError(400, "Title and Description are required!");
+  }
+
+  // create video
+  const video = await Video.create({
+    owner: req.user?._id,
+    title,
+    description,
+    videoUrl,
+    duration,
+    thumbnail,
+  });
+
+  // verify if created
+  const createdVideo = await Video.findById(video._id);
+
+  // final verification
+  if (!video || !createdVideo) {
+    throw new ApiError(500, "Something went wrong!");
+  }
 
   // send response
-  return res.status(200).json(
-    new SuccessResponse("Video uploaded successfully!", {
-      video: savedVideo,
+  return res.status(201).json(
+    new CreatedResponse("Video details uploaded successfully!", {
+      video: createdVideo,
     })
   );
 };

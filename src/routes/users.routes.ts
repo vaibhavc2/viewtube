@@ -16,6 +16,7 @@ import {
   updateWatchHistory,
 } from "@/controllers/user/user.controllers";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
+import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
 import { requiredFields } from "@/middlewares/validation/required-fields.middleware";
 import { zodValidation } from "@/middlewares/validation/zod-validation.middleware";
 import { RegisterValidation } from "@/validation/register.validation";
@@ -51,11 +52,19 @@ router.route("/update/profile").patch(updateUserProfile);
 
 router
   .route("/update/avatar")
-  .patch(uploadFilesLocally.single("avatar"), updateUserAvatar);
+  .patch(
+    uploadFilesLocally.single("avatar"),
+    uploadImageMiddleware,
+    updateUserAvatar
+  );
 
 router
   .route("/update/cover")
-  .patch(uploadFilesLocally.single("cover"), updateUserCover);
+  .patch(
+    uploadFilesLocally.single("cover"),
+    uploadImageMiddleware,
+    updateUserCover
+  );
 
 router.route("/update/channel/description").patch(updateChannelDescription);
 

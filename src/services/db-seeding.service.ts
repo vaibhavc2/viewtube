@@ -1,4 +1,4 @@
-import { seedUsers } from "@/utils/db/seeding/users/seed.users";
+import { seedUsers } from "@/utils/db/seeding/seed.users";
 
 class SeedDB {
   constructor() {}

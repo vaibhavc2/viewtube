@@ -5,13 +5,16 @@ import {
   getVideo,
   increaseViews,
   togglePublishStatus,
+  updateThumbnail,
+  updateVideo,
   updateVideoDetails,
   updateVideoPrivacy,
-  uploadThumbnail,
   uploadVideo,
-  uploadVideoDetails,
 } from "@/controllers/video/video.controller";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
+import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
+import { uploadVideoImageMiddleware } from "@/middlewares/upload/upload-video-image.middleware";
+import { uploadVideoMiddleware } from "@/middlewares/upload/upload-video.middleware";
 import { requiredFields } from "@/middlewares/validation/required-fields.middleware";
 import { zodValidation } from "@/middlewares/validation/zod-validation.middleware";
 import { VideoDetailsValidation } from "@/validation/video-details.validation";
@@ -29,23 +32,18 @@ router.route("/random-videos").get(getRandomVideos);
 
 //! create routes: POST
 
-router
-  .route("/upload-video-details")
-  .post(
-    requiredFields(["title", "description"]),
-    zodValidation(VideoDetailsValidation),
-    uploadVideoDetails
-  );
+router.route("/upload-video").post(
+  uploadFilesLocally.fields([
+    { name: "video", maxCount: 1 },
+    { name: "image", maxCount: 1 },
+  ]),
+  uploadVideoImageMiddleware,
+  requiredFields(["title", "description"]),
+  zodValidation(VideoDetailsValidation),
+  uploadVideo
+);
 
 //! update (upload but actually update) routes: PATCH
-
-router
-  .route("/upload-video")
-  .patch(uploadFilesLocally.single("video"), uploadVideo);
-
-router
-  .route("/upload-thumbnail")
-  .patch(uploadFilesLocally.single("thumbnail"), uploadThumbnail);
 
 router.route("/:videoId/increase-views").patch(increaseViews);
 
@@ -54,6 +52,14 @@ router.route("/:videoId/toggle-publish-status").patch(togglePublishStatus);
 router.route("/:videoId/update-details").patch(updateVideoDetails);
 
 router.route("/:videoId/update-privacy").patch(updateVideoPrivacy);
+
+router
+  .route("/:videoId/update-video")
+  .patch(uploadVideoMiddleware, updateVideo);
+
+router
+  .route("/:videoId/update-thumbnail")
+  .patch(uploadImageMiddleware, updateThumbnail);
 
 //! delete routes: DELETE
 
