@@ -21,7 +21,7 @@ export const _deletePlaylist = async (req: Request, res: Response) => {
   }
 
   // delete playlist
-  await playlist.delete();
+  await Playlist.findByIdAndDelete(playlistId);
 
   // send response
   res.status(200).json(

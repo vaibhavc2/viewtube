@@ -15,14 +15,13 @@ export const __video_valid_mime_types = [
   "video/3gpp",
   "video/3gpp2",
   "video/avi",
-  "video/quicktime",
+  "video/quicktime", // mov
   "video/x-msvideo",
   "video/x-matroska",
   "video/x-ms-wmv",
   "video/x-flv",
   "video/x-m4v",
   "video/mpeg",
-  "video/mov",
 ];
 
 export const __audio_valid_mime_types = [

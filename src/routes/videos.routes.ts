@@ -63,6 +63,6 @@ router
 
 //! delete routes: DELETE
 
-router.route("/:videoId").delete(deleteVideo);
+router.route("/:videoId/delete").delete(deleteVideo);
 
 export default router;

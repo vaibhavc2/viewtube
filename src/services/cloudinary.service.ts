@@ -4,10 +4,10 @@ import {
   CLOUDINARY_CLOUD_NAME,
 } from "@/config/config";
 import { getErrorMessage } from "@/utils/common/error/error-message.util";
+import { deleteLocalFile } from "@/utils/files/delete-local-file.util";
 import { wLogger } from "@/utils/log/logger.util";
 import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
 import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
-import fs from "fs";
 
 class CloudinaryService {
   cloudinaryResponse: UploadApiResponse | null;
@@ -33,6 +33,7 @@ class CloudinaryService {
       // check if file exists on the local server
       const response = await cloudinary.uploader.upload(localFilePath, {
         resource_type: "auto",
+        // timeout: 600000,
       });
 
       wLogger.info(`✅   File is uploaded on Cloudinary: ${response.url}`);
@@ -44,26 +45,7 @@ class CloudinaryService {
         "uploadFileToCloudinary()"
       );
     } finally {
-      // fs.unlinkSync(localFilePath); // remove temp file on local server: synchronously
-      fs.unlink(localFilePath, function (err) {
-        if (err && err.code == "ENOENT") {
-          // file doesn't exist
-          printErrorMessage(
-            `⚠️   File doesn't exist on the path provided: ${localFilePath}`,
-            "fs.unlink()"
-          );
-        } else if (err) {
-          // other errors, e.g. maybe we don't have enough permission
-          printErrorMessage(
-            `⚠️   Error occurred while trying to remove the file on the local server. File Path: ${localFilePath} \n💀   Error: ${err}`,
-            "fs.unlink()"
-          );
-        } else {
-          wLogger.info(
-            `✅   File removed from the local server. File Path: ${localFilePath}`
-          );
-        }
-      });
+      await deleteLocalFile(localFilePath);
 
       return this.cloudinaryResponse;
     }

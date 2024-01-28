@@ -41,7 +41,7 @@ export const _removeLike = async (req: Request, res: Response) => {
   }
 
   // delete like
-  await like.delete();
+  await Like.findByIdAndDelete(like._id);
 
   // send response
   res.status(200).json(new SuccessResponse("Like deleted successfully"));

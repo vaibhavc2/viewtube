@@ -1,5 +1,5 @@
 import { Video } from "@/models/video.model";
-import ApiError from "@/utils/api/error/api-error.util";
+import { cloudinaryService } from "@/services/cloudinary.service";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -7,16 +7,23 @@ export const _deleteVideo = async (req: Request, res: Response) => {
   // get videoId from request params
   const { videoId } = req.params;
 
-  // delete video from database
-  const result = await Video.findOneAndDelete({
+  // get video from database
+  const video = await Video.findOne({
     _id: videoId,
     owner: req.user?._id,
   });
 
-  // check if video was deleted
-  if (!result) {
-    throw new ApiError(400, "Video not found!");
-  }
+  // delete video from cloudinary
+  await cloudinaryService.deleteFileFromCloudinary(video.videoUrl);
+
+  // delete thumbnail from cloudinary
+  await cloudinaryService.deleteFileFromCloudinary(video.thumbnail);
+
+  // delete video from database
+  await Video.findOneAndDelete({
+    _id: videoId,
+    owner: req.user?._id,
+  });
 
   // send response
   return res

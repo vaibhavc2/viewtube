@@ -31,7 +31,11 @@ const VideoSchema: Schema = new Schema(
     },
     isPublished: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    publishDate: {
+      type: Date,
+      required: false,
     },
     private: {
       type: Boolean,
