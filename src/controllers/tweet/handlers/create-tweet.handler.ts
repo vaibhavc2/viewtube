@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _createTweet = async (req: Request, res: Response) => {
+export const createTweet = async (req: Request, res: Response) => {
   // get tweet data from req.body
   const { tweet } = req.body;
 

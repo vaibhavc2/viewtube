@@ -11,7 +11,7 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _getUserTweets = async (req: Request, res: Response) => {
+export const getUserTweets = async (req: Request, res: Response) => {
   // get userId, page, limit, sortBy, sortType, query from req.query
   const {
     page = __page,

@@ -1,10 +1,14 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { _createTweet } from "./handlers/create-tweet.handler";
-import { _deleteTweet } from "./handlers/delete-tweet.handler";
-import { _getUserTweets } from "./handlers/get-user-tweets.handler";
-import { _updateTweet } from "./handlers/update-tweet.handler";
+import { createTweet } from "./handlers/create-tweet.handler";
+import { deleteTweet } from "./handlers/delete-tweet.handler";
+import { getUserTweets } from "./handlers/get-user-tweets.handler";
+import { updateTweet } from "./handlers/update-tweet.handler";
 
-export const createTweet = asyncHandler(_createTweet);
-export const deleteTweet = asyncHandler(_deleteTweet);
-export const getUserTweets = asyncHandler(_getUserTweets);
-export const updateTweet = asyncHandler(_updateTweet);
+export class TweetController {
+  constructor() {}
+
+  public createTweet = asyncHandler(createTweet);
+  public updateTweet = asyncHandler(updateTweet);
+  public deleteTweet = asyncHandler(deleteTweet);
+  public getUserTweets = asyncHandler(getUserTweets);
+}

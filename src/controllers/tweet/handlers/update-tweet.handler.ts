@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateTweet = async (req: Request, res: Response) => {
+export const updateTweet = async (req: Request, res: Response) => {
   // get tweetId from req.params
   const tweetId = req.params.tweetId;
 

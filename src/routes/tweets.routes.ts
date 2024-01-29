@@ -1,23 +1,27 @@
-import {
-  createTweet,
-  deleteTweet,
-  getUserTweets,
-  updateTweet,
-} from "@/controllers/tweet/tweet.controller";
+import { TweetController } from "@/controllers/tweet/tweet.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
-const router = Router();
+class TweetRouter {
+  public router: Router;
+  public controller: TweetController;
 
-router.route("/get-tweets").get(getUserTweets);
+  constructor() {
+    this.router = Router();
+    this.controller = new TweetController();
+    this.routes();
+  }
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+  public routes() {
+    this.router.get("/get-tweets", this.controller.getUserTweets);
 
-router.route("/create").post(createTweet);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-router.route("/:tweetId/delete").delete(deleteTweet);
+    this.router.post("/create", this.controller.createTweet);
+    this.router.delete("/:tweetId/delete", this.controller.deleteTweet);
+    this.router.patch("/:tweetId/update", this.controller.updateTweet);
+  }
+}
 
-router.route("/:tweetId/update").patch(updateTweet);
-
-export default router;
+export default new TweetRouter().router;
