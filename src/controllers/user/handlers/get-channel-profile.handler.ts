@@ -91,6 +91,8 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, "Channel profile fetched successfully!", channel[0])
+      new ApiResponse(200, "Channel profile fetched successfully!", {
+        channel: channel[0],
+      })
     );
 };

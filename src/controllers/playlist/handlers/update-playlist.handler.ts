@@ -30,8 +30,11 @@ export const _updatePlaylist = async (req: Request, res: Response) => {
   }
 
   // update playlist
-  const playlist = await Playlist.findByIdAndUpdate(
-    playlistId,
+  const playlist = await Playlist.findOneAndUpdate(
+    {
+      _id: playlistId,
+      owner: req.user?._id,
+    },
     {
       name,
       description,

@@ -39,6 +39,10 @@ const unsecured_playlist_dynamic_routes = [
   `${__prefix_api_version}/playlists/:playlistId`,
 ];
 
+const unsecured_dashboard_dynamic_routes = [
+  `${__prefix_api_version}/dashboard/:userId/channel-stats`,
+];
+
 //? EXPORTS
 // ***************************************************
 
@@ -57,4 +61,5 @@ export const __unsecured_dynamic_routes = [
   ...unsecured_app_health_dynamic_routes,
   ...unsecured_subscription_dynamic_routes,
   ...unsecured_playlist_dynamic_routes,
+  ...unsecured_dashboard_dynamic_routes,
 ];

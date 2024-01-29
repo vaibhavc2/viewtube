@@ -35,7 +35,12 @@ export const _addLike = async (req: Request, res: Response) => {
     // if like exists and value doesn't match, update it
     likeExists.value = value;
 
-    await likeExists.save();
+    const result = await likeExists.save({ validateBeforeSave: false });
+
+    // check if like was saved successfully
+    if (!result) {
+      throw new ApiError(500, "Unable to update like!");
+    }
 
     return res.status(200).json(
       new SuccessResponse("Like updated successfully", {

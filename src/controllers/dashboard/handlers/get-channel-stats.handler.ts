@@ -5,8 +5,8 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 export const _getChannelStats = async (req: Request, res: Response) => {
-  // get the userId
-  const userId = req.user?._id;
+  // get the userId from req.params
+  const { userId } = req.params; // get any user's channel stats
 
   // total video views, total videos
   const video = await Video.aggregate([
@@ -48,10 +48,21 @@ export const _getChannelStats = async (req: Request, res: Response) => {
       },
     },
     {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subscriber",
+        as: "subscribedTo",
+      },
+    },
+    {
       $addFields: {
         subscribersCount: {
           $size: "$subscribers",
           // $size is an aggregation operator for counting the number of elements in an array
+        },
+        subscribedToCount: {
+          $size: "$subscribedTo",
         },
       },
     },
@@ -63,6 +74,7 @@ export const _getChannelStats = async (req: Request, res: Response) => {
         cover: 1,
         email: 1,
         subscribersCount: 1,
+        subscribedToCount: 1,
         channelDescription: 1,
         createdAt: 1,
       },
@@ -76,6 +88,7 @@ export const _getChannelStats = async (req: Request, res: Response) => {
     cover,
     email,
     subscribersCount,
+    subscribedToCount,
     channelDescription,
     createdAt,
   } = channel[0];
@@ -106,6 +119,11 @@ export const _getChannelStats = async (req: Request, res: Response) => {
         },
       },
     },
+    {
+      $project: {
+        totalLikes: 1,
+      },
+    },
   ]);
 
   const { totalLikes } = likes[0];
@@ -120,6 +138,7 @@ export const _getChannelStats = async (req: Request, res: Response) => {
         cover,
         email,
         subscribersCount,
+        subscribedToCount,
         channelDescription,
         createdAt,
         totalVideos,

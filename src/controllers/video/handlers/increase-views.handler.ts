@@ -25,7 +25,12 @@ export const _increaseViews = async (req: Request, res: Response) => {
   video.views += 1;
 
   // save video
-  await video.save();
+  const result = await video.save({ validateBeforeSave: false });
+
+  // check if video was saved successfully
+  if (!result) {
+    throw new ApiError(500, "Unable to increase video views!");
+  }
 
   // send response
   return res.status(200).json(

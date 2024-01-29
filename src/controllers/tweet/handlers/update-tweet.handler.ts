@@ -8,7 +8,7 @@ export const _updateTweet = async (req: Request, res: Response) => {
   const tweetId = req.params.tweetId;
 
   // get userId from req.user
-  const { _id: userId } = req.user;
+  const userId = req.user?._id;
 
   // get tweet from database
   const tweet = await Tweet.findOne({
@@ -33,7 +33,12 @@ export const _updateTweet = async (req: Request, res: Response) => {
   tweet.content = tweetContent;
 
   // save tweet
-  await tweet.save();
+  const result = await tweet.save({ validateBeforeSave: false });
+
+  // check if tweet was saved successfully
+  if (!result) {
+    throw new ApiError(500, "Unable to update tweet!");
+  }
 
   // send response
   return res.status(200).json(

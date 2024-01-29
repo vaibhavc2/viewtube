@@ -6,7 +6,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.route("/stats").get(getChannelStats);
+router.route("/:userId/channel-stats").get(getChannelStats);
 
 router.route("/videos").get(getChannelVideos);
 

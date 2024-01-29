@@ -5,7 +5,14 @@ export const generateTokens = async (user: any) => {
 
   // save refresh token to db
   user.refreshToken = refreshToken;
-  await user.save({ validateBeforeSave: false });
+
+  // save user
+  const result = await user.save({ validateBeforeSave: false });
+
+  // check if refresh token was saved successfully
+  if (!result) {
+    throw new Error("Unable to save refresh token!");
+  }
 
   // return tokens
   return { accessToken, refreshToken };

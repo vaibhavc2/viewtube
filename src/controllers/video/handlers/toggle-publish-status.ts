@@ -8,18 +8,21 @@ export const _togglePublishStatus = async (req: Request, res: Response) => {
   const videoId = req.params.videoId;
 
   // get video from database
-  const video = await Video.findOne({ _id: videoId });
-
-  // check if video exists
-  if (!video) {
-    throw new ApiError(404, "Video not found!");
-  }
+  const video = await Video.findOne({
+    _id: videoId,
+    owner: req.user?._id,
+  });
 
   // toggle publish status
   video.isPublished = !video.isPublished;
 
   // save video
-  await video.save();
+  const result = await video.save({ validateBeforeSave: false });
+
+  // check if video was saved successfully
+  if (!result) {
+    throw new ApiError(500, "Unable to toggle video publish status!");
+  }
 
   // send response
   return res.status(200).json(

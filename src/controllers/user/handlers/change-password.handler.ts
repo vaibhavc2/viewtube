@@ -43,7 +43,12 @@ export const _changePassword = async (req: Request, res: Response) => {
   user.password = newPassword;
 
   // save the user
-  await user.save({ validateBeforeSave: false });
+  const result = await user.save({ validateBeforeSave: false });
+
+  // check if user was saved successfully
+  if (!result) {
+    throw new ApiError(500, "Unable to change password!");
+  }
 
   // send response
   res

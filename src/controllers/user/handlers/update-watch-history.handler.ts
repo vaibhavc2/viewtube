@@ -1,3 +1,4 @@
+import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -12,21 +13,24 @@ export const _updateWatchHistory = async (req: Request, res: Response) => {
     throw new ApiError(400, "Video id is required");
   }
 
+  // find the user
+  const user = await User.findById(req.user?._id);
+
   // check if the video is already present in the watch history
-  const videoIndex = req.user.watchHistory.findIndex(
-    (video: mongoose.Types.ObjectId) => video.toString() === videoId
+  const videoIndex = user.watchHistory.findIndex(
+    (video: mongoose.Types.ObjectId) => String(video) === videoId
   );
 
   // if the video is already present in the watch history, then remove it
   if (videoIndex !== -1) {
-    req.user.watchHistory.splice(videoIndex, 1);
+    user.watchHistory.splice(videoIndex, 1);
   }
 
   // add the video to the beginning of the watch history
-  req.user.watchHistory.unshift(new mongoose.Types.ObjectId(videoId));
+  user.watchHistory.unshift(new mongoose.Types.ObjectId(videoId));
 
   // save the user object
-  const result = await req.user.save({ validateBeforeSave: false });
+  const result = await user.save({ validateBeforeSave: false });
 
   // check if the user object was saved successfully
   if (!result) {
@@ -34,7 +38,9 @@ export const _updateWatchHistory = async (req: Request, res: Response) => {
   }
 
   // send the response
-  return res
-    .status(200)
-    .json(new SuccessResponse("Watch history updated successfully"));
+  return res.status(200).json(
+    new SuccessResponse("Watch history updated successfully", {
+      watchHistory: user.watchHistory,
+    })
+  );
 };
