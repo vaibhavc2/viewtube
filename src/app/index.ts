@@ -1,18 +1,9 @@
 import { envConfig } from "@/config";
-import { __limit, __prefix_api_version } from "@/constants/express";
+import { __limit } from "@/constants/express";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
-import adminRouter from "@/routes/admin.routes";
-import appHealthRouter from "@/routes/app-health.routes";
-import commentsRouter from "@/routes/comments.routes";
-import dashboardRouter from "@/routes/dashboard.routes";
-import likesRouter from "@/routes/likes.routes";
-import playlistsRouter from "@/routes/playlists.routes";
-import subscriptionsRouter from "@/routes/subscriptions.routes";
-import tweetsRouter from "@/routes/tweets.routes";
-import usersRouter from "@/routes/users.routes";
-import videosRouter from "@/routes/videos.routes";
+import { appRouter } from "@/router";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application } from "express";
@@ -42,7 +33,7 @@ export class App {
     this.usePreBuiltMiddlewares();
 
     // using routes
-    this.useRoutes();
+    this.app.use(appRouter);
 
     // error handler middlewares
     this.useErrorHandlers();
@@ -71,24 +62,6 @@ export class App {
 
     // logs requests in development mode
     if (envConfig.isDev()) this.app.use(morgan("combined"));
-  }
-
-  private useRoutes() {
-    // using routes
-    this.app.use(`${__prefix_api_version}/users`, usersRouter);
-    this.app.use(`${__prefix_api_version}/videos`, videosRouter);
-    this.app.use(`${__prefix_api_version}/subscriptions`, subscriptionsRouter);
-    this.app.use(`${__prefix_api_version}/tweets`, tweetsRouter);
-    this.app.use(`${__prefix_api_version}/likes`, likesRouter);
-    this.app.use(`${__prefix_api_version}/comments`, commentsRouter);
-    this.app.use(`${__prefix_api_version}/playlists`, playlistsRouter);
-    this.app.use(`${__prefix_api_version}/dashboard`, dashboardRouter);
-
-    // admin routes
-    this.app.use(`${__prefix_api_version}/admin`, adminRouter);
-
-    // app health route
-    this.app.use(`${__prefix_api_version}`, appHealthRouter);
   }
 
   private useErrorHandlers() {

@@ -26,4 +26,4 @@ class CommentRouter {
   }
 }
 
-export default new CommentRouter().router;
+export const commentsRouter = new CommentRouter().router;

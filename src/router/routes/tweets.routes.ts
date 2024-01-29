@@ -24,4 +24,4 @@ class TweetRouter {
   }
 }
 
-export default new TweetRouter().router;
+export const tweetsRouter = new TweetRouter().router;

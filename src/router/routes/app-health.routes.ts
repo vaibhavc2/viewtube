@@ -17,4 +17,4 @@ class AppHealthRouter {
   }
 }
 
-export default new AppHealthRouter().router;
+export const appHealthRouter = new AppHealthRouter().router;

@@ -33,4 +33,4 @@ class PlaylistRouter {
   }
 }
 
-export default new PlaylistRouter().router;
+export const playlistsRouter = new PlaylistRouter().router;

@@ -69,4 +69,4 @@ class VideoRouter {
   }
 }
 
-export default new VideoRouter().router;
+export const videosRouter = new VideoRouter().router;

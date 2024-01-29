@@ -22,4 +22,4 @@ class DashboardRouter {
   }
 }
 
-export default new DashboardRouter().router;
+export const dashboardRouter = new DashboardRouter().router;

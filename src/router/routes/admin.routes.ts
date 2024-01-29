@@ -25,4 +25,4 @@ class AdminRouter {
   }
 }
 
-export default new AdminRouter().router;
+export const adminRouter = new AdminRouter().router;

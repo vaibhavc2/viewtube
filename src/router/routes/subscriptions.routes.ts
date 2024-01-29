@@ -23,4 +23,4 @@ class SubscriptionRouter {
   }
 }
 
-export default new SubscriptionRouter().router;
+export const subscriptionsRouter = new SubscriptionRouter().router;

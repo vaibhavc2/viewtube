@@ -25,4 +25,4 @@ class LikeRouter {
   }
 }
 
-export default new LikeRouter().router;
+export const likesRouter = new LikeRouter().router;

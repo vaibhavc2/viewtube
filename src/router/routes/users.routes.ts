@@ -56,4 +56,4 @@ class UserRouter {
   }
 }
 
-export default new UserRouter().router;
+export const usersRouter = new UserRouter().router;
