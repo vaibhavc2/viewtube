@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 
 export const _updatePlaylist = async (req: Request, res: Response) => {
   // get details from request body
-  const { name, description, videos, isPrivate } = req.body;
+  const { name, description, videos } = req.body;
 
   // get playlist id from request params
   const { playlistId } = req.params;
@@ -36,7 +36,6 @@ export const _updatePlaylist = async (req: Request, res: Response) => {
       name,
       description,
       videos,
-      private: isPrivate,
     },
     { new: true }
   );
