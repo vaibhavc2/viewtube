@@ -1,4 +1,4 @@
-import { NODE_ENV } from "@/config/config";
+import { envConfig } from "@/config";
 import { cache } from "@/helpers/cache/cache.helper";
 import { wLogger } from "@/utils/log/logger.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -20,13 +20,13 @@ export const cacheGetter = asyncHandler(
     console.log(cachedData);
 
     if (cachedData) {
-      if (NODE_ENV === "development")
+      if (envConfig.isDev())
         wLogger.info(`✅🚀   Cache hit for the route: ${req.path}`);
 
       return res.status(200).json(cachedData);
     }
 
-    if (NODE_ENV === "development")
+    if (envConfig.isDev())
       wLogger.error(`⚠️❌   Cache miss for the route: ${req.path}`);
 
     next();

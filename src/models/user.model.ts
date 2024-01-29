@@ -1,10 +1,4 @@
-import {
-  ACCESS_TOKEN_EXPIRY,
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_EXPIRY,
-  REFRESH_TOKEN_SECRET,
-  SECRET_KEY,
-} from "@/config/config";
+import { envConfig } from "@/config";
 import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import mongoose, { Schema } from "mongoose";
@@ -76,7 +70,7 @@ UserSchema.pre("save", async function (next) {
   const user = this;
   if (!user.isModified("password")) return next();
   user.password = await argon2.hash(user.password, {
-    secret: Buffer.from(SECRET_KEY),
+    secret: Buffer.from(envConfig.secretKey()),
   });
   next();
 });
@@ -86,7 +80,7 @@ UserSchema.methods.comparePassword = async function (
 ) {
   const user = this;
   return await argon2.verify(user.password, candidatePassword, {
-    secret: Buffer.from(SECRET_KEY),
+    secret: Buffer.from(envConfig.secretKey()),
   });
 };
 
@@ -99,9 +93,9 @@ UserSchema.methods.generateRefreshToken = async function () {
       email: user.email,
       fullName: user.fullName,
     },
-    REFRESH_TOKEN_SECRET,
+    envConfig.refreshTokenSecret(),
     {
-      expiresIn: REFRESH_TOKEN_EXPIRY,
+      expiresIn: envConfig.refreshTokenExpiry(),
     }
   );
   return refreshToken;
@@ -113,9 +107,9 @@ UserSchema.methods.generateAccessToken = async function () {
     {
       _id: user._id,
     },
-    ACCESS_TOKEN_SECRET,
+    envConfig.accessTokenSecret(),
     {
-      expiresIn: ACCESS_TOKEN_EXPIRY,
+      expiresIn: envConfig.accessTokenExpiry(),
     }
   );
   return accessToken;

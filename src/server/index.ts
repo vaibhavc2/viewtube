@@ -1,5 +1,5 @@
 import { App } from "@/app";
-import { NODE_ENV, PORT } from "@/config/config";
+import { envConfig } from "@/config";
 import { database } from "@/database";
 import { wLogger } from "@/utils/log/logger.util";
 import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
@@ -43,9 +43,9 @@ class Server {
     this.appErrorHandling();
 
     // starting server
-    this.app.listen(PORT, () => {
+    this.app.listen(envConfig.port(), () => {
       wLogger.info(
-        `⚙️   Server is running at http://localhost:${PORT} in ${NODE_ENV} mode.`
+        `⚙️   Server is running at http://localhost:${envConfig.port()} in ${envConfig.nodeEnv()} mode.`
       );
     });
   }

@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_SECRET as JWT_SECRET } from "@/config/config";
+import { envConfig } from "@/config";
 import { __jwt_callback } from "@/constants/jwt/index";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
@@ -19,7 +19,11 @@ export const verifyAuthentication = asyncHandler(
     }
 
     // if yes, verify token
-    const decodedToken: any = jwt.verify(token, JWT_SECRET, __jwt_callback);
+    const decodedToken: any = jwt.verify(
+      token,
+      envConfig.accessTokenSecret(),
+      __jwt_callback
+    );
 
     // find user in db using the decoded token
     const user = await User.findOne({ _id: decodedToken?._id }).select(

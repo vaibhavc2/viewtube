@@ -1,8 +1,4 @@
-import {
-  CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET,
-  CLOUDINARY_CLOUD_NAME,
-} from "@/config/config";
+import { envConfig } from "@/config";
 import { getErrorMessage } from "@/utils/common/error/error-message.util";
 import { deleteLocalFile } from "@/utils/files/delete-local-file.util";
 import { wLogger } from "@/utils/log/logger.util";
@@ -80,7 +76,7 @@ class CloudinaryService {
 }
 
 export const cloudinaryService = new CloudinaryService(
-  CLOUDINARY_CLOUD_NAME,
-  CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET
+  envConfig.cloudinaryCloudName(),
+  envConfig.cloudinaryApiKey(),
+  envConfig.cloudinaryApiSecret()
 );

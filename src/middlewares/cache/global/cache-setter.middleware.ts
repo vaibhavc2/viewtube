@@ -1,4 +1,4 @@
-import { NODE_ENV } from "@/config/config";
+import { envConfig } from "@/config";
 import { cache } from "@/helpers/cache/cache.helper";
 import { wLogger } from "@/utils/log/logger.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -17,7 +17,7 @@ export const cacheSetter = asyncHandler(
 
       const setCache = cache.set(cacheKey, stringifiedData);
 
-      if (NODE_ENV === "development") {
+      if (envConfig.isDev()) {
         if (setCache) {
           wLogger.info(`✅🚀   Cache set for the route: ${req.path}`);
         } else {

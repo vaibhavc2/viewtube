@@ -1,4 +1,4 @@
-import { FRONTEND_URI, NODE_ENV } from "@/config/config";
+import { envConfig } from "@/config";
 import { __limit, __prefix_api_version } from "@/constants/express";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
@@ -57,7 +57,7 @@ export class App {
     // using pre-built middlewares
     this.app.use(
       cors({
-        origin: [FRONTEND_URI],
+        origin: [envConfig.frontendUri()],
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"],
       }),
@@ -70,7 +70,7 @@ export class App {
     );
 
     // logs requests in development mode
-    if (NODE_ENV === "development") this.app.use(morgan("combined"));
+    if (envConfig.isDev()) this.app.use(morgan("combined"));
   }
 
   private useRoutes() {

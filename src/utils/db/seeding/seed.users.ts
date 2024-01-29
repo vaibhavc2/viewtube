@@ -1,4 +1,4 @@
-import { SECRET_KEY } from "@/config/config";
+import { envConfig } from "@/config";
 import { faker } from "@faker-js/faker";
 import * as argon2 from "argon2";
 
@@ -10,7 +10,7 @@ export const seedUsers = async (num: number) => {
     const username = `${fullName.toLowerCase().trim()}_${Math.floor(Math.random() * 1000)}`;
     const _password = "abcdefgh@#123";
     const password = await argon2.hash(_password, {
-      secret: Buffer.from(SECRET_KEY),
+      secret: Buffer.from(envConfig.secretKey()),
     });
     const email = faker.internet.email();
     const avatar = faker.image.avatar();

@@ -1,4 +1,4 @@
-import { DB_NAME, MONGO_URI } from "@/config/config";
+import { envConfig } from "@/config";
 import { wLogger } from "@/utils/log/logger.util";
 import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
 import mongoose from "mongoose";
@@ -14,8 +14,8 @@ class Database {
   private connectDB() {
     return new Promise<typeof mongoose>((resolve, reject) => {
       mongoose
-        .connect(MONGO_URI, {
-          dbName: DB_NAME,
+        .connect(envConfig.mongoUri(), {
+          dbName: envConfig.dbName(),
         })
         .then((connectionInstance) => {
           wLogger.info(

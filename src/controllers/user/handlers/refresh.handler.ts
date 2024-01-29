@@ -1,4 +1,4 @@
-import { REFRESH_TOKEN_SECRET } from "@/config/config";
+import { envConfig } from "@/config";
 import { __jwt_callback } from "@/constants/jwt/index";
 import { __cookie_options } from "@/constants/res/index";
 import { User } from "@/models/user.model";
@@ -21,7 +21,7 @@ export const refresh = async (req: Request, res: Response) => {
   // if found, verify token
   const decodedToken: any = jwt.verify(
     incomingRefreshToken,
-    REFRESH_TOKEN_SECRET,
+    envConfig.refreshTokenSecret(),
     __jwt_callback
   );
 
