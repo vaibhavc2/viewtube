@@ -4,7 +4,7 @@ import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { seedUsers } from "@/utils/db/seeding/seed.users";
 import { Request, Response } from "express";
 
-export const _seedFakeUsers = async (req: Request, res: Response) => {
+export const seedFakeUsers = async (req: Request, res: Response) => {
   const { num = 50, drop = 0 } = req.query;
 
   if (isNaN(Number(num))) {

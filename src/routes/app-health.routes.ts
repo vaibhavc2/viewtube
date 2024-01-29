@@ -1,10 +1,20 @@
-import { testAppHealth } from "@/controllers/app-health/app-health.controller";
+import { AppHealthController } from "@/controllers/app-health/app-health.controller";
 import { Router } from "express";
 
-const router = Router();
+class AppHealthRouter {
+  public router: Router;
+  public controller: AppHealthController;
 
-router.route("/health").get(testAppHealth);
+  constructor() {
+    this.router = Router();
+    this.controller = new AppHealthController();
+    this.routes();
+  }
 
-router.route("/health/:text").get(testAppHealth);
+  public routes() {
+    this.router.get("/test", this.controller.testAppHealth);
+    this.router.get("/health", this.controller.testAppHealth);
+  }
+}
 
-export default router;
+export default new AppHealthRouter().router;

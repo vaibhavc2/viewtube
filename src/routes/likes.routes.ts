@@ -1,24 +1,28 @@
-import {
-  addLike,
-  getLikeHistory,
-  getLikesCount,
-  removeLike,
-} from "@/controllers/like/like.controller";
+import { LikeController } from "@/controllers/like/like.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { validateIds } from "@/middlewares/validation/id-validation.middleware";
 import { Router } from "express";
 
-const router = Router();
+class LikeRouter {
+  public router: Router;
+  public controller: LikeController;
 
-router.route("/get-count").get(validateIds, getLikesCount);
+  constructor() {
+    this.router = Router();
+    this.controller = new LikeController();
+    this.routes();
+  }
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+  public routes() {
+    this.router.get("/get-count", validateIds, this.controller.getLikesCount);
 
-router.route("/add").post(validateIds, addLike);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-router.route("/remove").delete(validateIds, removeLike);
+    this.router.post("/add", validateIds, this.controller.addLike);
+    this.router.delete("/remove", validateIds, this.controller.removeLike);
+    this.router.get("/get-history", this.controller.getLikeHistory);
+  }
+}
 
-router.route("/get-history").get(getLikeHistory);
-
-export default router;
+export default new LikeRouter().router;

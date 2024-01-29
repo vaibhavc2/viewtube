@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _enableUser = async (req: Request, res: Response) => {
+export const enableUser = async (req: Request, res: Response) => {
   // get user id
   const userId = req.params.userId;
 

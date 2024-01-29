@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _deleteComment = async (req: Request, res: Response) => {
+export const deleteComment = async (req: Request, res: Response) => {
   // get id of comment
   const { commentId } = req.params;
 

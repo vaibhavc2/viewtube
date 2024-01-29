@@ -1,27 +1,29 @@
-import {
-  addComment,
-  deleteComment,
-  getCommentHistory,
-  getComments,
-  updateComment,
-} from "@/controllers/comment/comment.controller";
+import { CommentController } from "@/controllers/comment/comment.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { validateIds } from "@/middlewares/validation/id-validation.middleware";
 import { Router } from "express";
 
-const router = Router();
+class CommentRouter {
+  public router: Router;
+  public controller: CommentController;
 
-router.route("/get-comments").get(validateIds, getComments);
+  constructor() {
+    this.router = Router();
+    this.controller = new CommentController();
+    this.routes();
+  }
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+  public routes() {
+    this.router.get("/get-comments", validateIds, this.controller.getComments);
 
-router.route("/get-history").get(getCommentHistory);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-router.route("/add-comment").post(validateIds, addComment);
+    this.router.get("/get-history", this.controller.getCommentHistory);
+    this.router.post("/add-comment", validateIds, this.controller.addComment);
+    this.router.patch("/:commentId/update", this.controller.updateComment);
+    this.router.delete("/:commentId/delete", this.controller.deleteComment);
+  }
+}
 
-router.route("/:commentId/update").patch(updateComment);
-
-router.route("/:commentId/delete").delete(deleteComment);
-
-export default router;
+export default new CommentRouter().router;

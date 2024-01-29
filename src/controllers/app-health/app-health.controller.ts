@@ -2,8 +2,10 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { Request, Response } from "express";
 
-export const testAppHealth = asyncHandler(
-  async (req: Request, res: Response) => {
+export class AppHealthController {
+  constructor() {}
+
+  public testAppHealth = asyncHandler(async (req: Request, res: Response) => {
     // get the current time
     const now = new Date().toLocaleString();
 
@@ -15,5 +17,5 @@ export const testAppHealth = asyncHandler(
           `The server is running 'OK' and the current time is ${now}`
         )
       );
-  }
-);
+  });
+}

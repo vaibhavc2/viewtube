@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _getLikesCount = async (req: Request, res: Response) => {
+export const getLikesCount = async (req: Request, res: Response) => {
   // get tweetId, videoId, commentId from req.query
   const { tweetId, videoId, commentId, value = 1 } = req.query;
 

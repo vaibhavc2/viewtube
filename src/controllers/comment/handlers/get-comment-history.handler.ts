@@ -5,19 +5,34 @@ import {
   __sort_type,
 } from "@/constants/pagination";
 import { Comment } from "@/models/comment.model";
+import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _getCommentHistory = async (req: Request, res: Response) => {
-  // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
+export const getCommentHistory = async (req: Request, res: Response) => {
+  // get userId, page, limit, sortBy, sortType, query from req.query
   const {
     page = __page,
     limit = __page_limit,
     query,
     sortBy = __sort_by,
     sortType = __sort_type,
+    comments,
+    videos,
+    tweets,
   } = req.query;
+
+  // validate comments, videos, tweets: each of them must be either 0 or 1, and only one of them should be provided
+  if (
+    [comments, videos, tweets].filter((val) => val === "0" || val === "1")
+      .length !== 1
+  ) {
+    throw new ApiError(
+      400,
+      "Only one of comments, videos, tweets should be provided and must be either 0 or 1!"
+    );
+  }
 
   // Define the options for pagination and sorting
   const options = {
@@ -35,10 +50,13 @@ export const _getCommentHistory = async (req: Request, res: Response) => {
     ...(query && {
       content: { $regex: String(query) || "", $options: "i" },
     }),
+    ...(comments === "1" && { comment: { $exists: true } }),
+    ...(videos === "1" && { video: { $exists: true } }),
+    ...(tweets === "1" && { tweet: { $exists: true } }),
   };
 
   // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the comments.
-  const comments = await Comment.aggregatePaginate(
+  const commentHistory = await Comment.aggregatePaginate(
     Comment.aggregate([{ $match: match }]),
     options
   );
@@ -46,7 +64,7 @@ export const _getCommentHistory = async (req: Request, res: Response) => {
   // send response
   res.status(200).json(
     new SuccessResponse("Comments fetched successfully!", {
-      comments,
+      comments: commentHistory,
     })
   );
 };

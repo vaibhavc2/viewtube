@@ -11,7 +11,7 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _getComments = async (req: Request, res: Response) => {
+export const getComments = async (req: Request, res: Response) => {
   // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
   const {
     page = __page,

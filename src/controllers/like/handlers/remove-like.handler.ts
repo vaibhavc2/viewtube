@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _removeLike = async (req: Request, res: Response) => {
+export const removeLike = async (req: Request, res: Response) => {
   // get commentId, videoId, tweetId from req.query
   const { commentId, videoId, tweetId } = req.query;
 

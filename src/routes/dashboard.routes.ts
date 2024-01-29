@@ -1,17 +1,25 @@
-import {
-  getChannelStats,
-  getChannelVideos,
-} from "@/controllers/dashboard/dashboard.controller";
+import { DashboardController } from "@/controllers/dashboard/dashboard.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
-const router = Router();
+class DashboardRouter {
+  public router: Router;
+  public controller: DashboardController;
 
-router.route("/:userId/channel-stats").get(getChannelStats);
+  constructor() {
+    this.router = Router();
+    this.controller = new DashboardController();
+    this.routes();
+  }
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+  public routes() {
+    this.router.get("/:userId/channel-stats", this.controller.getChannelStats);
 
-router.route("/videos").get(getChannelVideos);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-export default router;
+    this.router.get("/videos", this.controller.getChannelVideos);
+  }
+}
+
+export default new DashboardRouter().router;

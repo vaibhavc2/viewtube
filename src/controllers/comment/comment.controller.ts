@@ -1,12 +1,16 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { _addComment } from "./handlers/add-comment.handler";
-import { _deleteComment } from "./handlers/delete-comment.handler";
-import { _getCommentHistory } from "./handlers/get-comment-history.handler";
-import { _getComments } from "./handlers/get-comments.handler";
-import { _updateComment } from "./handlers/update-comment.handler";
+import { addComment } from "./handlers/add-comment.handler";
+import { deleteComment } from "./handlers/delete-comment.handler";
+import { getCommentHistory } from "./handlers/get-comment-history.handler";
+import { getComments } from "./handlers/get-comments.handler";
+import { updateComment } from "./handlers/update-comment.handler";
 
-export const getComments = asyncHandler(_getComments);
-export const addComment = asyncHandler(_addComment);
-export const deleteComment = asyncHandler(_deleteComment);
-export const updateComment = asyncHandler(_updateComment);
-export const getCommentHistory = asyncHandler(_getCommentHistory);
+export class CommentController {
+  constructor() {}
+
+  public addComment = asyncHandler(addComment);
+  public deleteComment = asyncHandler(deleteComment);
+  public getCommentHistory = asyncHandler(getCommentHistory);
+  public getComments = asyncHandler(getComments);
+  public updateComment = asyncHandler(updateComment);
+}

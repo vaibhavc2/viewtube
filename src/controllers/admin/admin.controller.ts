@@ -1,12 +1,18 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { _changeRole } from "./handlers/change-role.handler";
-import { _deleteUser } from "./handlers/delete-user.handler";
-import { _disableUser } from "./handlers/disable-user.handler";
-import { _enableUser } from "./handlers/enable-user.handler";
-import { _seedFakeUsers } from "./handlers/seed-users.handler";
+import { changeRole } from "./handlers/change-role.handler";
+import { deleteUser } from "./handlers/delete-user.handler";
+import { disableUser } from "./handlers/disable-user.handler";
+import { enableUser } from "./handlers/enable-user.handler";
+import { seedFakeUsers } from "./handlers/seed-users.handler";
+import { seedFakeVideos } from "./handlers/seed-videos.handler";
 
-export const changeRole = asyncHandler(_changeRole);
-export const seedFakeUsers = asyncHandler(_seedFakeUsers);
-export const deleteUser = asyncHandler(_deleteUser);
-export const disableUser = asyncHandler(_disableUser);
-export const enableUser = asyncHandler(_enableUser);
+export class AdminController {
+  constructor() {}
+
+  public changeRole = asyncHandler(changeRole);
+  public deleteUser = asyncHandler(deleteUser);
+  public disableUser = asyncHandler(disableUser);
+  public enableUser = asyncHandler(enableUser);
+  public seedFakeUsers = asyncHandler(seedFakeUsers);
+  public seedFakeVideos = asyncHandler(seedFakeVideos);
+}

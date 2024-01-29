@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _addComment = async (req: Request, res: Response) => {
+export const addComment = async (req: Request, res: Response) => {
   // get the content of the comment from the req.body
   const { content } = req.body;
 
