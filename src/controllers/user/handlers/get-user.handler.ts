@@ -1,7 +1,7 @@
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   // get user from req object (set by verifyAuthentication middleware)
   const user = req.user;
 

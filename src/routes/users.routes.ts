@@ -1,81 +1,59 @@
-import {
-  changePassword,
-  disableUser,
-  getChannelDescription,
-  getUserChannelProfile,
-  getUserProfile,
-  getUserWatchHistory,
-  loginUser,
-  logoutUser,
-  refreshAccessToken,
-  registerUser,
-  updateChannelDescription,
-  updateUserAvatar,
-  updateUserCover,
-  updateUserProfile,
-  updateWatchHistory,
-} from "@/controllers/user/user.controllers";
+import { UserController } from "@/controllers/user/user.controllers";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
 import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
-import { requiredFields } from "@/middlewares/validation/required-fields.middleware";
-import { zodValidation } from "@/middlewares/validation/zod-validation.middleware";
-import { RegisterValidation } from "@/validation/register.validation";
 import { Router } from "express";
 
-const router = Router();
+class UserRouter {
+  public router: Router;
+  public controller: UserController;
 
-router.route("/register").post(
-  uploadFilesLocally.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "cover", maxCount: 1 },
-  ]),
-  requiredFields(["fullName", "username", "email", "password"]),
-  zodValidation(RegisterValidation),
-  registerUser
-);
+  constructor() {
+    this.router = Router();
+    this.controller = new UserController();
+    this.routes();
+  }
 
-router.route("/login").patch(loginUser);
+  public routes() {
+    this.router.post("/register", this.controller.register);
+    this.router.patch("/login", this.controller.login);
+    this.router.patch("/refresh", this.controller.refresh);
 
-router.route("/refresh").patch(refreshAccessToken);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+    this.router.patch("/logout", this.controller.logout);
+    this.router.patch("/change-password", this.controller.changePassword);
+    this.router.patch("/update/profile", this.controller.updateUser);
+    this.router.patch(
+      "/update/avatar",
+      uploadFilesLocally.single("avatar"),
+      uploadImageMiddleware,
+      this.controller.updateAvatar
+    );
+    this.router.patch(
+      "/update/cover",
+      uploadFilesLocally.single("cover"),
+      uploadImageMiddleware,
+      this.controller.updateCover
+    );
+    this.router.patch(
+      "/update/channel/description",
+      this.controller.updateChannelDescription
+    );
+    this.router.patch(
+      "/update/watch-history/:videoId",
+      this.controller.updateWatchHistory
+    );
+    this.router.get("/channel/:username", this.controller.getChannelProfile);
+    this.router.get("/me/profile", this.controller.getUser);
+    this.router.get("/me/watch-history", this.controller.getWatchHistory);
+    this.router.get(
+      "/channel-description",
+      this.controller.getChannelDescription
+    );
+    this.router.delete("/disable", this.controller.disableUser);
+  }
+}
 
-router.route("/logout").patch(logoutUser);
-
-router.route("/change-password").patch(changePassword);
-
-router.route("/update/profile").patch(updateUserProfile);
-
-router
-  .route("/update/avatar")
-  .patch(
-    uploadFilesLocally.single("avatar"),
-    uploadImageMiddleware,
-    updateUserAvatar
-  );
-
-router
-  .route("/update/cover")
-  .patch(
-    uploadFilesLocally.single("cover"),
-    uploadImageMiddleware,
-    updateUserCover
-  );
-
-router.route("/update/channel/description").patch(updateChannelDescription);
-
-router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
-
-router.route("/channel/:username").get(getUserChannelProfile);
-
-router.route("/me/profile").get(getUserProfile);
-
-router.route("/me/watch-history").get(getUserWatchHistory);
-
-router.route("/channel-description").get(getChannelDescription);
-
-router.route("/disable").delete(disableUser);
-
-export default router;
+export default new UserRouter().router;

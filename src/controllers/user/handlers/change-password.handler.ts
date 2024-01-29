@@ -15,7 +15,7 @@ import { Request, Response } from "express";
  *
  */
 
-export const _changePassword = async (req: Request, res: Response) => {
+export const changePassword = async (req: Request, res: Response) => {
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
   // check if new password and confirm password are not same

@@ -4,7 +4,7 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _updateWatchHistory = async (req: Request, res: Response) => {
+export const updateWatchHistory = async (req: Request, res: Response) => {
   // get the video id from the request params
   const { videoId } = req.params;
 

@@ -4,7 +4,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateCover = async (req: Request, res: Response) => {
+export const updateCover = async (req: Request, res: Response) => {
   // get cover as imageUrl from req.body
   const { imageUrl: cover } = req.body as { imageUrl: string };
 

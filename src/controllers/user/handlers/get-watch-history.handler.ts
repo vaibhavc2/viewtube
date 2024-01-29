@@ -3,7 +3,7 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _getWatchHistory = async (req: Request, res: Response) => {
+export const getWatchHistory = async (req: Request, res: Response) => {
   const user = await User.aggregate([
     // aggregation pipeline code is directly sent to the database and hence, we have to give the mongoDB id and the string that we get from req.user._id
     // mongoDB id is an object and hence, we have to convert it to a string

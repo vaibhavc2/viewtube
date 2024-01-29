@@ -25,7 +25,7 @@ import { Request, Response } from "express";
  *
  */
 
-export const _register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   // get user details from frontend
   const { fullName, username, email, password } = req.body;
 

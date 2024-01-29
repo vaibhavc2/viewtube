@@ -19,7 +19,7 @@ import { Request, Response } from "express";
  *
  */
 
-export const _login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   // request body -> data
   const { email, username, password } = req.body;
 

@@ -4,7 +4,7 @@ import ApiResponse, {
 } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (req: Request, res: Response) => {
   // get details from req body
   const { fullName, email, username } = req.body;
 

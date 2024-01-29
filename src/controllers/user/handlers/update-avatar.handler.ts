@@ -4,7 +4,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateAvatar = async (req: Request, res: Response) => {
+export const updateAvatar = async (req: Request, res: Response) => {
   // get avatar as imageUrl from req.body
   const { imageUrl: avatar } = req.body as { imageUrl: string };
 

@@ -1,32 +1,36 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { _changePassword } from "./handlers/change-password.handler";
-import { _disableUser } from "./handlers/disable-user.handler";
-import { _getChannelDescription } from "./handlers/get-channel-description.handler";
-import { _getChannelProfile } from "./handlers/get-channel-profile.handler";
-import { _getUser } from "./handlers/get-user.handler";
-import { _getWatchHistory } from "./handlers/get-watch-history.handler";
-import { _login } from "./handlers/login.handler";
-import { _logout } from "./handlers/logout.handler";
-import { _refresh } from "./handlers/refresh.handler";
-import { _register } from "./handlers/register.handler";
-import { _updateAvatar } from "./handlers/update-avatar.handler";
-import { _updateChannelDescription } from "./handlers/update-channel-description.handler";
-import { _updateCover } from "./handlers/update-cover.handler";
-import { _updateUser } from "./handlers/update-user.handler";
-import { _updateWatchHistory } from "./handlers/update-watch-history.handler";
+import { changePassword } from "./handlers/change-password.handler";
+import { disableUser } from "./handlers/disable-user.handler";
+import { getChannelDescription } from "./handlers/get-channel-description.handler";
+import { getChannelProfile } from "./handlers/get-channel-profile.handler";
+import { getUser } from "./handlers/get-user.handler";
+import { getWatchHistory } from "./handlers/get-watch-history.handler";
+import { login } from "./handlers/login.handler";
+import { logout } from "./handlers/logout.handler";
+import { refresh } from "./handlers/refresh.handler";
+import { register } from "./handlers/register.handler";
+import { updateAvatar } from "./handlers/update-avatar.handler";
+import { updateChannelDescription } from "./handlers/update-channel-description.handler";
+import { updateCover } from "./handlers/update-cover.handler";
+import { updateUser } from "./handlers/update-user.handler";
+import { updateWatchHistory } from "./handlers/update-watch-history.handler";
 
-export const registerUser = asyncHandler(_register);
-export const loginUser = asyncHandler(_login);
-export const logoutUser = asyncHandler(_logout);
-export const refreshAccessToken = asyncHandler(_refresh);
-export const changePassword = asyncHandler(_changePassword);
-export const disableUser = asyncHandler(_disableUser);
-export const getUserProfile = asyncHandler(_getUser);
-export const updateUserProfile = asyncHandler(_updateUser);
-export const updateUserAvatar = asyncHandler(_updateAvatar);
-export const updateUserCover = asyncHandler(_updateCover);
-export const getUserChannelProfile = asyncHandler(_getChannelProfile);
-export const getUserWatchHistory = asyncHandler(_getWatchHistory);
-export const getChannelDescription = asyncHandler(_getChannelDescription);
-export const updateChannelDescription = asyncHandler(_updateChannelDescription);
-export const updateWatchHistory = asyncHandler(_updateWatchHistory);
+export class UserController {
+  constructor() {}
+
+  public register = asyncHandler(register);
+  public login = asyncHandler(login);
+  public logout = asyncHandler(logout);
+  public refresh = asyncHandler(refresh);
+  public getUser = asyncHandler(getUser);
+  public updateUser = asyncHandler(updateUser);
+  public changePassword = asyncHandler(changePassword);
+  public disableUser = asyncHandler(disableUser);
+  public updateAvatar = asyncHandler(updateAvatar);
+  public updateCover = asyncHandler(updateCover);
+  public getChannelProfile = asyncHandler(getChannelProfile);
+  public getChannelDescription = asyncHandler(getChannelDescription);
+  public updateChannelDescription = asyncHandler(updateChannelDescription);
+  public getWatchHistory = asyncHandler(getWatchHistory);
+  public updateWatchHistory = asyncHandler(updateWatchHistory);
+}

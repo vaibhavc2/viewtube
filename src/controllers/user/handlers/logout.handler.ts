@@ -13,7 +13,7 @@ import { Request, Response } from "express";
  *
  */
 
-export const _logout = async (req: Request, res: Response) => {
+export const logout = async (req: Request, res: Response) => {
   // clear refresh token from db
   await User.findByIdAndUpdate(
     req.user?._id,

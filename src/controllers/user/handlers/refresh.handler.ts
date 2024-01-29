@@ -8,7 +8,7 @@ import { generateTokens } from "@/utils/tokens/generate-tokens.util";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-export const _refresh = async (req: Request, res: Response) => {
+export const refresh = async (req: Request, res: Response) => {
   // get refresh token from cookies
   const incomingRefreshToken =
     req.cookies?.refreshToken || req.body?.refreshToken;

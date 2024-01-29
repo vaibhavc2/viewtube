@@ -2,10 +2,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateChannelDescription = async (
-  req: Request,
-  res: Response
-) => {
+export const updateChannelDescription = async (req: Request, res: Response) => {
   const { description } = req.body;
 
   if (!description) {

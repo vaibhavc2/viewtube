@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import ApiResponse from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _getChannelProfile = async (req: Request, res: Response) => {
+export const getChannelProfile = async (req: Request, res: Response) => {
   // get the channel profile of the user with the given username
 
   // req.params is an object containing properties mapped to the named route “parameters”. For example, if you have the route /user/:name, then the “name” property is available as req.params.name. This object defaults to {}.
@@ -88,11 +88,9 @@ export const _getChannelProfile = async (req: Request, res: Response) => {
   }
 
   // return the response with the channel profile
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, "Channel profile fetched successfully!", {
-        channel: channel[0],
-      })
-    );
+  return res.status(200).json(
+    new ApiResponse(200, "Channel profile fetched successfully!", {
+      channel: channel[0],
+    })
+  );
 };
