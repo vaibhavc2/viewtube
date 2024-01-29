@@ -5,12 +5,16 @@ import {
   getComments,
   updateComment,
 } from "@/controllers/comment/comment.controller";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { validateIds } from "@/middlewares/validation/id-validation.middleware";
 import { Router } from "express";
 
 const router = Router();
 
 router.route("/get-comments").get(validateIds, getComments);
+
+// the routes below require authentication
+router.use(verifyAuthentication);
 
 router.route("/get-history").get(getCommentHistory);
 

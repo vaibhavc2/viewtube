@@ -5,9 +5,13 @@ import {
   enableUser,
   seedFakeUsers,
 } from "@/controllers/admin/admin.controller";
+import { verifyAdminAuth } from "@/middlewares/auth/auth-admin.middleware";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
 const router = Router();
+
+router.use(verifyAuthentication, verifyAdminAuth);
 
 router.route("/db-seed/users").post(seedFakeUsers);
 

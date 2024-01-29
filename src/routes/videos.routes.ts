@@ -11,6 +11,7 @@ import {
   updateVideoPrivacy,
   uploadVideo,
 } from "@/controllers/video/video.controller";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
 import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
 import { uploadVideoImageMiddleware } from "@/middlewares/upload/upload-video-image.middleware";
@@ -27,6 +28,7 @@ router.route("/all-videos").get(getAllVideos);
 router.route("/random-videos").get(getRandomVideos);
 
 router.route("/upload-video").post(
+  verifyAuthentication, // authentication required
   uploadFilesLocally.fields([
     { name: "video", maxCount: 1 },
     { name: "image", maxCount: 1 },
@@ -40,6 +42,9 @@ router.route("/upload-video").post(
 router.route("/:videoId").get(getVideo);
 
 router.route("/:videoId/increase-views").patch(increaseViews);
+
+// the routes below require authentication
+router.use(verifyAuthentication);
 
 router.route("/:videoId/toggle-publish-status").patch(togglePublishStatus);
 

@@ -15,6 +15,7 @@ import {
   updateUserProfile,
   updateWatchHistory,
 } from "@/controllers/user/user.controllers";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
 import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
 import { requiredFields } from "@/middlewares/validation/required-fields.middleware";
@@ -23,8 +24,6 @@ import { RegisterValidation } from "@/validation/register.validation";
 import { Router } from "express";
 
 const router = Router();
-
-//! create routes: POST
 
 router.route("/register").post(
   uploadFilesLocally.fields([
@@ -36,15 +35,14 @@ router.route("/register").post(
   registerUser
 );
 
-//! routes for login, logout and refresh tokens: PATCH or POST
-
 router.route("/login").patch(loginUser);
 
 router.route("/refresh").patch(refreshAccessToken);
 
-router.route("/logout").patch(logoutUser);
+// the routes below require authentication
+router.use(verifyAuthentication);
 
-//! update routes: PATCH
+router.route("/logout").patch(logoutUser);
 
 router.route("/change-password").patch(changePassword);
 
@@ -70,8 +68,6 @@ router.route("/update/channel/description").patch(updateChannelDescription);
 
 router.route("/update/watch-history/:videoId").patch(updateWatchHistory);
 
-//! read routes: GET
-
 router.route("/channel/:username").get(getUserChannelProfile);
 
 router.route("/me/profile").get(getUserProfile);
@@ -79,8 +75,6 @@ router.route("/me/profile").get(getUserProfile);
 router.route("/me/watch-history").get(getUserWatchHistory);
 
 router.route("/channel-description").get(getChannelDescription);
-
-// ! delete routes: DELETE
 
 router.route("/disable").delete(disableUser);
 

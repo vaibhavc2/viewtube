@@ -1,7 +1,5 @@
 import { FRONTEND_URI, NODE_ENV } from "@/config/config";
 import { __limit, __prefix_api_version } from "@/constants/express";
-import { verifyAdminAuth } from "@/middlewares/auth/auth-admin.middleware";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { errorHandler } from "@/middlewares/error/error-handler.middleware";
 import { errorLogger } from "@/middlewares/error/error-logger.middleware";
 import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
@@ -41,38 +39,17 @@ app.use(
 if (NODE_ENV === "development") app.use(morgan("combined"));
 
 // using routes
-app.use(`${__prefix_api_version}/users`, verifyAuthentication, usersRouter);
-app.use(`${__prefix_api_version}/videos`, verifyAuthentication, videosRouter);
-app.use(
-  `${__prefix_api_version}/subscriptions`,
-  verifyAuthentication,
-  subscriptionsRouter
-);
-app.use(`${__prefix_api_version}/tweets`, verifyAuthentication, tweetsRouter);
-app.use(`${__prefix_api_version}/likes`, verifyAuthentication, likesRouter);
-app.use(
-  `${__prefix_api_version}/comments`,
-  verifyAuthentication,
-  commentsRouter
-);
-app.use(
-  `${__prefix_api_version}/playlists`,
-  verifyAuthentication,
-  playlistsRouter
-);
-app.use(
-  `${__prefix_api_version}/dashboard`,
-  verifyAuthentication,
-  dashboardRouter
-);
+app.use(`${__prefix_api_version}/users`, usersRouter);
+app.use(`${__prefix_api_version}/videos`, videosRouter);
+app.use(`${__prefix_api_version}/subscriptions`, subscriptionsRouter);
+app.use(`${__prefix_api_version}/tweets`, tweetsRouter);
+app.use(`${__prefix_api_version}/likes`, likesRouter);
+app.use(`${__prefix_api_version}/comments`, commentsRouter);
+app.use(`${__prefix_api_version}/playlists`, playlistsRouter);
+app.use(`${__prefix_api_version}/dashboard`, dashboardRouter);
 
 // admin routes
-app.use(
-  `${__prefix_api_version}/admin`,
-  verifyAuthentication,
-  verifyAdminAuth,
-  adminRouter
-);
+app.use(`${__prefix_api_version}/admin`, adminRouter);
 
 // app health route
 app.use(`${__prefix_api_version}`, appHealthRouter);

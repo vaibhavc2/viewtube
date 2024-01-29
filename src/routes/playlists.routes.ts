@@ -6,15 +6,19 @@ import {
   togglePlaylistPrivacy,
   updatePlaylist,
 } from "@/controllers/playlist/playlist.controller";
+import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
 const router = Router();
 
-router.route("/create").post(createPlaylist);
-
 router.route("/search-playlist").get(searchPlaylist);
 
+router.route("/create").post(verifyAuthentication, createPlaylist);
+
 router.route("/:playlistId").get(getPlaylist);
+
+// the routes below require authentication
+router.use(verifyAuthentication);
 
 router.route("/:playlistId/update").patch(updatePlaylist);
 
