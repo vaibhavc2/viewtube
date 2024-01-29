@@ -10,23 +10,9 @@ export const _updatePlaylist = async (req: Request, res: Response) => {
   // get playlist id from request params
   const { playlistId } = req.params;
 
-  // validation of name
-  if (!name) {
-    throw new ApiError(400, "Playlist Name is required!");
-  }
-
-  // description can be empty, no need of validation
-  // no need of validation of videos array, we are allowing empty playlists to be created
-
-  // check if playlist with same name already exists
-  const existingPlaylist = await Playlist.findOne({
-    name,
-    owner: req.user?._id,
-  });
-
-  // if playlist with same name already exists, throw error
-  if (existingPlaylist) {
-    throw new ApiError(400, "Playlist with same name already exists!");
+  // validate that atleast one field is being updated
+  if (!name && !description && !videos) {
+    throw new ApiError(400, "Atleast one field is required to update!");
   }
 
   // update playlist
@@ -36,9 +22,9 @@ export const _updatePlaylist = async (req: Request, res: Response) => {
       owner: req.user?._id,
     },
     {
-      name,
-      description,
-      videos,
+      ...(name && { name }),
+      ...(description && { description }),
+      ...(videos && { videos }),
     },
     { new: true }
   );
