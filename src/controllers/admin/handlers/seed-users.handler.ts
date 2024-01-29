@@ -1,22 +1,22 @@
 import { User } from "@/models/user.model";
+import { generateFakeData } from "@/services/fake-data.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
-import { seedUsers } from "@/utils/db/seeding/seed.users";
 import { Request, Response } from "express";
 
 export const seedFakeUsers = async (req: Request, res: Response) => {
   const { num = 50, drop = 0 } = req.query;
 
-  if (isNaN(Number(num))) {
+  if (isNaN(+num)) {
     throw new ApiError(400, "Number of users must be a number.");
   }
-  if (isNaN(Number(drop))) {
+  if (isNaN(+drop)) {
     throw new ApiError(400, "Drop must be a number. (representing boolean)");
   }
 
-  const users = await seedUsers(Number(num));
+  const users = await generateFakeData.users(+num);
 
-  if (Number(drop)) {
+  if (+drop) {
     await User.collection.drop();
   }
 
