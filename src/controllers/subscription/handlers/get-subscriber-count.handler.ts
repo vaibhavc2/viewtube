@@ -3,7 +3,7 @@ import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-export const _getTotalSubscribers = async (req: Request, res: Response) => {
+export const getSubscriberCount = async (req: Request, res: Response) => {
   // get userId
   const { userId } = req.params;
 
@@ -17,19 +17,19 @@ export const _getTotalSubscribers = async (req: Request, res: Response) => {
     {
       $group: {
         _id: null,
-        totalSubscribers: {
+        subscriberCount: {
           $sum: 1,
         },
       },
     },
   ]);
 
-  const { totalSubscribers } = subs[0];
+  const { subscriberCount } = subs[0];
 
   // send response
   res.send(200).json(
     new SuccessResponse("Total Subscribers fetched successfully!", {
-      totalSubscribers,
+      subscriptions: { subscriberCount },
     })
   );
 };

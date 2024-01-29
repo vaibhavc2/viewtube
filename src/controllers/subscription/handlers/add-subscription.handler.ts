@@ -4,33 +4,35 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _addSubscription = async (req: Request, res: Response) => {
-  // get username of the channel subscribed to from params
-  const { channelUserName } = req.params;
+export const addSubscription = async (req: Request, res: Response) => {
+  // get userId of the channel subscribed to from params
+  const { userId } = req.params;
 
-  // find the user: the channel subscribed to
-  const user = await User.findOne({ username: channelUserName }, { _id: 1 });
+  // verify that the user exists
+  if (!(await User.findById(userId))) {
+    throw new ApiError(404, "Channel not found!");
+  }
 
-  // check if the channel exists
-  if (!user) {
-    throw new ApiError(404, "Channel not found");
+  // check if the user is trying to subscribe to their own channel
+  if (userId.toString() === req.user?._id.toString()) {
+    throw new ApiError(400, "Cannot subscribe to your own channel!");
   }
 
   // check if the user is already subscribed to the channel
   const alreadySubscribed = await Subscription.findOne({
     subscriber: req.user._id,
-    channel: user._id,
+    channel: userId,
   });
 
   // if already subscribed, throw error
   if (alreadySubscribed) {
-    throw new ApiError(400, "Already subscribed");
+    throw new ApiError(400, "Already subscribed!");
   }
 
   // create new subscription
   const subscription = await Subscription.create({
     subscriber: req.user._id,
-    channel: user._id,
+    channel: userId,
   });
 
   // check if created
@@ -43,7 +45,7 @@ export const _addSubscription = async (req: Request, res: Response) => {
 
   // send response
   res.status(201).json(
-    new CreatedResponse("Subscription created successfully", {
+    new CreatedResponse("Subscription created successfully!", {
       subscription: createdSubscription,
     })
   );

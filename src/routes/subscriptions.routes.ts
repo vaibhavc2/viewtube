@@ -1,20 +1,26 @@
-import {
-  addSubscription,
-  getTotalSubscribers,
-  removeSubscription,
-} from "@/controllers/subscription/subscription.controller";
+import { SubscriptionController } from "@/controllers/subscription/subscription.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
-const router = Router();
+class SubscriptionRouter {
+  public router: Router;
+  public controller: SubscriptionController;
 
-router.route("/:userId/get-total-subscribers").get(getTotalSubscribers);
+  constructor() {
+    this.router = Router();
+    this.controller = new SubscriptionController();
+    this.routes();
+  }
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+  public routes() {
+    this.router.get("/:userId", this.controller.getSubscriberCount);
 
-router.route("/add/:channelUserName").post(addSubscription);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-router.route("/remove/:channelUserName").delete(removeSubscription);
+    this.router.post("/add/:userId", this.controller.addSubscription);
+    this.router.delete("/remove/:userId", this.controller.removeSubscription);
+  }
+}
 
-export default router;
+export default new SubscriptionRouter().router;
