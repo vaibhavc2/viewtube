@@ -12,14 +12,20 @@ import jwt from "jsonwebtoken";
 
 export const verifyAuthentication = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    // check if route is unsecured, if yes, skip authentication
-    // Express's req.route.path property, which gives you the route string that was matched. This is useful for dynamic routes.
-    // req.path is for static routes
-    if (
-      __unsecured_routes.includes(req.path) ||
-      (req.route && __unsecured_dynamic_routes.includes(req.route.path))
-    )
+    // Check if the request path is a static unsecured route
+    if (__unsecured_routes.includes(req.path)) {
       return next();
+    }
+
+    // Check if the request path matches the pattern of a dynamic unsecured route
+    for (const route of __unsecured_dynamic_routes) {
+      const regex = new RegExp(
+        "^" + route.replace(/:[^\s/]+/g, "([\\w-]+)") + "$"
+      );
+      if (regex.test(req.originalUrl)) {
+        return next();
+      }
+    }
 
     // check if token exists
     const token =

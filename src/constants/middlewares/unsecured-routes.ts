@@ -13,7 +13,7 @@ const unsecured_like_routes = ["/get-count"];
 
 const unsecured_comment_routes = ["/get-comments"];
 
-const unsecured_playlist_routes = ["/get-playlist", "/search-playlist"];
+const unsecured_playlist_routes = ["/search-playlist"];
 
 //? DYNAMIC ROUTES
 // ***************************************************
@@ -31,6 +31,10 @@ const unsecured_subscription_dynamic_routes = [
 
 const unsecured_app_health_dynamic_routes = [`${__prefix_api_version}/:text`];
 
+const unsecured_playlist_dynamic_routes = [
+  `${__prefix_api_version}/playlists/:playlistId`,
+];
+
 //? EXPORTS
 // ***************************************************
 
@@ -47,4 +51,5 @@ export const __unsecured_dynamic_routes = [
   ...unsecured_video_dynamic_routes,
   ...unsecured_app_health_dynamic_routes,
   ...unsecured_subscription_dynamic_routes,
+  ...unsecured_playlist_dynamic_routes,
 ];

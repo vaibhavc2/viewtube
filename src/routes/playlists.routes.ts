@@ -3,6 +3,7 @@ import {
   deletePlaylist,
   getPlaylist,
   searchPlaylist,
+  togglePlaylistPrivacy,
   updatePlaylist,
 } from "@/controllers/playlist/playlist.controller";
 import { Router } from "express";
@@ -11,11 +12,13 @@ const router = Router();
 
 router.route("/create").post(createPlaylist);
 
+router.route("/:playlistId").get(getPlaylist);
+
 router.route("/:playlistId/update").patch(updatePlaylist);
 
-router.route("/:playlistId/delete").delete(deletePlaylist);
+router.route("/:playlistId/toggle-privacy").patch(togglePlaylistPrivacy);
 
-router.route("/get-playlist").get(getPlaylist);
+router.route("/:playlistId/delete").delete(deletePlaylist);
 
 router.route("/search-playlist").get(searchPlaylist);
 
