@@ -33,12 +33,20 @@ export const _getAllVideos = async (req: Request, res: Response) => {
   };
 
   // Define the match object for the MongoDB query. This will be used to filter the videos.
-  const match = {
-    ...{ title: { $regex: String(query) || "", $options: "i" } },
-    ...{ description: { $regex: String(query) || "", $options: "i" } },
+  let match: any = {
     isPublished: true,
     private: false,
   };
+
+  if (query) {
+    match = {
+      ...match,
+      $or: [
+        { title: { $regex: String(query), $options: "i" } },
+        { description: { $regex: String(query), $options: "i" } },
+      ],
+    };
+  }
 
   // If a userId is provided in the query parameters, add it to the match object.
   // This will filter the videos to only return those owned by the specified user.

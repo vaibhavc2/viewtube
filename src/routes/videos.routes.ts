@@ -22,15 +22,9 @@ import { Router } from "express";
 
 const router = Router();
 
-//! get routes: GET
-
 router.route("/all-videos").get(getAllVideos);
 
-router.route("/:videoId").get(getVideo);
-
 router.route("/random-videos").get(getRandomVideos);
-
-//! create routes: POST
 
 router.route("/upload-video").post(
   uploadFilesLocally.fields([
@@ -43,7 +37,7 @@ router.route("/upload-video").post(
   uploadVideo
 );
 
-//! update (upload but actually update) routes: PATCH
+router.route("/:videoId").get(getVideo);
 
 router.route("/:videoId/increase-views").patch(increaseViews);
 
@@ -60,8 +54,6 @@ router
 router
   .route("/:videoId/update-thumbnail")
   .patch(uploadImageMiddleware, updateThumbnail);
-
-//! delete routes: DELETE
 
 router.route("/:videoId/delete").delete(deleteVideo);
 

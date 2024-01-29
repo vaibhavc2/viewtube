@@ -1,6 +1,7 @@
 import { __page, __page_limit } from "@/constants/pagination";
 import { Video } from "@/models/video.model";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { shuffleArray } from "@/utils/array/shuffle-array.util";
 import { Request, Response } from "express";
 
 // get random videos with pagination
@@ -12,6 +13,9 @@ export const _getRandomVideos = async (req: Request, res: Response) => {
   const options = {
     page: parseInt(page as string, 10),
     limit: parseInt(limit as string, 10),
+    sort: {
+      createdAt: -1,
+    },
   };
 
   // Use the aggregatePaginate function (plugin) to get a random set of videos that match the given match object.
@@ -26,6 +30,9 @@ export const _getRandomVideos = async (req: Request, res: Response) => {
     ]),
     options
   );
+
+  // Shuffle the videos array
+  videos.docs = shuffleArray(videos.docs);
 
   // Send a 200 OK response with the videos and a success message.
   res

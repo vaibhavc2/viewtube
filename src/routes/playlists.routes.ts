@@ -12,6 +12,8 @@ const router = Router();
 
 router.route("/create").post(createPlaylist);
 
+router.route("/search-playlist").get(searchPlaylist);
+
 router.route("/:playlistId").get(getPlaylist);
 
 router.route("/:playlistId/update").patch(updatePlaylist);
@@ -19,7 +21,5 @@ router.route("/:playlistId/update").patch(updatePlaylist);
 router.route("/:playlistId/toggle-privacy").patch(togglePlaylistPrivacy);
 
 router.route("/:playlistId/delete").delete(deletePlaylist);
-
-router.route("/search-playlist").get(searchPlaylist);
 
 export default router;

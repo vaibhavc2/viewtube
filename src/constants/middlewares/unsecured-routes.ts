@@ -15,6 +15,8 @@ const unsecured_comment_routes = ["/get-comments"];
 
 const unsecured_playlist_routes = ["/search-playlist"];
 
+const unsecured_app_health_routes = ["/health"];
+
 //? DYNAMIC ROUTES
 // ***************************************************
 
@@ -29,7 +31,9 @@ const unsecured_subscription_dynamic_routes = [
   `${__prefix_api_version}/subscriptions/:userId/get-total-subscribers`,
 ];
 
-const unsecured_app_health_dynamic_routes = [`${__prefix_api_version}/:text`];
+const unsecured_app_health_dynamic_routes = [
+  `${__prefix_api_version}/health/:text`,
+];
 
 const unsecured_playlist_dynamic_routes = [
   `${__prefix_api_version}/playlists/:playlistId`,
@@ -45,6 +49,7 @@ export const __unsecured_routes = [
   ...unsecured_like_routes,
   ...unsecured_comment_routes,
   ...unsecured_playlist_routes,
+  ...unsecured_app_health_routes,
 ];
 
 export const __unsecured_dynamic_routes = [
