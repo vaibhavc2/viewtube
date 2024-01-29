@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _searchPlaylist = async (req: Request, res: Response) => {
+export const searchPlaylist = async (req: Request, res: Response) => {
   // get the search query from request query
   const { query } = req.query;
 

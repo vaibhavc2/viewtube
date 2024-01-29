@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _togglePlaylistPrivacy = async (req: Request, res: Response) => {
+export const togglePlaylistPrivacy = async (req: Request, res: Response) => {
   // get playlistId from req.params
   const { playlistId } = req.params;
 

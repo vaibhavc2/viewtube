@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _createPlaylist = async (req: Request, res: Response) => {
+export const createPlaylist = async (req: Request, res: Response) => {
   // get details from request body
   const { name, description, videos, isPrivate = false } = req.body;
 

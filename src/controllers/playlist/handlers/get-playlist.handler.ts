@@ -2,7 +2,7 @@ import { Playlist } from "@/models/playlist.model";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _getPlaylist = async (req: Request, res: Response) => {
+export const getPlaylist = async (req: Request, res: Response) => {
   // get playlist id from request params
   const { playlistId } = req.params;
 

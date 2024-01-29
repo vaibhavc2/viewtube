@@ -1,29 +1,36 @@
-import {
-  createPlaylist,
-  deletePlaylist,
-  getPlaylist,
-  searchPlaylist,
-  togglePlaylistPrivacy,
-  updatePlaylist,
-} from "@/controllers/playlist/playlist.controller";
+import { PlaylistController } from "@/controllers/playlist/playlist.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { Router } from "express";
 
-const router = Router();
+class PlaylistRouter {
+  public router: Router;
+  public controller: PlaylistController;
 
-router.route("/search-playlist").get(searchPlaylist);
+  constructor() {
+    this.router = Router();
+    this.controller = new PlaylistController();
+    this.routes();
+  }
 
-router.route("/create").post(verifyAuthentication, createPlaylist);
+  public routes() {
+    this.router.get("/search-playlist", this.controller.searchPlaylist);
+    this.router.post(
+      "/create",
+      verifyAuthentication,
+      this.controller.createPlaylist
+    );
+    this.router.get("/:playlistId", this.controller.getPlaylist);
 
-router.route("/:playlistId").get(getPlaylist);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-// the routes below require authentication
-router.use(verifyAuthentication);
+    this.router.patch("/:playlistId/update", this.controller.updatePlaylist);
+    this.router.patch(
+      "/:playlistId/toggle-privacy",
+      this.controller.togglePlaylistPrivacy
+    );
+    this.router.delete("/:playlistId/delete", this.controller.deletePlaylist);
+  }
+}
 
-router.route("/:playlistId/update").patch(updatePlaylist);
-
-router.route("/:playlistId/toggle-privacy").patch(togglePlaylistPrivacy);
-
-router.route("/:playlistId/delete").delete(deletePlaylist);
-
-export default router;
+export default new PlaylistRouter().router;

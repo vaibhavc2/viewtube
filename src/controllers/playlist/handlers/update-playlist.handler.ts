@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updatePlaylist = async (req: Request, res: Response) => {
+export const updatePlaylist = async (req: Request, res: Response) => {
   // get details from request body
   const { name, description, videos } = req.body;
 

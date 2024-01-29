@@ -1,14 +1,18 @@
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { _createPlaylist } from "./handlers/create-playlist.handler";
-import { _deletePlaylist } from "./handlers/delete-playlist.handler";
-import { _getPlaylist } from "./handlers/get-playlist.handler";
-import { _searchPlaylist } from "./handlers/search-playlists.handler";
-import { _togglePlaylistPrivacy } from "./handlers/toggle-playlist-privacy.handler";
-import { _updatePlaylist } from "./handlers/update-playlist.handler";
+import { createPlaylist } from "./handlers/create-playlist.handler";
+import { deletePlaylist } from "./handlers/delete-playlist.handler";
+import { getPlaylist } from "./handlers/get-playlist.handler";
+import { searchPlaylist } from "./handlers/search-playlists.handler";
+import { togglePlaylistPrivacy } from "./handlers/toggle-playlist-privacy.handler";
+import { updatePlaylist } from "./handlers/update-playlist.handler";
 
-export const createPlaylist = asyncHandler(_createPlaylist);
-export const updatePlaylist = asyncHandler(_updatePlaylist);
-export const togglePlaylistPrivacy = asyncHandler(_togglePlaylistPrivacy);
-export const deletePlaylist = asyncHandler(_deletePlaylist);
-export const getPlaylist = asyncHandler(_getPlaylist);
-export const searchPlaylist = asyncHandler(_searchPlaylist);
+export class PlaylistController {
+  constructor() {}
+
+  public createPlaylist = asyncHandler(createPlaylist);
+  public updatePlaylist = asyncHandler(updatePlaylist);
+  public deletePlaylist = asyncHandler(deletePlaylist);
+  public getPlaylist = asyncHandler(getPlaylist);
+  public searchPlaylist = asyncHandler(searchPlaylist);
+  public togglePlaylistPrivacy = asyncHandler(togglePlaylistPrivacy);
+}

@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _deletePlaylist = async (req: Request, res: Response) => {
+export const deletePlaylist = async (req: Request, res: Response) => {
   // get playlist id from request params
   const { playlistId } = req.params;
 
