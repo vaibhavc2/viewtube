@@ -1,16 +1,4 @@
-import {
-  deleteVideo,
-  getAllVideos,
-  getRandomVideos,
-  getVideo,
-  increaseViews,
-  togglePublishStatus,
-  updateThumbnail,
-  updateVideo,
-  updateVideoDetails,
-  updateVideoPrivacy,
-  uploadVideo,
-} from "@/controllers/video/video.controller";
+import { VideoController } from "@/controllers/video/video.controller";
 import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
 import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
 import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
@@ -21,45 +9,64 @@ import { zodValidation } from "@/middlewares/validation/zod-validation.middlewar
 import { VideoDetailsValidation } from "@/validation/video-details.validation";
 import { Router } from "express";
 
-const router = Router();
+class VideoRouter {
+  public router: Router;
+  public controller: VideoController;
 
-router.route("/all-videos").get(getAllVideos);
+  constructor() {
+    this.router = Router();
+    this.controller = new VideoController();
+    this.routes();
+  }
 
-router.route("/random-videos").get(getRandomVideos);
+  public routes() {
+    this.router.get("/all-videos", this.controller.getAllVideos);
+    this.router.get("/random-videos", this.controller.getRandomVideos);
+    this.router.post(
+      "/upload-video",
+      verifyAuthentication, // authentication required
+      uploadFilesLocally.fields([
+        { name: "video", maxCount: 1 },
+        { name: "image", maxCount: 1 },
+      ]),
+      uploadVideoImageMiddleware,
+      requiredFields(["title", "description"]),
+      zodValidation(VideoDetailsValidation),
+      this.controller.uploadVideo
+    );
+    this.router.get("/:videoId", this.controller.getVideo);
+    this.router.patch(
+      "/:videoId/increase-views",
+      this.controller.increaseViews
+    );
 
-router.route("/upload-video").post(
-  verifyAuthentication, // authentication required
-  uploadFilesLocally.fields([
-    { name: "video", maxCount: 1 },
-    { name: "image", maxCount: 1 },
-  ]),
-  uploadVideoImageMiddleware,
-  requiredFields(["title", "description"]),
-  zodValidation(VideoDetailsValidation),
-  uploadVideo
-);
+    // the routes below require authentication
+    this.router.use(verifyAuthentication);
 
-router.route("/:videoId").get(getVideo);
+    this.router.patch(
+      "/:videoId/toggle-publish-status",
+      this.controller.togglePublishStatus
+    );
+    this.router.patch(
+      "/:videoId/update-details",
+      this.controller.updateVideoDetails
+    );
+    this.router.patch(
+      "/:videoId/update-privacy",
+      this.controller.updateVideoPrivacy
+    );
+    this.router.patch(
+      "/:videoId/update-video",
+      uploadVideoMiddleware,
+      this.controller.updateVideo
+    );
+    this.router.patch(
+      "/:videoId/update-thumbnail",
+      uploadImageMiddleware,
+      this.controller.updateThumbnail
+    );
+    this.router.delete("/:videoId/delete", this.controller.deleteVideo);
+  }
+}
 
-router.route("/:videoId/increase-views").patch(increaseViews);
-
-// the routes below require authentication
-router.use(verifyAuthentication);
-
-router.route("/:videoId/toggle-publish-status").patch(togglePublishStatus);
-
-router.route("/:videoId/update-details").patch(updateVideoDetails);
-
-router.route("/:videoId/update-privacy").patch(updateVideoPrivacy);
-
-router
-  .route("/:videoId/update-video")
-  .patch(uploadVideoMiddleware, updateVideo);
-
-router
-  .route("/:videoId/update-thumbnail")
-  .patch(uploadImageMiddleware, updateThumbnail);
-
-router.route("/:videoId/delete").delete(deleteVideo);
-
-export default router;
+export default new VideoRouter().router;

@@ -5,7 +5,7 @@ import { shuffleArray } from "@/utils/array/shuffle-array.util";
 import { Request, Response } from "express";
 
 // get random videos with pagination
-export const _getRandomVideos = async (req: Request, res: Response) => {
+export const getRandomVideos = async (req: Request, res: Response) => {
   // Destructure the page and limit query parameters from the request
   const { page = __page, limit = __page_limit } = req.query;
 

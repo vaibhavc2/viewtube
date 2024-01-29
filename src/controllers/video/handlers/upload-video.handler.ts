@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _uploadVideo = async (req: Request, res: Response) => {
+export const uploadVideo = async (req: Request, res: Response) => {
   // get video details from request body
   const {
     title,

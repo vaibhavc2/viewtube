@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _updateVideo = async (req: Request, res: Response) => {
+export const updateVideo = async (req: Request, res: Response) => {
   // get videoUrl and duration from req.body
   const { videoUrl, duration } = req.body as {
     videoUrl: string;

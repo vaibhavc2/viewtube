@@ -12,7 +12,7 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 // get all videos based on query, sort and pagination
-export const _getAllVideos = async (req: Request, res: Response) => {
+export const getAllVideos = async (req: Request, res: Response) => {
   // Destructure the query parameters from the request
   const {
     page = __page,

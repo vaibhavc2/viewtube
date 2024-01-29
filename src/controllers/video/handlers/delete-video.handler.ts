@@ -3,7 +3,7 @@ import { cloudinaryService } from "@/services/cloudinary.service";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _deleteVideo = async (req: Request, res: Response) => {
+export const deleteVideo = async (req: Request, res: Response) => {
   // get videoId from request params
   const { videoId } = req.params;
 

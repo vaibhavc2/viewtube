@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
-export const _togglePublishStatus = async (req: Request, res: Response) => {
+export const togglePublishStatus = async (req: Request, res: Response) => {
   // get videoId from req.params
   const videoId = req.params.videoId;
 

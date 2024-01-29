@@ -3,7 +3,7 @@ import ApiError from "@/utils/api/error/api-error.util.js";
 import { SuccessResponse } from "@/utils/api/res/api-response.util.js";
 import { Request, Response } from "express";
 
-export const _updateThumbnail = async (req: Request, res: Response) => {
+export const updateThumbnail = async (req: Request, res: Response) => {
   // get thumbnail from request body
   const { thumbnail } = req.body as { thumbnail: string };
 
