@@ -7,14 +7,14 @@ export const seedUsers = async (num: number) => {
 
   for (let i = 0; i < num; ++i) {
     const fullName = faker.person.fullName();
-    const username = `${faker.person.fullName().toLowerCase()}_${Math.floor(Math.random() * 1000)}`;
+    const username = `${fullName.toLowerCase().trim()}_${Math.floor(Math.random() * 1000)}`;
     const _password = "abcdefgh@#123";
     const password = await argon2.hash(_password, {
       secret: Buffer.from(SECRET_KEY),
     });
     const email = faker.internet.email();
     const avatar = faker.image.avatar();
-    const cover = faker.image.avatar();
+    const cover = avatar;
     const channelDescription = faker.lorem.paragraph();
     const createdAt = faker.date.past();
     const updatedAt = faker.date.recent();

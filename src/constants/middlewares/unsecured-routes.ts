@@ -5,7 +5,7 @@ import { __prefix_api_version } from "@/constants/express";
 
 const unsecured_user_routes = ["/register", "/login", "/refresh"];
 
-const unsecured_video_routes = ["/videos", "/random-videos"];
+const unsecured_video_routes = ["/all-videos", "/random-videos"];
 
 const unsecured_tweet_routes = ["/get-tweets"];
 

@@ -9,6 +9,7 @@ import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 export const _getUserTweets = async (req: Request, res: Response) => {
   // get userId, page, limit, sortBy, sortType, query from req.query
@@ -32,14 +33,14 @@ export const _getUserTweets = async (req: Request, res: Response) => {
 
   // Define the match object for the MongoDB query. This will be used to filter tweets.
   const match = {
-    content: { $regex: (query as string) || "", $options: "i" },
+    ...(query && { content: { $regex: String(query) || "", $options: "i" } }),
   };
 
   // If a userId is provided in the query parameters, add it to the match object.
   // This will filter tweets to only return those owned by the specified user.
   if (userId) {
     const user = await User.findById(userId);
-    if (user) (match as any)["owner"] = user._id;
+    if (user) (match as any)["owner"] = new mongoose.Types.ObjectId(user._id);
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 

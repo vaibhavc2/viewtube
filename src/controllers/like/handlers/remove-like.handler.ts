@@ -7,29 +7,10 @@ export const _removeLike = async (req: Request, res: Response) => {
   // get commentId, videoId, tweetId from req.query
   const { commentId, videoId, tweetId } = req.query;
 
-  // check if one of commentId, videoId, tweetId is provided
-  if (!commentId && !videoId && !tweetId) {
-    throw new ApiError(400, "One of commentId, videoId, tweetId is required");
-  }
-
-  // there should be only one of commentId, videoId, tweetId
-  if (
-    (commentId && videoId) ||
-    (commentId && tweetId) ||
-    (videoId && tweetId)
-  ) {
-    throw new ApiError(
-      400,
-      "Only one of commentId, videoId, tweetId is allowed"
-    );
-  }
-
-  // get userId from req.user
-  const userId = req.user._id;
-
+  // validate ids using middleware!
   // find the like
   const like = await Like.findOne({
-    owner: userId,
+    owner: req.user?._id,
     ...(commentId && { comment: commentId }),
     ...(videoId && { video: videoId }),
     ...(tweetId && { tweet: tweetId }),

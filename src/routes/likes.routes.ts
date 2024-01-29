@@ -1,5 +1,6 @@
 import {
   addLike,
+  getLikeHistory,
   getLikesCount,
   removeLike,
 } from "@/controllers/like/like.controller";
@@ -10,8 +11,10 @@ const router = Router();
 
 router.route("/add").post(validateIds, addLike);
 
-router.route("/remove").delete(removeLike);
+router.route("/remove").delete(validateIds, removeLike);
 
 router.route("/get-count").get(validateIds, getLikesCount);
+
+router.route("/get-history").get(getLikeHistory);
 
 export default router;

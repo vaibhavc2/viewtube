@@ -9,6 +9,7 @@ import { Video } from "@/models/video.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 // get all videos based on query, sort and pagination
 export const _getAllVideos = async (req: Request, res: Response) => {
@@ -33,7 +34,8 @@ export const _getAllVideos = async (req: Request, res: Response) => {
 
   // Define the match object for the MongoDB query. This will be used to filter the videos.
   const match = {
-    title: { $regex: (query as string) || "", $options: "i" },
+    ...{ title: { $regex: String(query) || "", $options: "i" } },
+    ...{ description: { $regex: String(query) || "", $options: "i" } },
     isPublished: true,
     private: false,
   };
@@ -42,7 +44,7 @@ export const _getAllVideos = async (req: Request, res: Response) => {
   // This will filter the videos to only return those owned by the specified user.
   if (userId) {
     const user = await User.findById(userId);
-    if (user) (match as any)["owner"] = user._id;
+    if (user) (match as any)["owner"] = new mongoose.Types.ObjectId(user._id);
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 

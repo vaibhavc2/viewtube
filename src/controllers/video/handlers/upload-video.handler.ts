@@ -53,7 +53,7 @@ export const _uploadVideo = async (req: Request, res: Response) => {
 
   // send response
   return res.status(201).json(
-    new CreatedResponse("Video details uploaded successfully!", {
+    new CreatedResponse("Video uploaded successfully!", {
       video: createdVideo,
     })
   );
