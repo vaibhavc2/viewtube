@@ -1,8 +1,6 @@
 import { envConfig } from "@/config";
 import { __limit } from "@/constants/express";
-import { errorHandler } from "@/middlewares/error/error-handler.middleware";
-import { errorLogger } from "@/middlewares/error/error-logger.middleware";
-import { routeNotFound } from "@/middlewares/error/route-not-found.middleware";
+import { middlewares } from "@/middlewares";
 import { appRouter } from "@/router";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -66,6 +64,10 @@ export class App {
 
   private useErrorHandlers() {
     // error handler middlewares
-    this.app.use(errorLogger, errorHandler, routeNotFound);
+    this.app.use(
+      middlewares.error.logger,
+      middlewares.error.handler,
+      middlewares.error.routeNotFound
+    );
   }
 }

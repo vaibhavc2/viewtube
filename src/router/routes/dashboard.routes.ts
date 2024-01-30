@@ -1,5 +1,5 @@
 import { DashboardController } from "@/controllers/dashboard/dashboard.controller";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
+import { middlewares } from "@/middlewares";
 import { Router } from "express";
 
 class DashboardRouter {
@@ -16,7 +16,7 @@ class DashboardRouter {
     this.router.get("/:userId/channel-stats", this.controller.getChannelStats);
 
     // the routes below require authentication
-    this.router.use(verifyAuthentication);
+    this.router.use(middlewares.auth.user);
 
     this.router.get("/videos", this.controller.getChannelVideos);
   }

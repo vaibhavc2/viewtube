@@ -1,7 +1,6 @@
 import { envConfig } from "@/config";
 import { AdminController } from "@/controllers/admin/admin.controller";
-import { verifyAdminAuth } from "@/middlewares/auth/auth-admin.middleware";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
+import { middlewares } from "@/middlewares";
 import { Router } from "express";
 
 class AdminRouter {
@@ -15,7 +14,7 @@ class AdminRouter {
   }
 
   public routes() {
-    this.router.use(verifyAuthentication, verifyAdminAuth);
+    this.router.use(middlewares.auth.user, middlewares.auth.admin);
 
     // safety check: the environment must be development
     if (envConfig.isDev()) {

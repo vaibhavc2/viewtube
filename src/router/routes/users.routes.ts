@@ -1,7 +1,7 @@
 import { UserController } from "@/controllers/user/user.controllers";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
-import { uploadFilesLocally } from "@/middlewares/multer/upload-files-locally.middleware";
-import { uploadImageMiddleware } from "@/middlewares/upload/upload-image.middleware";
+import { middlewares } from "@/middlewares";
+import { RegisterValidation } from "@/validation/register.validation";
+
 import { Router } from "express";
 
 class UserRouter {
@@ -15,26 +15,40 @@ class UserRouter {
   }
 
   public routes() {
-    this.router.post("/register", this.controller.register);
+    this.router.post(
+      "/register",
+      middlewares.files.uploadLocally.fields([
+        { name: "avatar", maxCount: 1 },
+        { name: "cover", maxCount: 1 },
+      ]),
+      middlewares.validation.fields([
+        "fullName",
+        "username",
+        "email",
+        "password",
+      ]),
+      middlewares.validation.zod(RegisterValidation),
+      this.controller.register
+    );
     this.router.patch("/login", this.controller.login);
     this.router.patch("/refresh", this.controller.refresh);
 
     // the routes below require authentication
-    this.router.use(verifyAuthentication);
+    this.router.use(middlewares.auth.user);
 
     this.router.patch("/logout", this.controller.logout);
     this.router.patch("/change-password", this.controller.changePassword);
     this.router.patch("/update/profile", this.controller.updateUser);
     this.router.patch(
       "/update/avatar",
-      uploadFilesLocally.single("avatar"),
-      uploadImageMiddleware,
+      middlewares.files.uploadLocally.single("avatar"),
+      middlewares.files.uploadImage,
       this.controller.updateAvatar
     );
     this.router.patch(
       "/update/cover",
-      uploadFilesLocally.single("cover"),
-      uploadImageMiddleware,
+      middlewares.files.uploadLocally.single("cover"),
+      middlewares.files.uploadImage,
       this.controller.updateCover
     );
     this.router.patch(

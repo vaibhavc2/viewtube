@@ -1,5 +1,6 @@
 import { SubscriptionController } from "@/controllers/subscription/subscription.controller";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
+import { middlewares } from "@/middlewares";
+
 import { Router } from "express";
 
 class SubscriptionRouter {
@@ -16,7 +17,7 @@ class SubscriptionRouter {
     this.router.get("/:userId", this.controller.getSubscriberCount);
 
     // the routes below require authentication
-    this.router.use(verifyAuthentication);
+    this.router.use(middlewares.auth.user);
 
     this.router.post("/add/:userId", this.controller.addSubscription);
     this.router.delete("/remove/:userId", this.controller.removeSubscription);

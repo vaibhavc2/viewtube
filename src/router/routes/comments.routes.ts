@@ -1,6 +1,5 @@
 import { CommentController } from "@/controllers/comment/comment.controller";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
-import { validateIds } from "@/middlewares/validation/id-validation.middleware";
+import { middlewares } from "@/middlewares";
 import { Router } from "express";
 
 class CommentRouter {
@@ -14,13 +13,21 @@ class CommentRouter {
   }
 
   public routes() {
-    this.router.get("/get-comments", validateIds, this.controller.getComments);
+    this.router.get(
+      "/get-comments",
+      middlewares.validation.ids,
+      this.controller.getComments
+    );
 
     // the routes below require authentication
-    this.router.use(verifyAuthentication);
+    this.router.use(middlewares.auth.user);
 
     this.router.get("/get-history", this.controller.getCommentHistory);
-    this.router.post("/add-comment", validateIds, this.controller.addComment);
+    this.router.post(
+      "/add-comment",
+      middlewares.validation.ids,
+      this.controller.addComment
+    );
     this.router.patch("/:commentId/update", this.controller.updateComment);
     this.router.delete("/:commentId/delete", this.controller.deleteComment);
   }

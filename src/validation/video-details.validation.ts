@@ -2,7 +2,7 @@ import {
   largeStringError,
   minStringError,
   requiredError,
-} from "@/helpers/validation/zod-error-messages.helper";
+} from "@/utils/validation/zod-error-messages.util";
 import * as z from "zod";
 
 export const VideoDetailsValidation = z.object({

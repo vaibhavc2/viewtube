@@ -1,5 +1,6 @@
 import { TweetController } from "@/controllers/tweet/tweet.controller";
-import { verifyAuthentication } from "@/middlewares/auth/auth.middleware";
+import { middlewares } from "@/middlewares";
+
 import { Router } from "express";
 
 class TweetRouter {
@@ -16,7 +17,7 @@ class TweetRouter {
     this.router.get("/get-tweets", this.controller.getUserTweets);
 
     // the routes below require authentication
-    this.router.use(verifyAuthentication);
+    this.router.use(middlewares.auth.user);
 
     this.router.post("/create", this.controller.createTweet);
     this.router.delete("/:tweetId/delete", this.controller.deleteTweet);
