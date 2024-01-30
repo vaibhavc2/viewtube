@@ -122,8 +122,8 @@ export class FilesMiddleware {
     }
   );
 
-  public uploadImageAndVideo = asyncHandler(
-    async (req: Request, res: Response, next: NextFunction) => {
+  public uploadImageAndVideo = (thumbnail = false) =>
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
       // get video and image local paths
       const files = req?.files as GlobalTypes.MulterFiles;
       let videoLocalPath: string | undefined = undefined;
@@ -139,15 +139,22 @@ export class FilesMiddleware {
       }
 
       // check if video and image files are missing
-      if (!videoLocalPath) throw new ApiError(400, "Video File is required!");
-      if (!imageLocalPath) throw new ApiError(400, "Image File is required!");
+      if (!videoLocalPath) throw new ApiError(400, "Video is required!");
+      if (!imageLocalPath)
+        throw new ApiError(
+          400,
+          `${thumbnail ? "Thumbnail" : "Image File"} is required!`
+        );
 
       // check if video and image are valid files
       if (!__video_valid_mime_types.includes(files?.video[0]?.mimetype)) {
         throw new ApiError(400, "Invalid Video file!");
       }
       if (!__img_valid_mime_types.includes(files?.image[0]?.mimetype)) {
-        throw new ApiError(400, "Invalid Image file!");
+        throw new ApiError(
+          400,
+          `Invalid ${thumbnail ? "Thumbnail" : ""} image file!`
+        );
       }
 
       // check if video is less than the allowed size
@@ -193,7 +200,10 @@ export class FilesMiddleware {
       // check if image upload failed
       if (!image?.secure_url) {
         await cloudinaryService.deleteFileFromCloudinary(video.secure_url);
-        throw new ApiError(400, "Image upload failed!");
+        throw new ApiError(
+          400,
+          `${thumbnail ? "Thumbnail" : "Image"} upload failed!`
+        );
       }
 
       // save video url to request body
@@ -204,6 +214,74 @@ export class FilesMiddleware {
 
       // save video duration to request body
       req.body.duration = videoLength;
+
+      // next middleware
+      next();
+    });
+
+  public uploadAvatarAndCover = asyncHandler(
+    async (req: Request, res: Response, next: NextFunction) => {
+      // check for images: avatar, cover : avatar is compulsory
+      const files = req?.files as GlobalTypes.MulterFiles;
+      let avatarLocalPath: string | undefined = undefined;
+      let coverLocalPath: string | undefined = undefined;
+
+      if (files) {
+        if (Array.isArray(files.avatar) && files.avatar.length > 0) {
+          avatarLocalPath = files.avatar[0].path;
+        }
+        if (Array.isArray(files.cover) && files.cover.length > 0) {
+          coverLocalPath = files.cover[0].path;
+        }
+      }
+
+      if (!avatarLocalPath)
+        throw new ApiError(400, "Avatar Image is required!");
+
+      // check if avatar and cover are valid images: avatar is compulsory
+      if (!__img_valid_mime_types.includes(files?.avatar[0]?.mimetype)) {
+        throw new ApiError(400, "Invalid Avatar Image!");
+      }
+      if (coverLocalPath) {
+        if (!__img_valid_mime_types.includes(files?.cover[0]?.mimetype)) {
+          throw new ApiError(400, "Invalid Cover Image!");
+        }
+      }
+
+      // upload avatar to cloudinary
+      const avatar =
+        await cloudinaryService.uploadFileToCloudinary(avatarLocalPath);
+
+      // check if avatar upload failed
+      if (!avatar?.secure_url) {
+        throw new ApiError(
+          500,
+          "Something went wrong while uploading Avatar Image to server!"
+        );
+      }
+
+      // save avatar url to request body
+      req.body.avatarUrl = avatar.secure_url;
+
+      // upload cover to cloudinary
+      let cover = null;
+      if (coverLocalPath) {
+        cover = await cloudinaryService.uploadFileToCloudinary(coverLocalPath);
+      }
+
+      // check if cover upload failed
+      if (coverLocalPath) {
+        if (!cover?.secure_url) {
+          await cloudinaryService.deleteFileFromCloudinary(avatar.secure_url);
+          throw new ApiError(
+            500,
+            "Something went wrong while uploading Cover Image to server!"
+          );
+        }
+      }
+
+      // save cover url to request body
+      req.body.coverUrl = cover?.secure_url || "";
 
       // next middleware
       next();

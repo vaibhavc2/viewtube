@@ -2,24 +2,18 @@ import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import ApiResponse from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 export const getChannelProfile = async (req: Request, res: Response) => {
-  // get the channel profile of the user with the given username
-
-  // req.params is an object containing properties mapped to the named route “parameters”. For example, if you have the route /user/:name, then the “name” property is available as req.params.name. This object defaults to {}.
-  const { username } = req.params;
-
-  // check if the username is missing
-  if (!username?.trim()) {
-    throw new ApiError(400, "Username is missing!");
-  }
+  // get userId from request params
+  const { userId } = req.params;
 
   // write the aggregation pipeline to get the channel profile of the user with the given username
   const channel = await User.aggregate([
-    // match the user with the given username in the users collection
+    // match the user with the given id in the users collection
     {
       $match: {
-        username: username?.trim().toLowerCase(),
+        _id: new mongoose.Types.ObjectId(userId),
       },
     },
     // lookup the subscriptions collection to get the subscribers of the user with the given username
@@ -72,7 +66,7 @@ export const getChannelProfile = async (req: Request, res: Response) => {
         cover: 1,
         email: 1,
         subscribersCount: 1,
-        subscribedToCount: req.user?.username === username ? 1 : 0,
+        subscribedToCount: 1,
         isSubscribed: 1,
         channelDescription: 1,
       },

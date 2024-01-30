@@ -1,7 +1,6 @@
 import { UserController } from "@/controllers/user/user.controllers";
 import { middlewares } from "@/middlewares";
 import { RegisterValidation } from "@/validation/register.validation";
-
 import { Router } from "express";
 
 class UserRouter {
@@ -21,11 +20,13 @@ class UserRouter {
         { name: "avatar", maxCount: 1 },
         { name: "cover", maxCount: 1 },
       ]),
+      middlewares.files.uploadAvatarAndCover,
       middlewares.validation.fields([
         "fullName",
         "username",
         "email",
         "password",
+        "avatarUrl",
       ]),
       middlewares.validation.zod(RegisterValidation),
       this.controller.register
@@ -59,7 +60,7 @@ class UserRouter {
       "/update/watch-history/:videoId",
       this.controller.updateWatchHistory
     );
-    this.router.get("/channel/:username", this.controller.getChannelProfile);
+    this.router.get("/channel/:userId", this.controller.getChannelProfile);
     this.router.get("/me/profile", this.controller.getUser);
     this.router.get("/me/watch-history", this.controller.getWatchHistory);
     this.router.get(
