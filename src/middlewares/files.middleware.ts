@@ -28,19 +28,25 @@ export class FilesMiddleware {
     }),
   });
 
-  public uploadImage = asyncHandler(
-    async (req: Request, res: Response, next: NextFunction) => {
+  public uploadImage = ({ thumbnail = false }) =>
+    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
       // get image local path
       const imageLocalPath = req.file?.path;
 
       // check if image file is missing
       if (!imageLocalPath) {
-        throw new ApiError(400, "Image file is missing!");
+        throw new ApiError(
+          400,
+          `${thumbnail ? "Thumbnail" : "Image"} file upload failed!`
+        );
       }
 
       // check if image is a valid image file
       if (!__img_valid_mime_types.includes(req.file?.mimetype as string)) {
-        throw new ApiError(400, "Invalid Image File!");
+        throw new ApiError(
+          400,
+          `Invalid ${thumbnail ? "Thumbnail" : "Image"} file!`
+        );
       }
 
       // upload image to cloudinary
@@ -49,7 +55,10 @@ export class FilesMiddleware {
 
       // check if image upload failed
       if (!image?.secure_url) {
-        throw new ApiError(400, "Image upload failed!");
+        throw new ApiError(
+          400,
+          `${thumbnail ? "Thumbnail" : "Image"} file upload failed!`
+        );
       }
 
       // save image url to request body
@@ -57,8 +66,7 @@ export class FilesMiddleware {
 
       // next middleware
       next();
-    }
-  );
+    });
 
   public uploadVideo = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -122,7 +130,7 @@ export class FilesMiddleware {
     }
   );
 
-  public uploadImageAndVideo = (thumbnail = false) =>
+  public uploadImageAndVideo = ({ thumbnail = false }) =>
     asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
       // get video and image local paths
       const files = req?.files as GlobalTypes.MulterFiles;
@@ -153,7 +161,7 @@ export class FilesMiddleware {
       if (!__img_valid_mime_types.includes(files?.image[0]?.mimetype)) {
         throw new ApiError(
           400,
-          `Invalid ${thumbnail ? "Thumbnail" : ""} image file!`
+          `Invalid ${thumbnail ? "Thumbnail" : "Image"} file!`
         );
       }
 

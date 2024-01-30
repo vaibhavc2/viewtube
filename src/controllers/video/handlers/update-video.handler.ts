@@ -1,5 +1,4 @@
 import { Video } from "@/models/video.model";
-import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -9,11 +8,6 @@ export const updateVideo = async (req: Request, res: Response) => {
     videoUrl: string;
     duration: number;
   };
-
-  // check if video upload failed
-  if (!videoUrl || !duration) {
-    throw new ApiError(400, "Video upload failed!");
-  }
 
   // get videoId from req.params
   const videoId = req.params.videoId;

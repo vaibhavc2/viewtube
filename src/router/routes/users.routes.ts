@@ -20,15 +20,14 @@ class UserRouter {
         { name: "avatar", maxCount: 1 },
         { name: "cover", maxCount: 1 },
       ]),
-      middlewares.files.uploadAvatarAndCover,
       middlewares.validation.fields([
         "fullName",
         "username",
         "email",
         "password",
-        "avatarUrl",
       ]),
       middlewares.validation.zod(RegisterValidation),
+      middlewares.files.uploadAvatarAndCover,
       this.controller.register
     );
     this.router.patch("/login", this.controller.login);

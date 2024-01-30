@@ -1,4 +1,5 @@
 import { Video } from "@/models/video.model";
+import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -19,20 +20,6 @@ export const uploadVideo = async (req: Request, res: Response) => {
     imageUrl: string;
   };
 
-  // check if video upload failed
-  if (!videoUrl || !duration) {
-    throw new ApiError(500, "Video upload failed!");
-  }
-
-  if (!thumbnail) {
-    throw new ApiError(500, "Thumbnail upload failed!");
-  }
-
-  // validate details here also
-  if (!title || !description) {
-    throw new ApiError(400, "Title and Description are required!");
-  }
-
   // create video
   const video = await Video.create({
     owner: req.user?._id,
@@ -48,6 +35,8 @@ export const uploadVideo = async (req: Request, res: Response) => {
 
   // final verification
   if (!video || !createdVideo) {
+    await cloudinaryService.deleteFileFromCloudinary(videoUrl);
+    await cloudinaryService.deleteFileFromCloudinary(thumbnail);
     throw new ApiError(500, "Something went wrong!");
   }
 

@@ -23,9 +23,9 @@ class VideoRouter {
         { name: "video", maxCount: 1 },
         { name: "image", maxCount: 1 },
       ]),
-      middlewares.files.uploadImageAndVideo(true),
       middlewares.validation.fields(["title", "description"]),
       middlewares.validation.zod(VideoDetailsValidation),
+      middlewares.files.uploadImageAndVideo({ thumbnail: true }),
       this.controller.uploadVideo
     );
     this.router.get("/:videoId", this.controller.getVideo);

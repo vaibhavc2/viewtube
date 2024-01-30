@@ -1,9 +1,8 @@
 import { User } from "@/models/user.model";
+import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
-
-// TODO: improve performance by using Promise.all() for uploading images to cloudinary or use a queue or something async method to update the loaded images later after the user is created
 
 /**
  * @desc    STEPS: Register a new user
@@ -34,6 +33,8 @@ export const register = async (req: Request, res: Response) => {
   });
 
   if (existedUser) {
+    await cloudinaryService.deleteFileFromCloudinary(avatarUrl);
+    await cloudinaryService.deleteFileFromCloudinary(coverUrl);
     throw new ApiError(409, "User with this email or username already exists!");
   }
 
@@ -52,8 +53,11 @@ export const register = async (req: Request, res: Response) => {
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -__v"
   );
-  if (!user || !createdUser)
+  if (!user || !createdUser) {
+    await cloudinaryService.deleteFileFromCloudinary(avatarUrl);
+    await cloudinaryService.deleteFileFromCloudinary(coverUrl);
     throw new ApiError(500, "Something went wrong while creating the user!");
+  }
 
   // send response
   return res.status(201).json(

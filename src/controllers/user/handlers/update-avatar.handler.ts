@@ -1,17 +1,11 @@
 import { User } from "@/models/user.model";
 import { cloudinaryService } from "@/services/cloudinary.service";
-import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
 export const updateAvatar = async (req: Request, res: Response) => {
   // get avatar as imageUrl from req.body
   const { imageUrl: avatar } = req.body as { imageUrl: string };
-
-  // check if avatar upload failed
-  if (!avatar) {
-    throw new ApiError(400, "Avatar upload failed!");
-  }
 
   // update user avatar
   const avatarOldImageURL = req.user?.avatar;
