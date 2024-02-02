@@ -13,7 +13,7 @@ export const getChannelProfile = async (req: Request, res: Response) => {
     // match the user with the given id in the users collection
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(userId),
+        _id: new mongoose.Types.ObjectId(String(userId)),
       },
     },
     // lookup the subscriptions collection to get the subscribers of the user with the given username

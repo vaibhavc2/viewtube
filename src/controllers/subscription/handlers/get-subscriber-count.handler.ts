@@ -11,7 +11,7 @@ export const getSubscriberCount = async (req: Request, res: Response) => {
   const subs = await Subscription.aggregate([
     {
       $match: {
-        channel: new mongoose.Types.ObjectId(userId),
+        channel: new mongoose.Types.ObjectId(String(userId)),
       },
     },
     {

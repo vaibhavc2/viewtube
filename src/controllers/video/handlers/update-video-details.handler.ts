@@ -43,7 +43,7 @@ export const updateVideoDetails = async (req: Request, res: Response) => {
       owner: req.user?._id,
     },
     {
-      ...validDetails,
+      $set: { ...validDetails },
     },
     { new: true }
   );

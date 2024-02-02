@@ -14,13 +14,13 @@ export const addSubscription = async (req: Request, res: Response) => {
   }
 
   // check if the user is trying to subscribe to their own channel
-  if (userId.toString() === req.user?._id.toString()) {
+  if (String(userId) === String(req.user?._id)) {
     throw new ApiError(400, "Cannot subscribe to your own channel!");
   }
 
   // check if the user is already subscribed to the channel
   const alreadySubscribed = await Subscription.findOne({
-    subscriber: req.user._id,
+    subscriber: req.user?._id,
     channel: userId,
   });
 
@@ -31,7 +31,7 @@ export const addSubscription = async (req: Request, res: Response) => {
 
   // create new subscription
   const subscription = await Subscription.create({
-    subscriber: req.user._id,
+    subscriber: req.user?._id,
     channel: userId,
   });
 

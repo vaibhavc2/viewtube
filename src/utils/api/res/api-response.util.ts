@@ -24,24 +24,6 @@ export class CreatedResponse extends ApiResponse {
   }
 }
 
-export class BadRequestResponse extends ApiResponse {
-  constructor(message?: string, data?: any) {
-    super(400, message || "Bad Request", data);
-  }
-}
-
-export class UnauthorizedResponse extends ApiResponse {
-  constructor(message?: string, data?: any) {
-    super(401, message || "Unauthorized", data);
-  }
-}
-
-export class ForbiddenResponse extends ApiResponse {
-  constructor(message?: string, data?: any) {
-    super(403, message || "Forbidden", data);
-  }
-}
-
 export class NotFoundResponse extends ApiResponse {
   constructor(message?: string, data?: any) {
     super(404, message || "Not Found", data);

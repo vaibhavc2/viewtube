@@ -22,7 +22,7 @@ export const changeRole = async (req: Request, res: Response) => {
   const user = await User.findByIdAndUpdate(
     userId,
     {
-      role,
+      $set: { role },
     },
     { new: true }
   );

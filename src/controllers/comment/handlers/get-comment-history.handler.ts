@@ -1,9 +1,4 @@
-import {
-  __page,
-  __page_limit,
-  __sort_by,
-  __sort_type,
-} from "@/constants/pagination";
+import { appConstants } from "@/constants";
 import { Comment } from "@/models/comment.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
@@ -11,13 +6,14 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 export const getCommentHistory = async (req: Request, res: Response) => {
+  const { pagination } = appConstants;
   // get userId, page, limit, sortBy, sortType, query from req.query
   const {
-    page = __page,
-    limit = __page_limit,
+    page = pagination.page,
+    limit = pagination.pageLimit,
     query,
-    sortBy = __sort_by,
-    sortType = __sort_type,
+    sortBy = pagination.sortBy,
+    sortType = pagination.sortType,
     comments,
     videos,
     tweets,
@@ -46,7 +42,7 @@ export const getCommentHistory = async (req: Request, res: Response) => {
   // Define the match object for the MongoDB query. This will be used to filter comments.
   // $options: "i" makes the query case-insensitive
   const match = {
-    owner: new mongoose.Types.ObjectId(req.user?._id),
+    owner: new mongoose.Types.ObjectId(req.user?._id as string),
     ...(query && {
       content: { $regex: String(query) || "", $options: "i" },
     }),

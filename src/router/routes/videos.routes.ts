@@ -1,6 +1,6 @@
 import { VideoController } from "@/controllers/video/video.controller";
 import { middlewares } from "@/middlewares";
-import { VideoDetailsValidation } from "@/validation/video-details.validation";
+import { validator } from "@/validation";
 import { Router } from "express";
 
 class VideoRouter {
@@ -24,7 +24,7 @@ class VideoRouter {
         { name: "image", maxCount: 1 },
       ]),
       middlewares.validation.fields(["title", "description"]),
-      middlewares.validation.zod(VideoDetailsValidation),
+      middlewares.validation.zod(validator.zod.videoDetails),
       middlewares.files.uploadImageAndVideo({ thumbnail: true }),
       this.controller.uploadVideo
     );

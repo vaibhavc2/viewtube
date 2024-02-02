@@ -33,7 +33,7 @@ export const addLike = async (req: Request, res: Response) => {
     );
   } else if (likeExists && likeExists.value !== Number(value)) {
     // if like exists and value doesn't match, update it
-    likeExists.value = value;
+    likeExists.value = Number(value);
 
     const result = await likeExists.save({ validateBeforeSave: false });
 

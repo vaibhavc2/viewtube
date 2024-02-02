@@ -15,7 +15,7 @@ export const removeSubscription = async (req: Request, res: Response) => {
 
   // check if the user is subscribed to the channel or not
   const subscription = await Subscription.findOne({
-    subscriber: req.user._id,
+    subscriber: req.user?._id,
     channel: userId,
   });
 

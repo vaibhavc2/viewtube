@@ -1,6 +1,5 @@
 import { SubscriptionController } from "@/controllers/subscription/subscription.controller";
 import { middlewares } from "@/middlewares";
-
 import { Router } from "express";
 
 class SubscriptionRouter {

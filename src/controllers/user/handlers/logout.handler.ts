@@ -1,4 +1,4 @@
-import { __cookie_options } from "@/constants/res/index";
+import { appConstants } from "@/constants";
 import { User } from "@/models/user.model";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -28,7 +28,7 @@ export const logout = async (req: Request, res: Response) => {
   // clear cookies and send response
   return res
     .status(200)
-    .clearCookie("accessToken", __cookie_options)
-    .clearCookie("refreshToken", __cookie_options)
+    .clearCookie("accessToken", appConstants.authCookieOptions)
+    .clearCookie("refreshToken", appConstants.authCookieOptions)
     .json(new SuccessResponse("User logged out successfully!", {}));
 };

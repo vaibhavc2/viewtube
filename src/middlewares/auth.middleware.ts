@@ -1,7 +1,7 @@
 import { envConfig } from "@/config";
-import { __jwt_callback } from "@/constants/jwt/index";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
+import { jwtCallback } from "@/utils/jwt/jwt-callback";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
@@ -25,7 +25,7 @@ export class Authentication {
       const decodedToken: any = jwt.verify(
         token,
         envConfig.accessTokenSecret(),
-        __jwt_callback
+        jwtCallback
       );
 
       // find user in db using the decoded token

@@ -1,6 +1,13 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-const SubscriptionSchema = new Schema(
+export interface ISubscription extends Document {
+  subscriber: string | Schema.Types.ObjectId;
+  channel: string | Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const SubscriptionSchema: Schema<ISubscription> = new Schema(
   {
     subscriber: {
       type: Schema.Types.ObjectId, // one who is subscribing
@@ -18,4 +25,7 @@ const SubscriptionSchema = new Schema(
   }
 );
 
-export const Subscription = mongoose.model("Subscription", SubscriptionSchema);
+export const Subscription: Model<ISubscription> = mongoose.model<ISubscription>(
+  "Subscription",
+  SubscriptionSchema
+);

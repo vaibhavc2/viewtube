@@ -21,7 +21,7 @@ export const seedFakeVideos = async (req: Request, res: Response) => {
   }
 
   // generate videos
-  const videos = await generateFakeData.videos(+num, req.user?._id);
+  const videos = await generateFakeData.videos(+num, String(req.user?._id));
 
   // save videos
   const result = await Video.insertMany(videos);

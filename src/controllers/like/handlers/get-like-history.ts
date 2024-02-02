@@ -1,9 +1,4 @@
-import {
-  __page,
-  __page_limit,
-  __sort_by,
-  __sort_type,
-} from "@/constants/pagination";
+import { appConstants } from "@/constants";
 import { Like } from "@/models/like.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
@@ -11,12 +6,13 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 export const getLikeHistory = async (req: Request, res: Response) => {
+  const { pagination } = appConstants;
   // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
   const {
-    page = __page,
-    limit = __page_limit,
-    sortBy = __sort_by,
-    sortType = __sort_type,
+    page = pagination.page,
+    limit = pagination.pageLimit,
+    sortBy = pagination.sortBy,
+    sortType = pagination.sortType,
     comments, // boolean, send 1 for true, 0 for false
     videos, // boolean, send 1 for true, 0 for false
     tweets, // boolean, send 1 for true, 0 for false
@@ -47,7 +43,7 @@ export const getLikeHistory = async (req: Request, res: Response) => {
 
   // Define the match object for the MongoDB query.
   const match = {
-    owner: new mongoose.Types.ObjectId(req.user?._id),
+    owner: new mongoose.Types.ObjectId(req.user?._id as string),
     ...(comments && { comment: { $exists: true } }),
     ...(videos && { video: { $exists: true } }),
     ...(tweets && { tweet: { $exists: true } }),

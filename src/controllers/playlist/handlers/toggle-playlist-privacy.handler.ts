@@ -8,12 +8,14 @@ export const togglePlaylistPrivacy = async (req: Request, res: Response) => {
   const { playlistId } = req.params;
 
   // get privacy from req.query
-  const { privacy } = req.query;
+  const { privacy: _privacy } = req.query;
 
   // validate privacy
-  if (!["public", "private"].includes(String(privacy))) {
+  if (!["public", "private"].includes(String(_privacy))) {
     throw new ApiError(400, "Invalid privacy!");
   }
+
+  const privacy = String(_privacy) === "private" ? true : false;
 
   // validate playlistId using middleware!
   // find playlist
@@ -22,7 +24,11 @@ export const togglePlaylistPrivacy = async (req: Request, res: Response) => {
       _id: playlistId,
       owner: req.user?._id,
     },
-    { privacy: String(privacy) },
+    {
+      $set: {
+        private: privacy,
+      },
+    },
     { new: true }
   );
 

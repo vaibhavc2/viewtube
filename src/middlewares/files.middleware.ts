@@ -1,8 +1,4 @@
-import {
-  __img_valid_mime_types,
-  __video_valid_mime_types,
-} from "@/constants/middlewares/mime-types";
-import { __max_video_size, __min_video_length } from "@/constants/video";
+import { appConstants } from "@/constants";
 import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -42,7 +38,9 @@ export class FilesMiddleware {
       }
 
       // check if image is a valid image file
-      if (!__img_valid_mime_types.includes(req.file?.mimetype as string)) {
+      if (
+        !appConstants.imageValidMimeTypes.includes(req.file?.mimetype as string)
+      ) {
         throw new ApiError(
           400,
           `Invalid ${thumbnail ? "Thumbnail" : "Image"} file!`
@@ -79,13 +77,15 @@ export class FilesMiddleware {
       }
 
       // check if video is a valid video file
-      if (!__video_valid_mime_types.includes(req.file?.mimetype as string)) {
+      if (
+        !appConstants.videoValidMimeTypes.includes(req.file?.mimetype as string)
+      ) {
         throw new ApiError(400, "Invalid Video File!");
       }
 
       // check if video is less than the allowed size
       const { size: videoSize } = fs.statSync(videoLocalPath);
-      if (videoSize > __max_video_size) {
+      if (videoSize > appConstants.maxVideoSize) {
         throw new ApiError(400, "Video size is too large!");
       }
 
@@ -106,7 +106,7 @@ export class FilesMiddleware {
       }
 
       // check if video length is less than the allowed length
-      if (videoLength < __min_video_length) {
+      if (videoLength < appConstants.minVideoLength) {
         throw new ApiError(400, "Video length is too short!");
       }
 
@@ -155,10 +155,14 @@ export class FilesMiddleware {
         );
 
       // check if video and image are valid files
-      if (!__video_valid_mime_types.includes(files?.video[0]?.mimetype)) {
+      if (
+        !appConstants.videoValidMimeTypes.includes(files?.video[0]?.mimetype)
+      ) {
         throw new ApiError(400, "Invalid Video file!");
       }
-      if (!__img_valid_mime_types.includes(files?.image[0]?.mimetype)) {
+      if (
+        !appConstants.imageValidMimeTypes.includes(files?.image[0]?.mimetype)
+      ) {
         throw new ApiError(
           400,
           `Invalid ${thumbnail ? "Thumbnail" : "Image"} file!`
@@ -167,7 +171,7 @@ export class FilesMiddleware {
 
       // check if video is less than the allowed size
       const { size: videoSize } = fs.statSync(videoLocalPath);
-      if (videoSize > __max_video_size) {
+      if (videoSize > appConstants.maxVideoSize) {
         throw new ApiError(400, "Video size is too large!");
       }
 
@@ -188,7 +192,7 @@ export class FilesMiddleware {
       }
 
       // check if video length is less than the allowed length
-      if (videoLength < __min_video_length) {
+      if (videoLength < appConstants.minVideoLength) {
         throw new ApiError(400, "Video length is too short!");
       }
 
@@ -247,11 +251,15 @@ export class FilesMiddleware {
         throw new ApiError(400, "Avatar Image is required!");
 
       // check if avatar and cover are valid images: avatar is compulsory
-      if (!__img_valid_mime_types.includes(files?.avatar[0]?.mimetype)) {
+      if (
+        !appConstants.imageValidMimeTypes.includes(files?.avatar[0]?.mimetype)
+      ) {
         throw new ApiError(400, "Invalid Avatar Image!");
       }
       if (coverLocalPath) {
-        if (!__img_valid_mime_types.includes(files?.cover[0]?.mimetype)) {
+        if (
+          !appConstants.imageValidMimeTypes.includes(files?.cover[0]?.mimetype)
+        ) {
           throw new ApiError(400, "Invalid Cover Image!");
         }
       }

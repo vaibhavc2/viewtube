@@ -1,9 +1,4 @@
-import {
-  __page,
-  __page_limit,
-  __sort_by,
-  __sort_type,
-} from "@/constants/pagination";
+import { appConstants } from "@/constants";
 import { User } from "@/models/user.model";
 import { Video } from "@/models/video.model";
 import ApiError from "@/utils/api/error/api-error.util";
@@ -23,7 +18,7 @@ export class DashboardController {
     const video = await Video.aggregate([
       {
         $match: {
-          owner: new mongoose.Types.ObjectId(userId),
+          owner: new mongoose.Types.ObjectId(String(userId)),
         },
       },
       {
@@ -46,7 +41,7 @@ export class DashboardController {
       // match the user with the given username in the users collection
       {
         $match: {
-          _id: new mongoose.Types.ObjectId(userId),
+          _id: new mongoose.Types.ObjectId(String(userId)),
         },
       },
       // lookup the subscriptions collection to get the subscribers of the user with the given username
@@ -108,7 +103,7 @@ export class DashboardController {
     const likes = await Video.aggregate([
       {
         $match: {
-          owner: new mongoose.Types.ObjectId(userId),
+          owner: new mongoose.Types.ObjectId(String(userId)),
         },
         $lookup: {
           from: "likes",
@@ -162,14 +157,15 @@ export class DashboardController {
 
   public getChannelVideos = asyncHandler(
     async (req: Request, res: Response) => {
+      const { pagination } = appConstants;
       // Destructure the query parameters from the request
       const {
-        page = __page,
-        limit = __page_limit,
+        page = pagination.page,
+        limit = pagination.pageLimit,
         isPublished, // isPublished is optional, send 1 for true, 0 for false
         isPrivate, // isPrivate is optional, send 1 for true, 0 for false
-        sortBy = __sort_by,
-        sortType = __sort_type,
+        sortBy = pagination.sortBy,
+        sortType = pagination.sortType,
       } = req.query;
 
       // validate
@@ -197,7 +193,7 @@ export class DashboardController {
         Video.aggregate([
           {
             $match: {
-              owner: new mongoose.Types.ObjectId(req.user?._id),
+              owner: new mongoose.Types.ObjectId(req.user?._id as string),
               ...(isPublished && { isPublished: Boolean(Number(isPublished)) }),
               ...(isPrivate && { private: Boolean(Number(isPrivate)) }),
             },

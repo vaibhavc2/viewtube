@@ -13,12 +13,12 @@ export const createTweet = async (req: Request, res: Response) => {
   }
 
   // get user from req.user
-  const { _id } = req.user;
+  const userId = req.user?._id;
 
   // create tweet in database
   const newTweet = await Tweet.create({
     content: tweet,
-    owner: _id,
+    owner: userId,
   });
 
   // check if created

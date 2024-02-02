@@ -10,12 +10,6 @@ export const increaseViews = async (req: Request, res: Response) => {
   // get video from database
   const video = await Video.findOne({ _id: videoId });
 
-  // const video = await Video.findByIdAndUpdate(videoId,{
-  //   $inc: {
-  //     views:1
-  //   }
-  // })
-
   // check if video exists
   if (!video) {
     throw new ApiError(404, "Video not found!");

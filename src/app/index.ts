@@ -1,5 +1,5 @@
 import { envConfig } from "@/config";
-import { __limit } from "@/constants/express";
+import { appConstants } from "@/constants";
 import { middlewares } from "@/middlewares";
 import { appRouter } from "@/router";
 import cookieParser from "cookie-parser";
@@ -52,9 +52,9 @@ export class App {
       }),
       cookieParser(),
       express.json({
-        limit: __limit,
+        limit: appConstants.expressLimit,
       }),
-      express.urlencoded({ extended: true, limit: __limit }),
+      express.urlencoded({ extended: true, limit: appConstants.expressLimit }),
       express.static("public")
     );
 

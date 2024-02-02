@@ -22,7 +22,7 @@ export const updateComment = async (req: Request, res: Response) => {
       owner: req.user?._id,
     },
     {
-      content,
+      $set: { content },
     },
     {
       new: true,

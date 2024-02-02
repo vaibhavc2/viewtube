@@ -1,7 +1,20 @@
-import mongoose, { Schema } from "mongoose";
+import { appConstants } from "@/constants";
+import mongoose, { AggregatePaginateModel, Document, Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-const likeSchema = new Schema(
+export interface ILike extends Document {
+  video?: string | Schema.Types.ObjectId;
+  comment?: string | Schema.Types.ObjectId;
+  tweet?: string | Schema.Types.ObjectId;
+  value: number;
+  owner: string | Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ILikeModel extends AggregatePaginateModel<ILike> {}
+
+const likeSchema: Schema<ILike> = new Schema(
   {
     video: {
       type: Schema.Types.ObjectId,
@@ -17,7 +30,7 @@ const likeSchema = new Schema(
     },
     value: {
       type: Number,
-      enum: [-1, 1], // 1: like, -1: dislike
+      enum: appConstants.likeValues,
       required: true,
     },
     owner: {
@@ -31,4 +44,7 @@ const likeSchema = new Schema(
 
 likeSchema.plugin(mongooseAggregatePaginate);
 
-export const Like = mongoose.model("Like", likeSchema);
+export const Like: ILikeModel = mongoose.model<ILike, ILikeModel>(
+  "Like",
+  likeSchema
+);

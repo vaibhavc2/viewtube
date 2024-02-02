@@ -1,6 +1,6 @@
-import { __cookie_options } from "@/constants/res/index";
+import { appConstants } from "@/constants";
 import { User } from "@/models/user.model";
-import ApiError from "@/utils/api/error/api-error.util";
+import ApiError, { UserNotFoundError } from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { generateTokens } from "@/utils/tokens/generate-tokens.util";
 import { Request, Response } from "express";
@@ -30,9 +30,7 @@ export const login = async (req: Request, res: Response) => {
   // find the user in the db
   const user = await User.findOne({ $or: [{ email }, { username }] });
 
-  if (!user) {
-    throw new ApiError(404, "User not found! Please register first!");
-  }
+  if (!user) throw new UserNotFoundError();
 
   // if user exists, check if password is correct
   const isPasswordCorrect = await user.comparePassword(password);
@@ -51,8 +49,8 @@ export const login = async (req: Request, res: Response) => {
   // send response and cookies
   return res
     .status(200)
-    .cookie("accessToken", accessToken, __cookie_options)
-    .cookie("refreshToken", refreshToken, __cookie_options)
+    .cookie("accessToken", accessToken, appConstants.authCookieOptions)
+    .cookie("refreshToken", refreshToken, appConstants.authCookieOptions)
     .json(
       new SuccessResponse("User logged in successfully!", {
         user: {

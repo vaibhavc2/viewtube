@@ -1,6 +1,16 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { AggregatePaginateModel, Document, Schema } from "mongoose";
+import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-const tweetSchema = new Schema(
+export interface ITweet extends Document {
+  content: string;
+  owner: string | Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ITweetModel extends AggregatePaginateModel<ITweet> {}
+
+const tweetSchema: Schema<ITweet> = new Schema(
   {
     content: {
       type: String,
@@ -15,4 +25,9 @@ const tweetSchema = new Schema(
   { timestamps: true }
 );
 
-export const Tweet = mongoose.model("Tweet", tweetSchema);
+tweetSchema.plugin(mongooseAggregatePaginate);
+
+export const Tweet: ITweetModel = mongoose.model<ITweet, ITweetModel>(
+  "Tweet",
+  tweetSchema
+);

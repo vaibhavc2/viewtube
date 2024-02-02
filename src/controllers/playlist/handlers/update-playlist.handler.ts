@@ -22,9 +22,11 @@ export const updatePlaylist = async (req: Request, res: Response) => {
       owner: req.user?._id,
     },
     {
-      ...(name && { name }),
-      ...(description && { description }),
-      ...(videos && { videos }),
+      $set: {
+        ...(name && { name }),
+        ...(description && { description }),
+        ...(videos && { videos }),
+      },
     },
     { new: true }
   );

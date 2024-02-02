@@ -8,7 +8,7 @@ export const deleteTweet = async (req: Request, res: Response) => {
   const tweetId = req.params.tweetId;
 
   // get userId from req.user
-  const { _id: userId } = req.user;
+  const userId = req.user?._id;
 
   // find tweet in database
   const tweet = await Tweet.findById(tweetId);
@@ -19,12 +19,19 @@ export const deleteTweet = async (req: Request, res: Response) => {
   }
 
   // if user is not the owner of the tweet, send error response
-  if (String(tweet.owner) !== String(userId)) {
-    throw new ApiError(403, "Unauthorized!");
-  }
+  if (String(tweet.owner) !== String(userId))
+    throw new ApiError(
+      403,
+      "Unauthorized! You are not the owner of this tweet."
+    );
 
   // delete tweet from database
-  await Tweet.findByIdAndDelete(tweetId);
+  const result = await Tweet.findByIdAndDelete(tweetId);
+
+  // if tweet not deleted, send error response
+  if (!result) {
+    throw new ApiError(500, "Failed to delete tweet.");
+  }
 
   // send response
   return res

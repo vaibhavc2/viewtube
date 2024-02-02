@@ -1,4 +1,4 @@
-import ApiError from "@/utils/api/error/api-error.util";
+import ApiError, { UnauthorizedError } from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -9,7 +9,9 @@ export const updateChannelDescription = async (req: Request, res: Response) => {
     throw new ApiError(400, "Description is required");
   }
 
-  req.user.channelDescription = description;
+  if (!req.user) throw new UnauthorizedError();
+
+  req.user.channelDescription = String(description);
 
   const result = await req.user.save({ validateBeforeSave: false });
 

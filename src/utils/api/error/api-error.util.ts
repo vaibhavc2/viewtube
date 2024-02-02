@@ -33,13 +33,24 @@ class ApiError extends Error {
 class RequiredBodyError extends ApiError {
   constructor(notIncludedFields: string[]) {
     super(400);
-    this.statusCode = 400;
     this.message = `Missing fields: ${notIncludedFields.join(
       ", "
     )}. Please fill in all the required fields.`;
   }
 }
 
-export { RequiredBodyError };
+class UnauthorizedError extends ApiError {
+  constructor() {
+    super(401, "Unauthorized request!");
+  }
+}
+
+class UserNotFoundError extends ApiError {
+  constructor() {
+    super(404, "User not found!");
+  }
+}
+
+export { RequiredBodyError, UnauthorizedError, UserNotFoundError };
 
 export default ApiError;

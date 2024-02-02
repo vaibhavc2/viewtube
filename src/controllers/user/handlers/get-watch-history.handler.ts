@@ -7,7 +7,11 @@ export const getWatchHistory = async (req: Request, res: Response) => {
   const user = await User.aggregate([
     // aggregation pipeline code is directly sent to the database and hence, we have to give the mongoDB id and the string that we get from req.user._id
     // mongoDB id is an object and hence, we have to convert it to a string
-    { $match: { _id: new mongoose.Types.ObjectId(req.user?._id) } },
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(req.user?._id as string),
+      },
+    },
     // get the watch history of the user
     // the watchHistory field of the user object will be an array of video objects
     {

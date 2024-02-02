@@ -1,7 +1,24 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { AggregatePaginateModel, Document, Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-const VideoSchema: Schema = new Schema(
+export interface IVideo extends Document {
+  videoUrl: string;
+  thumbnail: string;
+  title: string;
+  description: string;
+  duration: number;
+  views: number;
+  isPublished: boolean;
+  publishDate: Date;
+  private: boolean;
+  owner: string | Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IVideoModel extends AggregatePaginateModel<IVideo> {}
+
+const VideoSchema: Schema<IVideo> = new Schema(
   {
     videoUrl: {
       type: String,
@@ -54,4 +71,7 @@ const VideoSchema: Schema = new Schema(
 
 VideoSchema.plugin(mongooseAggregatePaginate);
 
-export const Video = mongoose.model("Video", VideoSchema);
+export const Video: IVideoModel = mongoose.model<IVideo, IVideoModel>(
+  "Video",
+  VideoSchema
+);

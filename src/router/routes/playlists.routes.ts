@@ -1,6 +1,5 @@
 import { PlaylistController } from "@/controllers/playlist/playlist.controller";
 import { middlewares } from "@/middlewares";
-
 import { Router } from "express";
 
 class PlaylistRouter {

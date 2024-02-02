@@ -1,9 +1,4 @@
-import {
-  __page,
-  __page_limit,
-  __sort_by,
-  __sort_type,
-} from "@/constants/pagination";
+import { appConstants } from "@/constants";
 import { User } from "@/models/user.model";
 import { Video } from "@/models/video.model";
 import ApiError from "@/utils/api/error/api-error.util";
@@ -15,11 +10,11 @@ import mongoose from "mongoose";
 export const getAllVideos = async (req: Request, res: Response) => {
   // Destructure the query parameters from the request
   const {
-    page = __page,
-    limit = __page_limit,
+    page = appConstants.pagination.page,
+    limit = appConstants.pagination.pageLimit,
     query,
-    sortBy = __sort_by,
-    sortType = __sort_type,
+    sortBy = appConstants.pagination.sortBy,
+    sortType = appConstants.pagination.sortType,
     userId,
   } = req.query;
 
@@ -52,7 +47,8 @@ export const getAllVideos = async (req: Request, res: Response) => {
   // This will filter the videos to only return those owned by the specified user.
   if (userId) {
     const user = await User.findById(userId);
-    if (user) (match as any)["owner"] = new mongoose.Types.ObjectId(user._id);
+    if (user)
+      (match as any)["owner"] = new mongoose.Types.ObjectId(user._id as string);
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 

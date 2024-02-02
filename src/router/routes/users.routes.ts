@@ -1,6 +1,6 @@
 import { UserController } from "@/controllers/user/user.controllers";
 import { middlewares } from "@/middlewares";
-import { RegisterValidation } from "@/validation/register.validation";
+import { validator } from "@/validation";
 import { Router } from "express";
 
 class UserRouter {
@@ -26,7 +26,7 @@ class UserRouter {
         "email",
         "password",
       ]),
-      middlewares.validation.zod(RegisterValidation),
+      middlewares.validation.zod(validator.zod.registration),
       middlewares.files.uploadAvatarAndCover,
       this.controller.register
     );

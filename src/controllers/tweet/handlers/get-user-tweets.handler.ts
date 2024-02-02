@@ -1,9 +1,4 @@
-import {
-  __page,
-  __page_limit,
-  __sort_by,
-  __sort_type,
-} from "@/constants/pagination";
+import { appConstants } from "@/constants";
 import { Tweet } from "@/models/tweet.model";
 import { User } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
@@ -12,6 +7,14 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 export const getUserTweets = async (req: Request, res: Response) => {
+  const { pagination } = appConstants;
+  const {
+    page: __page,
+    pageLimit: __page_limit,
+    sortBy: __sort_by,
+    sortType: __sort_type,
+  } = pagination;
+
   // get userId, page, limit, sortBy, sortType, query from req.query
   const {
     page = __page,
@@ -40,7 +43,8 @@ export const getUserTweets = async (req: Request, res: Response) => {
   // This will filter tweets to only return those owned by the specified user.
   if (userId) {
     const user = await User.findById(userId);
-    if (user) (match as any)["owner"] = new mongoose.Types.ObjectId(user._id);
+    if (user)
+      (match as any)["owner"] = new mongoose.Types.ObjectId(user._id as string);
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 

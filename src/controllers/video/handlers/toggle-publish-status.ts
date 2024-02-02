@@ -13,6 +13,11 @@ export const togglePublishStatus = async (req: Request, res: Response) => {
     owner: req.user?._id,
   });
 
+  // check if video exists
+  if (!video) {
+    throw new ApiError(404, "Video not found!");
+  }
+
   // toggle publish status
   video.isPublished = !video.isPublished;
 

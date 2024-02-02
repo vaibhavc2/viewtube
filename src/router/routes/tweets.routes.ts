@@ -1,6 +1,5 @@
 import { TweetController } from "@/controllers/tweet/tweet.controller";
 import { middlewares } from "@/middlewares";
-
 import { Router } from "express";
 
 class TweetRouter {

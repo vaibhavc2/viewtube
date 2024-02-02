@@ -1,4 +1,4 @@
-import { __prefix_api_version } from "@/constants/express";
+import { appConstants } from "@/constants";
 import { Router } from "express";
 import { adminRouter } from "./routes/admin.routes";
 import { appHealthRouter } from "./routes/app-health.routes";
@@ -21,23 +21,32 @@ class AppRouter {
 
   private routes() {
     // using routes
-    this.router.use(`${__prefix_api_version}/users`, usersRouter);
-    this.router.use(`${__prefix_api_version}/videos`, videosRouter);
+    this.router.use(`${appConstants.prefixApiVersion}/users`, usersRouter);
+    this.router.use(`${appConstants.prefixApiVersion}/videos`, videosRouter);
     this.router.use(
-      `${__prefix_api_version}/subscriptions`,
+      `${appConstants.prefixApiVersion}/subscriptions`,
       subscriptionsRouter
     );
-    this.router.use(`${__prefix_api_version}/tweets`, tweetsRouter);
-    this.router.use(`${__prefix_api_version}/likes`, likesRouter);
-    this.router.use(`${__prefix_api_version}/comments`, commentsRouter);
-    this.router.use(`${__prefix_api_version}/playlists`, playlistsRouter);
-    this.router.use(`${__prefix_api_version}/dashboard`, dashboardRouter);
+    this.router.use(`${appConstants.prefixApiVersion}/tweets`, tweetsRouter);
+    this.router.use(`${appConstants.prefixApiVersion}/likes`, likesRouter);
+    this.router.use(
+      `${appConstants.prefixApiVersion}/comments`,
+      commentsRouter
+    );
+    this.router.use(
+      `${appConstants.prefixApiVersion}/playlists`,
+      playlistsRouter
+    );
+    this.router.use(
+      `${appConstants.prefixApiVersion}/dashboard`,
+      dashboardRouter
+    );
 
     // admin routes
-    this.router.use(`${__prefix_api_version}/admin`, adminRouter);
+    this.router.use(`${appConstants.prefixApiVersion}/admin`, adminRouter);
 
     // app health route
-    this.router.use(`${__prefix_api_version}`, appHealthRouter);
+    this.router.use(`${appConstants.prefixApiVersion}`, appHealthRouter);
   }
 }
 

@@ -1,3 +1,4 @@
+import { appConstants } from "@/constants";
 import { User } from "@/models/user.model";
 import ApiResponse, {
   SuccessResponse,
@@ -21,8 +22,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 
   // check if email is valid
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (email && !emailRegex.test(email)) {
+  if (email && !appConstants.emailRegex.test(email)) {
     return res
       .status(400)
       .json(new ApiResponse(400, "Please enter a valid email address."));
