@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiResponse, {
   SuccessResponse,
 } from "@/utils/api/res/api-response.util";
@@ -68,7 +68,7 @@ export const updateUser = async (req: Request, res: Response) => {
   if (username) validDetails.push(username);
 
   // update user details: get id from req.user object
-  const user = await User.findByIdAndUpdate(
+  const user = await db.User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {

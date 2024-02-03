@@ -1,5 +1,5 @@
 import { envConfig } from "@/config";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { jwtCallback } from "@/utils/jwt/jwt-callback";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -29,7 +29,7 @@ export class Authentication {
       );
 
       // find user in db using the decoded token
-      const user = await User.findOne({ _id: decodedToken?._id }).select(
+      const user = await db.User.findOne({ _id: decodedToken?._id }).select(
         "-password -refreshToken -__v"
       );
 

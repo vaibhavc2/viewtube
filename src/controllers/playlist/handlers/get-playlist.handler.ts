@@ -1,4 +1,4 @@
-import { Playlist } from "@/models/playlist.model";
+import { db } from "@/database/models";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -7,7 +7,7 @@ export const getPlaylist = async (req: Request, res: Response) => {
   const { playlistId } = req.params;
 
   // find playlist
-  const playlist = await Playlist.findById(playlistId);
+  const playlist = await db.Playlist.findById(playlistId);
 
   // send response
   res.status(200).json(

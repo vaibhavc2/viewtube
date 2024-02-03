@@ -1,4 +1,4 @@
-import { Comment } from "@/models/comment.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -16,7 +16,7 @@ export const updateComment = async (req: Request, res: Response) => {
   }
 
   // update comment
-  const comment = await Comment.findOneAndUpdate(
+  const comment = await db.Comment.findOneAndUpdate(
     {
       _id: commentId,
       owner: req.user?._id,

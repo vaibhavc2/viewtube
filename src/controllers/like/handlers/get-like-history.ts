@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { Like } from "@/models/like.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -50,8 +50,8 @@ export const getLikeHistory = async (req: Request, res: Response) => {
   };
 
   // get likes history
-  const likes = await Like.aggregatePaginate(
-    Like.aggregate([{ $match: match }]),
+  const likes = await db.Like.aggregatePaginate(
+    db.Like.aggregate([{ $match: match }]),
     options
   );
 

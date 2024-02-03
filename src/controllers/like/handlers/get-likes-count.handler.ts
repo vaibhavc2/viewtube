@@ -1,4 +1,4 @@
-import { Like } from "@/models/like.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -14,7 +14,7 @@ export const getLikesCount = async (req: Request, res: Response) => {
 
   // validate ids using middleware!
   // get likes count
-  const likesCount = await Like.countDocuments({
+  const likesCount = await db.Like.countDocuments({
     value, // 1 for like, -1 for dislike
     ...(tweetId && { tweet: tweetId }),
     ...(videoId && { video: videoId }),

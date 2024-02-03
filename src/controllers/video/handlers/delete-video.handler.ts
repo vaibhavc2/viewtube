@@ -1,4 +1,4 @@
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
@@ -9,7 +9,7 @@ export const deleteVideo = async (req: Request, res: Response) => {
   const { videoId } = req.params;
 
   // get video from database
-  const video = await Video.findOne({
+  const video = await db.Video.findOne({
     _id: videoId,
     owner: req.user?._id,
   });
@@ -26,7 +26,7 @@ export const deleteVideo = async (req: Request, res: Response) => {
   await cloudinaryService.deleteFileFromCloudinary(video.thumbnail);
 
   // delete video from database
-  await Video.findOneAndDelete({
+  await db.Video.findOneAndDelete({
     _id: videoId,
     owner: req.user?._id,
   });

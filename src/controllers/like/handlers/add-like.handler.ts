@@ -1,4 +1,4 @@
-import { Like } from "@/models/like.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import {
   CreatedResponse,
@@ -18,7 +18,7 @@ export const addLike = async (req: Request, res: Response) => {
   // other validation is done using middleware!
 
   // check if like already exists
-  const likeExists = await Like.findOne({
+  const likeExists = await db.Like.findOne({
     owner: req.user?._id,
     ...(tweetId && { tweet: tweetId }),
     ...(videoId && { video: videoId }),
@@ -50,7 +50,7 @@ export const addLike = async (req: Request, res: Response) => {
   }
 
   // create like
-  const like = await Like.create({
+  const like = await db.Like.create({
     value,
     owner: req.user?._id,
     ...(tweetId && { tweet: tweetId }),
@@ -59,7 +59,7 @@ export const addLike = async (req: Request, res: Response) => {
   });
 
   // check if created
-  const createdLike = await Like.findById(like._id);
+  const createdLike = await db.Like.findById(like._id);
 
   // final verification
   if (!like || !createdLike) {

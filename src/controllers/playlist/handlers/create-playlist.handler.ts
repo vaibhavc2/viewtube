@@ -1,4 +1,4 @@
-import { Playlist } from "@/models/playlist.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -16,7 +16,7 @@ export const createPlaylist = async (req: Request, res: Response) => {
   // no need of validation of videos array, we are allowing empty playlists to be created
 
   // check if playlist with same name already exists
-  const existingPlaylist = await Playlist.findOne({
+  const existingPlaylist = await db.Playlist.findOne({
     name,
     owner: req.user?._id,
   });
@@ -27,7 +27,7 @@ export const createPlaylist = async (req: Request, res: Response) => {
   }
 
   // create playlist
-  const playlist = await Playlist.create({
+  const playlist = await db.Playlist.create({
     name,
     description,
     videos,

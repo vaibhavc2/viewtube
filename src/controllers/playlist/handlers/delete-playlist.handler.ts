@@ -1,4 +1,4 @@
-import { Playlist } from "@/models/playlist.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -8,7 +8,7 @@ export const deletePlaylist = async (req: Request, res: Response) => {
   const { playlistId } = req.params;
 
   // find if playlist exists
-  const playlist = await Playlist.findById(playlistId);
+  const playlist = await db.Playlist.findById(playlistId);
 
   // if playlist does not exists, throw error
   if (!playlist) {
@@ -21,7 +21,7 @@ export const deletePlaylist = async (req: Request, res: Response) => {
   }
 
   // delete playlist
-  await Playlist.findByIdAndDelete(playlistId);
+  await db.Playlist.findByIdAndDelete(playlistId);
 
   // send response
   res.status(200).json(

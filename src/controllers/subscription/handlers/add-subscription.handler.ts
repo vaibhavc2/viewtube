@@ -1,5 +1,4 @@
-import { Subscription } from "@/models/subscription.model";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -9,7 +8,7 @@ export const addSubscription = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   // verify that the user exists
-  if (!(await User.findById(userId))) {
+  if (!(await db.User.findById(userId))) {
     throw new ApiError(404, "Channel not found!");
   }
 
@@ -19,7 +18,7 @@ export const addSubscription = async (req: Request, res: Response) => {
   }
 
   // check if the user is already subscribed to the channel
-  const alreadySubscribed = await Subscription.findOne({
+  const alreadySubscribed = await db.Subscription.findOne({
     subscriber: req.user?._id,
     channel: userId,
   });
@@ -30,13 +29,13 @@ export const addSubscription = async (req: Request, res: Response) => {
   }
 
   // create new subscription
-  const subscription = await Subscription.create({
+  const subscription = await db.Subscription.create({
     subscriber: req.user?._id,
     channel: userId,
   });
 
   // check if created
-  const createdSubscription = await Subscription.findById(subscription._id);
+  const createdSubscription = await db.Subscription.findById(subscription._id);
 
   // if not created, throw error
   if (!subscription || !createdSubscription) {

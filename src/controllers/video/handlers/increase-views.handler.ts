@@ -1,4 +1,4 @@
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util.js";
 import { Request, Response } from "express";
@@ -8,7 +8,7 @@ export const increaseViews = async (req: Request, res: Response) => {
   const videoId = req.params.videoId;
 
   // get video from database
-  const video = await Video.findOne({ _id: videoId });
+  const video = await db.Video.findOne({ _id: videoId });
 
   // check if video exists
   if (!video) {

@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { Comment } from "@/models/comment.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -52,8 +52,8 @@ export const getCommentHistory = async (req: Request, res: Response) => {
   };
 
   // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the comments.
-  const commentHistory = await Comment.aggregatePaginate(
-    Comment.aggregate([{ $match: match }]),
+  const commentHistory = await db.Comment.aggregatePaginate(
+    db.Comment.aggregate([{ $match: match }]),
     options
   );
 

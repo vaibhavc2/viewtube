@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -8,10 +8,10 @@ export const deleteUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
 
   // find user and delete
-  await User.findByIdAndDelete(userId);
+  await db.User.findByIdAndDelete(userId);
 
   // confirm deletion
-  const user = await User.findById(userId);
+  const user = await db.User.findById(userId);
 
   // check if user exists
   if (user) throw new ApiError(500, "Unable to delete user.");

@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
@@ -28,7 +28,7 @@ export const register = async (req: Request, res: Response) => {
   // images are uploaded to cloudinary by the middleware
 
   // check if user exists: email, username
-  const existedUser = await User.findOne({
+  const existedUser = await db.User.findOne({
     $or: [{ username }, { email }],
   });
 
@@ -39,7 +39,7 @@ export const register = async (req: Request, res: Response) => {
   }
 
   // create user object - create entry in db (hashing of pwd is done in the model)
-  const user = await User.create({
+  const user = await db.User.create({
     fullName,
     username,
     email,
@@ -50,7 +50,7 @@ export const register = async (req: Request, res: Response) => {
 
   // check for user creation
   // select only the required fields: password, refreshToken, __v are not needed here
-  const createdUser = await User.findById(user._id).select(
+  const createdUser = await db.User.findById(user._id).select(
     "-password -refreshToken -__v"
   );
   if (!user || !createdUser) {

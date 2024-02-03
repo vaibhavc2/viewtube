@@ -1,6 +1,5 @@
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
@@ -15,7 +14,7 @@ export class DashboardController {
     const { userId } = req.params; // get any user's channel stats
 
     // total video views, total videos
-    const video = await Video.aggregate([
+    const video = await db.Video.aggregate([
       {
         $match: {
           owner: new mongoose.Types.ObjectId(String(userId)),
@@ -37,7 +36,7 @@ export class DashboardController {
     const { totalVideos, totalViews } = video[0];
 
     // channel stats
-    const channel = await User.aggregate([
+    const channel = await db.User.aggregate([
       // match the user with the given username in the users collection
       {
         $match: {
@@ -100,7 +99,7 @@ export class DashboardController {
     } = channel[0];
 
     // total likes of the channel
-    const likes = await Video.aggregate([
+    const likes = await db.Video.aggregate([
       {
         $match: {
           owner: new mongoose.Types.ObjectId(String(userId)),
@@ -189,8 +188,8 @@ export class DashboardController {
       // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the videos.
       // The first argument is a Mongoose aggregation that uses the match object to filter the videos.
       // The second argument is the options object, which sets the pagination and sorting options.
-      const videos = await Video.aggregatePaginate(
-        Video.aggregate([
+      const videos = await db.Video.aggregatePaginate(
+        db.Video.aggregate([
           {
             $match: {
               owner: new mongoose.Types.ObjectId(req.user?._id as string),

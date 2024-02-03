@@ -1,5 +1,4 @@
-import { User } from "@/models/user.model";
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import { generateFakeData } from "@/services/fake-data.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
@@ -17,14 +16,14 @@ export const seedFakeVideos = async (req: Request, res: Response) => {
   }
 
   if (+drop === 1) {
-    await User.collection.drop();
+    await db.User.collection.drop();
   }
 
   // generate videos
   const videos = await generateFakeData.videos(+num, String(req.user?._id));
 
   // save videos
-  const result = await Video.insertMany(videos);
+  const result = await db.Video.insertMany(videos);
 
   if (!result) {
     throw new ApiError(500, "Failed to seed videos.");

@@ -1,4 +1,4 @@
-import { Comment } from "@/models/comment.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -8,11 +8,11 @@ export const deleteComment = async (req: Request, res: Response) => {
   const { commentId } = req.params;
 
   // verify commentId
-  const comment = await Comment.findById(commentId);
+  const comment = await db.Comment.findById(commentId);
   if (!comment) throw new ApiError(404, "Comment not found!");
 
   // delete comment
-  await Comment.findOneAndDelete({
+  await db.Comment.findOneAndDelete({
     _id: commentId,
     owner: req.user?._id,
   });

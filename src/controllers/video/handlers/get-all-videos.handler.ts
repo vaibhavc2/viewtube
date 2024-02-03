@@ -1,6 +1,5 @@
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -46,7 +45,7 @@ export const getAllVideos = async (req: Request, res: Response) => {
   // If a userId is provided in the query parameters, add it to the match object.
   // This will filter the videos to only return those owned by the specified user.
   if (userId) {
-    const user = await User.findById(userId);
+    const user = await db.User.findById(userId);
     if (user)
       (match as any)["owner"] = new mongoose.Types.ObjectId(user._id as string);
     else throw new ApiError(404, "User not found! Wrong userId!");
@@ -55,8 +54,8 @@ export const getAllVideos = async (req: Request, res: Response) => {
   // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the videos.
   // The first argument is a Mongoose aggregation that uses the match object to filter the videos.
   // The second argument is the options object, which sets the pagination and sorting options.
-  const videos = await Video.aggregatePaginate(
-    Video.aggregate([{ $match: match }]),
+  const videos = await db.Video.aggregatePaginate(
+    db.Video.aggregate([{ $match: match }]),
     options
   );
 

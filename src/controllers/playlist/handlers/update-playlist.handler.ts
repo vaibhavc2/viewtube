@@ -1,4 +1,4 @@
-import { Playlist } from "@/models/playlist.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -16,7 +16,7 @@ export const updatePlaylist = async (req: Request, res: Response) => {
   }
 
   // update playlist
-  const playlist = await Playlist.findOneAndUpdate(
+  const playlist = await db.Playlist.findOneAndUpdate(
     {
       _id: playlistId,
       owner: req.user?._id,

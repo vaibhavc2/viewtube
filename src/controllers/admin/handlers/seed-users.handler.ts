@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import { generateFakeData } from "@/services/fake-data.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
@@ -17,10 +17,10 @@ export const seedFakeUsers = async (req: Request, res: Response) => {
   const users = await generateFakeData.users(+num);
 
   if (+drop) {
-    await User.collection.drop();
+    await db.User.collection.drop();
   }
 
-  const insertedUsers = await User.insertMany(users);
+  const insertedUsers = await db.User.insertMany(users);
 
   if (!insertedUsers) {
     throw new ApiError(500, "Failed to seed users.");

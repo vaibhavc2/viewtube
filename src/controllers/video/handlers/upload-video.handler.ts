@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
@@ -46,7 +46,7 @@ export const uploadVideo = async (req: Request, res: Response) => {
   }
 
   // create video
-  const video = await Video.create({
+  const video = await db.Video.create({
     owner: req.user?._id,
     title,
     description,
@@ -57,7 +57,7 @@ export const uploadVideo = async (req: Request, res: Response) => {
   });
 
   // verify if created
-  const createdVideo = await Video.findById(video._id);
+  const createdVideo = await db.Video.findById(video._id);
 
   // final verification
   if (!video || !createdVideo) {

@@ -1,4 +1,3 @@
-import { IUser } from "@/models/user.model";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -29,8 +28,13 @@ export const changePassword = async (req: Request, res: Response) => {
     throw new ApiError(400, "New password cannot be same as old password!");
   }
 
+  // verify if req.user exists
+  if (!req.user) {
+    throw new ApiError(500, "User not found in request object!");
+  }
+
   // retreive user from req object
-  const user = req.user as IUser;
+  const user = req.user;
 
   // check if old password is correct
   const isCorrect = await user.comparePassword(oldPassword);

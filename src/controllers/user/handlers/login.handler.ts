@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError, { UserNotFoundError } from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { generateTokens } from "@/utils/tokens/generate-tokens.util";
@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
   }
 
   // find the user in the db
-  const user = await User.findOne({ $or: [{ email }, { username }] });
+  const user = await db.User.findOne({ $or: [{ email }, { username }] });
 
   if (!user) throw new UserNotFoundError();
 

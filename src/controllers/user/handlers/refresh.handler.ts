@@ -1,6 +1,6 @@
 import { envConfig } from "@/config";
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError, { UnauthorizedError } from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { jwtCallback } from "@/utils/jwt/jwt-callback";
@@ -24,7 +24,7 @@ export const refresh = async (req: Request, res: Response) => {
   );
 
   // find user in db using the refresh token
-  const user = await User.findById(decodedToken?._id);
+  const user = await db.User.findById(decodedToken?._id);
 
   if (!user) {
     throw new ApiError(401, "Invalid refresh token!");

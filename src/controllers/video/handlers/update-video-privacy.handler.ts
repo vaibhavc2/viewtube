@@ -1,4 +1,4 @@
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -16,7 +16,7 @@ export const updateVideoPrivacy = async (req: Request, res: Response) => {
   }
 
   // save video privacy to database
-  const video = await Video.findOneAndUpdate(
+  const video = await db.Video.findOneAndUpdate(
     {
       _id: videoId,
       owner: req.user?._id,

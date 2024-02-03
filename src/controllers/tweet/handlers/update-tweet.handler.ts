@@ -1,4 +1,4 @@
-import { Tweet } from "@/models/tweet.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -11,7 +11,7 @@ export const updateTweet = async (req: Request, res: Response) => {
   const userId = req.user?._id;
 
   // get tweet from database
-  const tweet = await Tweet.findOne({
+  const tweet = await db.Tweet.findOne({
     _id: tweetId,
     owner: userId,
   });

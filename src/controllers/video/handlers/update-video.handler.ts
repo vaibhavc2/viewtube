@@ -1,4 +1,4 @@
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -13,7 +13,7 @@ export const updateVideo = async (req: Request, res: Response) => {
   const videoId = req.params.videoId;
 
   // save video url to database
-  const savedVideo = await Video.findOneAndUpdate(
+  const savedVideo = await db.Video.findOneAndUpdate(
     {
       _id: videoId,
       owner: req.user?._id,

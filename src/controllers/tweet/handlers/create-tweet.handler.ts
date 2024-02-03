@@ -1,4 +1,4 @@
-import { Tweet } from "@/models/tweet.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { CreatedResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -16,13 +16,13 @@ export const createTweet = async (req: Request, res: Response) => {
   const userId = req.user?._id;
 
   // create tweet in database
-  const newTweet = await Tweet.create({
+  const newTweet = await db.Tweet.create({
     content: tweet,
     owner: userId,
   });
 
   // check if created
-  const createdTweet = await Tweet.findById(newTweet._id);
+  const createdTweet = await db.Tweet.findById(newTweet._id);
 
   // final verification
   if (!newTweet || !createdTweet) {

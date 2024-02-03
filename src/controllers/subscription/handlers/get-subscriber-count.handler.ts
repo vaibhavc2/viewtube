@@ -1,4 +1,4 @@
-import { Subscription } from "@/models/subscription.model";
+import { db } from "@/database/models";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
@@ -8,7 +8,7 @@ export const getSubscriberCount = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   // get total subs
-  const subs = await Subscription.aggregate([
+  const subs = await db.Subscription.aggregate([
     {
       $match: {
         channel: new mongoose.Types.ObjectId(String(userId)),

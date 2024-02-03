@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -9,7 +9,7 @@ export const updateCover = async (req: Request, res: Response) => {
 
   // update user cover
   const coverOldImageURL = req.user?.cover;
-  const user = await User.findByIdAndUpdate(
+  const user = await db.User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {

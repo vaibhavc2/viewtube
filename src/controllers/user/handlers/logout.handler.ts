@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
 
@@ -15,7 +15,7 @@ import { Request, Response } from "express";
 
 export const logout = async (req: Request, res: Response) => {
   // clear refresh token from db
-  await User.findByIdAndUpdate(
+  await db.User.findByIdAndUpdate(
     req.user?._id,
     {
       $unset: {

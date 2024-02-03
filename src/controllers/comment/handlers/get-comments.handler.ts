@@ -1,6 +1,5 @@
 import { appConstants } from "@/constants";
-import { Comment } from "@/models/comment.model";
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -54,15 +53,15 @@ export const getComments = async (req: Request, res: Response) => {
   // If a userId is provided in the query parameters, add it to the match object.
   // This will filter comments to only return those owned by the specified user.
   if (userId) {
-    const user = await User.findById(userId);
+    const user = await db.User.findById(userId);
     if (user)
       (match as any)["owner"] = new mongoose.Types.ObjectId(user._id as string);
     else throw new ApiError(404, "User not found! Wrong userId!");
   }
 
   // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the comments.
-  const comments = await Comment.aggregatePaginate(
-    Comment.aggregate([{ $match: match }]),
+  const comments = await db.Comment.aggregatePaginate(
+    db.Comment.aggregate([{ $match: match }]),
     options
   );
 

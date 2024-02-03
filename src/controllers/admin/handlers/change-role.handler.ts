@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -19,7 +19,7 @@ export const changeRole = async (req: Request, res: Response) => {
     throw new ApiError(400, "Role must be either 'user' or 'admin'.");
   }
 
-  const user = await User.findByIdAndUpdate(
+  const user = await db.User.findByIdAndUpdate(
     userId,
     {
       $set: { role },

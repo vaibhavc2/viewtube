@@ -1,4 +1,4 @@
-import { Like } from "@/models/like.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -9,7 +9,7 @@ export const removeLike = async (req: Request, res: Response) => {
 
   // validate ids using middleware!
   // find the like
-  const like = await Like.findOne({
+  const like = await db.Like.findOne({
     owner: req.user?._id,
     ...(commentId && { comment: commentId }),
     ...(videoId && { video: videoId }),
@@ -22,7 +22,7 @@ export const removeLike = async (req: Request, res: Response) => {
   }
 
   // delete like
-  await Like.findByIdAndDelete(like._id);
+  await db.Like.findByIdAndDelete(like._id);
 
   // send response
   res.status(200).json(new SuccessResponse("Like deleted successfully"));

@@ -1,4 +1,4 @@
-import { Comment } from "@/models/comment.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -17,7 +17,7 @@ export const addComment = async (req: Request, res: Response) => {
   const { videoId, commentId, tweetId } = req.query;
 
   // create the comment
-  const comment = await Comment.create({
+  const comment = await db.Comment.create({
     content,
     ...(commentId && { comment: commentId }), // handling replies
     ...(videoId && { video: videoId }),
@@ -26,7 +26,7 @@ export const addComment = async (req: Request, res: Response) => {
   });
 
   // check if comment is created
-  const createdComment = await Comment.findById(comment._id);
+  const createdComment = await db.Comment.findById(comment._id);
 
   // final verification
   if (!comment || !createdComment) {

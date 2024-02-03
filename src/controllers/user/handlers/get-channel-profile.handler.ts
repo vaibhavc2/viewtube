@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import ApiError from "@/utils/api/error/api-error.util";
 import ApiResponse from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -9,7 +9,7 @@ export const getChannelProfile = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   // write the aggregation pipeline to get the channel profile of the user with the given username
-  const channel = await User.aggregate([
+  const channel = await db.User.aggregate([
     // match the user with the given id in the users collection
     {
       $match: {

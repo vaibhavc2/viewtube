@@ -1,5 +1,5 @@
 import { appConstants } from "@/constants";
-import { Video } from "@/models/video.model";
+import { db } from "@/database/models";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { shuffleArray } from "@/utils/array/shuffle-array.util";
 import { Request, Response } from "express";
@@ -21,8 +21,8 @@ export const getRandomVideos = async (req: Request, res: Response) => {
   };
 
   // Use the aggregatePaginate function (plugin) to get a random set of videos that match the given match object.
-  const videos = await Video.aggregatePaginate(
-    Video.aggregate([
+  const videos = await db.Video.aggregatePaginate(
+    db.Video.aggregate([
       {
         $match: {
           isPublished: true,

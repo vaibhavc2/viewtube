@@ -1,4 +1,4 @@
-import { User } from "@/models/user.model";
+import { db } from "@/database/models";
 import { UserNotFoundError } from "@/utils/api/error/api-error.util";
 import { SuccessResponse } from "@/utils/api/res/api-response.util";
 import { Request, Response } from "express";
@@ -8,7 +8,7 @@ export const disableUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
 
   // find user and update
-  const user = await User.findByIdAndUpdate(
+  const user = await db.User.findByIdAndUpdate(
     userId,
     {
       $set: {
