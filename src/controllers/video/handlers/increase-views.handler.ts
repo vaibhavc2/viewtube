@@ -1,6 +1,6 @@
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util.js";
+import ApiError from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util.js";
 import { Request, Response } from "express";
 
 export const increaseViews = async (req: Request, res: Response) => {

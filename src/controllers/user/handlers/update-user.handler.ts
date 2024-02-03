@@ -1,8 +1,6 @@
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import ApiResponse, {
-  SuccessResponse,
-} from "@/utils/api/res/api-response.util";
+import ApiResponse, { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const updateUser = async (req: Request, res: Response) => {

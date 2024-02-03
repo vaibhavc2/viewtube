@@ -1,6 +1,6 @@
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import { CreatedResponse } from "@/utils/api/res/api-response.util";
+import ApiError from "@/utils/api-error.util";
+import { CreatedResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const createPlaylist = async (req: Request, res: Response) => {

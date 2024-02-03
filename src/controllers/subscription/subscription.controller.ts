@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util.js";
+import { asyncHandler } from "@/utils/async-handler.util.js";
 import { addSubscription } from "./handlers/add-subscription.handler";
 import { getSubscriberCount } from "./handlers/get-subscriber-count.handler";
 import { removeSubscription } from "./handlers/remove-subscription.handler";

@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { addLike } from "./handlers/add-like.handler";
 import { getLikeHistory } from "./handlers/get-like-history";
 import { getLikesCount } from "./handlers/get-likes-count.handler";

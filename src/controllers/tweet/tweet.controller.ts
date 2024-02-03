@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { createTweet } from "./handlers/create-tweet.handler";
 import { deleteTweet } from "./handlers/delete-tweet.handler";
 import { getUserTweets } from "./handlers/get-user-tweets.handler";

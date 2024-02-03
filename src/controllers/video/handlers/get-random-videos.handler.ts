@@ -1,7 +1,7 @@
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { shuffleArray } from "@/utils/array/shuffle-array.util";
+import { SuccessResponse } from "@/utils/api-response.util";
+import { shuffleArray } from "@/utils/shuffle-array.util";
 import { Request, Response } from "express";
 
 // get random videos with pagination

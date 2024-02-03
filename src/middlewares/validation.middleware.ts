@@ -1,7 +1,7 @@
 import { db } from "@/database/models";
-import ApiError, { RequiredBodyError } from "@/utils/api/error/api-error.util";
-import { getErrorMessage } from "@/utils/common/error/error-message.util";
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import ApiError, { RequiredBodyError } from "@/utils/api-error.util";
+import { asyncHandler } from "@/utils/async-handler.util";
+import { getErrorMessage } from "@/utils/error-message.util";
 import { NextFunction, Request, Response } from "express";
 import { AnyZodObject, ZodError } from "zod";
 

@@ -1,9 +1,9 @@
-import ApiError from "@/utils/api/error/api-error.util";
+import ApiError from "@/utils/api-error.util";
 import ApiResponse, {
   InternalServerErrorResponse,
   NotFoundResponse,
-} from "@/utils/api/res/api-response.util";
-import { wLogger } from "@/utils/log/logger.util";
+} from "@/utils/api-response.util";
+import { wLogger } from "@/utils/logger.util";
 import { NextFunction, Request, Response } from "express";
 
 export class ErrorMiddleware {

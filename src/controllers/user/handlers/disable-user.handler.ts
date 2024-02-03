@@ -1,6 +1,6 @@
 import { db } from "@/database/models";
-import { UserNotFoundError } from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { UserNotFoundError } from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const disableUser = async (req: Request, res: Response) => {

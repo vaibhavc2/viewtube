@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { changeRole } from "./handlers/change-role.handler";
 import { deleteUser } from "./handlers/delete-user.handler";
 import { disableUser } from "./handlers/disable-user.handler";

@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { addComment } from "./handlers/add-comment.handler";
 import { deleteComment } from "./handlers/delete-comment.handler";
 import { getCommentHistory } from "./handlers/get-comment-history.handler";

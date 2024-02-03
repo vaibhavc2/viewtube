@@ -1,7 +1,7 @@
 import { db } from "@/database/models";
 import { generateFakeData } from "@/services/fake-data.service";
-import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import ApiError from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const seedFakeVideos = async (req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 import { db } from "@/database/models";
-import { SuccessResponse } from "@/utils/api/res/api-response.util.js";
+import { SuccessResponse } from "@/utils/api-response.util.js";
 import { Request, Response } from "express";
 
 export const updateThumbnail = async (req: Request, res: Response) => {

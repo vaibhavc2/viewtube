@@ -1,8 +1,8 @@
 import { envConfig } from "@/config";
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import { jwtCallback } from "@/utils/jwt/jwt-callback";
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import ApiError from "@/utils/api-error.util";
+import { asyncHandler } from "@/utils/async-handler.util";
+import { jwtCallback } from "@/utils/jwt-callback.util";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 

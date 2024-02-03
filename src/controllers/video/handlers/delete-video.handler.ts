@@ -1,7 +1,7 @@
 import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
-import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import ApiError from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const deleteVideo = async (req: Request, res: Response) => {

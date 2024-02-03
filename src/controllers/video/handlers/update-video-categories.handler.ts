@@ -1,7 +1,7 @@
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import ApiError from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const updateVideoCategories = async (req: Request, res: Response) => {

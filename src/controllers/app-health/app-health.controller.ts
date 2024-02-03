@@ -1,5 +1,5 @@
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { SuccessResponse } from "@/utils/api-response.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { Request, Response } from "express";
 
 export class AppHealthController {

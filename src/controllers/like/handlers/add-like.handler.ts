@@ -1,9 +1,6 @@
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import {
-  CreatedResponse,
-  SuccessResponse,
-} from "@/utils/api/res/api-response.util";
+import ApiError from "@/utils/api-error.util";
+import { CreatedResponse, SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const addLike = async (req: Request, res: Response) => {

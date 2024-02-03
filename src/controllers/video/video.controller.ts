@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { deleteVideo } from "./handlers/delete-video.handler";
 import { getAllVideos } from "./handlers/get-all-videos.handler";
 import { getRandomVideos } from "./handlers/get-random-videos.handler";

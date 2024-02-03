@@ -2,7 +2,7 @@ import {
   largeStringError,
   minStringError,
   requiredError,
-} from "@/utils/validation/zod-error-messages.util";
+} from "@/utils/zod-error-messages.util";
 import * as z from "zod";
 
 class Validation {

@@ -1,8 +1,8 @@
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import ApiError, { UserNotFoundError } from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { generateTokens } from "@/utils/tokens/generate-tokens.util";
+import ApiError, { UserNotFoundError } from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
+import { generateTokens } from "@/utils/generate-tokens.util";
 import { Request, Response } from "express";
 
 /**

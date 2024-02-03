@@ -1,6 +1,6 @@
 import { envConfig } from "@/config";
-import { wLogger } from "@/utils/log/logger.util";
-import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
+import { wLogger } from "@/utils/logger.util";
+import { printErrorMessage } from "@/utils/print-error-message.util";
 import mongoose from "mongoose";
 
 class Database {

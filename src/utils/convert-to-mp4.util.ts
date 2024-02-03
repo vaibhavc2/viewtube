@@ -1,8 +1,8 @@
 import { path } from "@ffmpeg-installer/ffmpeg";
 import ffmpeg from "fluent-ffmpeg";
-import { deleteLocalFile } from "../files/delete-local-file.util";
-import { wLogger } from "../log/logger.util";
-import { printErrorMessage } from "../server/error/print-error-message.util";
+import { deleteLocalFile } from "./delete-local-file.util";
+import { wLogger } from "./logger.util";
+import { printErrorMessage } from "./print-error-message.util";
 
 ffmpeg.setFfmpegPath(path);
 

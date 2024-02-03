@@ -1,6 +1,6 @@
 import { db } from "@/database/models";
 import { cloudinaryService } from "@/services/cloudinary.service";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const updateAvatar = async (req: Request, res: Response) => {

@@ -1,8 +1,8 @@
 import { appConstants } from "@/constants";
 import { cloudinaryService } from "@/services/cloudinary.service";
-import ApiError from "@/utils/api/error/api-error.util";
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
-import { convertToMp4 } from "@/utils/video/convert-to-mp4.util";
+import ApiError from "@/utils/api-error.util";
+import { asyncHandler } from "@/utils/async-handler.util";
+import { convertToMp4 } from "@/utils/convert-to-mp4.util";
 import { NextFunction, Request, Response } from "express";
 import fs from "fs";
 import getVideoDurationInSeconds from "get-video-duration";

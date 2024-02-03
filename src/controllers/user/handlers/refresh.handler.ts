@@ -1,10 +1,10 @@
 import { envConfig } from "@/config";
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import ApiError, { UnauthorizedError } from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { jwtCallback } from "@/utils/jwt/jwt-callback";
-import { generateTokens } from "@/utils/tokens/generate-tokens.util";
+import ApiError, { UnauthorizedError } from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
+import { generateTokens } from "@/utils/generate-tokens.util";
+import { jwtCallback } from "@/utils/jwt-callback.util";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 

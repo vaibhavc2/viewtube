@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { createPlaylist } from "./handlers/create-playlist.handler";
 import { deletePlaylist } from "./handlers/delete-playlist.handler";
 import { getPlaylist } from "./handlers/get-playlist.handler";

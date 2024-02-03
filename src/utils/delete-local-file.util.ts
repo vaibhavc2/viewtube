@@ -1,6 +1,6 @@
 import fs from "fs";
-import { wLogger } from "../log/logger.util";
-import { printErrorMessage } from "../server/error/print-error-message.util";
+import { wLogger } from "./logger.util";
+import { printErrorMessage } from "./print-error-message.util";
 
 export const deleteLocalFile = (filePath: string) => {
   return new Promise((resolve, reject) => {

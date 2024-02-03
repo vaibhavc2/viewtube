@@ -1,4 +1,4 @@
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { changePassword } from "./handlers/change-password.handler";
 import { disableUser } from "./handlers/disable-user.handler";
 import { getChannelDescription } from "./handlers/get-channel-description.handler";

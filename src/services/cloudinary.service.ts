@@ -1,8 +1,8 @@
 import { envConfig } from "@/config";
-import { getErrorMessage } from "@/utils/common/error/error-message.util";
-import { deleteLocalFile } from "@/utils/files/delete-local-file.util";
-import { wLogger } from "@/utils/log/logger.util";
-import { printErrorMessage } from "@/utils/server/error/print-error-message.util";
+import { deleteLocalFile } from "@/utils/delete-local-file.util";
+import { getErrorMessage } from "@/utils/error-message.util";
+import { wLogger } from "@/utils/logger.util";
+import { printErrorMessage } from "@/utils/print-error-message.util";
 import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 
 class CloudinaryService {

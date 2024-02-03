@@ -1,8 +1,8 @@
 import { appConstants } from "@/constants";
 import { db } from "@/database/models";
-import ApiError from "@/utils/api/error/api-error.util";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
-import { asyncHandler } from "@/utils/server/handlers/async-handler.util";
+import ApiError from "@/utils/api-error.util";
+import { SuccessResponse } from "@/utils/api-response.util";
+import { asyncHandler } from "@/utils/async-handler.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 

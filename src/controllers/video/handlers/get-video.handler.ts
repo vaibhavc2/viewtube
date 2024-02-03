@@ -1,5 +1,5 @@
 import { db } from "@/database/models";
-import { SuccessResponse } from "@/utils/api/res/api-response.util";
+import { SuccessResponse } from "@/utils/api-response.util";
 import { Request, Response } from "express";
 
 export const getVideo = async (req: Request, res: Response) => {
