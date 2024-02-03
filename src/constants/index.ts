@@ -1,6 +1,7 @@
 class Constants {
   public readonly expressLimit = "50mb" as const;
   public readonly prefixApiVersion = "/api/v1" as const;
+  public readonly webSocketRoutePath = "/ws" as const;
   public readonly emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   public readonly userRoles = ["user", "admin"] as const;
   public readonly defaultUserRole = "user" as const;
