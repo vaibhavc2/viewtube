@@ -61,6 +61,10 @@ class VideoRouter {
       middlewares.files.uploadImage,
       this.controller.updateThumbnail
     );
+    this.router.patch(
+      "/:videoId/update-categories",
+      this.controller.updateVideoCategories
+    );
     this.router.delete("/:videoId/delete", this.controller.deleteVideo);
   }
 }

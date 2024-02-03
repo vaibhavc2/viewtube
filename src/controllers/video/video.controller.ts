@@ -6,6 +6,7 @@ import { getVideo } from "./handlers/get-video.handler";
 import { increaseViews } from "./handlers/increase-views.handler";
 import { togglePublishStatus } from "./handlers/toggle-publish-status";
 import { updateThumbnail } from "./handlers/update-thumbnail.handler";
+import { updateVideoCategories } from "./handlers/update-video-categories.handler";
 import { updateVideoDetails } from "./handlers/update-video-details.handler";
 import { updateVideoPrivacy } from "./handlers/update-video-privacy.handler";
 import { updateVideo } from "./handlers/update-video.handler";
@@ -25,4 +26,5 @@ export class VideoController {
   public updateVideoDetails = asyncHandler(updateVideoDetails);
   public updateVideoPrivacy = asyncHandler(updateVideoPrivacy);
   public updateThumbnail = asyncHandler(updateThumbnail);
+  public updateVideoCategories = asyncHandler(updateVideoCategories);
 }

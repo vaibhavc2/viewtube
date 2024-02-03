@@ -11,6 +11,7 @@ export interface IVideo extends Document {
   isPublished: boolean;
   publishDate: Date;
   private: boolean;
+  videoCategories: string[];
   owner: string | Schema.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -58,6 +59,12 @@ const VideoSchema: Schema<IVideo> = new Schema(
       type: Boolean,
       default: false,
     },
+    videoCategories: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
