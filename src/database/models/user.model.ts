@@ -27,6 +27,8 @@ export interface IUser extends Document {
   generateAccessToken(): Promise<string>;
 }
 
+export interface IUserModel extends Model<IUser> {}
+
 const UserSchema: Schema<IUser> = new Schema(
   {
     fullName: {

@@ -2,15 +2,19 @@ import { App } from "@/app";
 import { envConfig } from "@/config";
 import { appConstants } from "@/constants";
 import { database } from "@/database";
+import { IUserModel } from "@/database/models/user.model";
 import { wLogger } from "@/utils/logger.util";
 import { printErrorMessage } from "@/utils/print-error-message.util";
 import { Application } from "express";
 import { Server as HttpServer } from "http";
+import mongoose from "mongoose";
+import url from "url";
 import WebSocket from "ws";
 
 class Server {
   private app: Application;
   private wss: WebSocket.Server;
+  private userConnections: Map<string, WebSocket>;
 
   constructor() {
     // initializing express app for http server
@@ -18,6 +22,9 @@ class Server {
 
     // initializing websocket server: later upgrade http server to websocket server
     this.wss = new WebSocket.Server({ noServer: true });
+
+    // initializing user connections
+    this.userConnections = new Map();
   }
 
   public async init() {
@@ -76,6 +83,7 @@ class Server {
   }
 
   private handleWebSocketUpgrade(server: HttpServer) {
+    // Upgrade HTTP server to WebSocket server
     server.on("upgrade", (request, socket, head) => {
       // Extract the pathname from the request URL
       const pathname = new URL(
@@ -94,25 +102,59 @@ class Server {
     });
   }
 
-  private handleNewWebSocketConnections() {
+  private async handleNewWebSocketConnections() {
     // Handle new WebSocket connections
-    this.wss.on("connection", (ws) => {
-      wLogger.info(`👤  A user connected!`);
+    this.wss.on("connection", async (ws, request) => {
+      try {
+        // Parse the URL of the request to get the query parameters
+        const parsedUrl = url.parse(String(request.url), true);
 
-      // Handle messages from the client
-      ws.on("message", (message) => {
-        wLogger.info(`📌  Received: ${message}`);
-      });
+        // Get the userId from the query parameters
+        const userId = String(parsedUrl.query.userId);
 
-      // Handle disconnections
-      ws.on("close", () => {
-        wLogger.info("🔁  A user disconnected!");
-      });
+        // check if userId is present
+        if (userId === "undefined") {
+          wLogger.info(`⚠️  A connection attempt without userId!`);
+          ws.close();
+        }
 
-      // Send a message to the client
-      ws.send(
-        "👋   Hello from server! Server time is " + new Date().toLocaleString()
-      );
+        // check if userId is valid
+        const userModel = (await this.app
+          .get("connection")
+          .model("User")) as IUserModel;
+        const user = await userModel
+          .findById(new mongoose.Types.ObjectId(userId))
+          .select("_id");
+
+        // if user is not found, close the connection
+        if (user?._id !== userId) {
+          wLogger.info(`⚠️  A connection attempt with invalid userId!`);
+          ws.close();
+        }
+
+        // Save the connection
+        this.userConnections.set(userId, ws);
+
+        // Log the connection
+        wLogger.info(`👤  A user connected! userId: ${userId}`);
+
+        // Handle messages from the client
+        ws.on("message", (message) => {
+          wLogger.info(`📌  Received: ${message}`);
+        });
+
+        // Handle disconnections
+        ws.on("close", () => {
+          // Remove the connection
+          this.userConnections.delete(userId);
+          wLogger.info(`🔁  A user disconnected! userId: ${userId}`);
+        });
+      } catch (error) {
+        printErrorMessage(
+          error,
+          "WebSocket error :: at handleNewWebSocketConnections() :: Server"
+        );
+      }
     });
   }
 
