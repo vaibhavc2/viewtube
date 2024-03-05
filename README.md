@@ -4,4 +4,4 @@ This is the backend of a Youtube-like Application. It uses latest technologies l
 
 ## Database Model
 
-Database model of the whole application: [Eraser Workspace Data-Model](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
+Database model of the whole application: [Eraser Workspace Data-Model](https://app.eraser.io/workspace/vn75lfGWJ7OkzoNJtaiJ)
