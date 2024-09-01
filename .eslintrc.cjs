@@ -16,8 +16,11 @@ module.exports = {
     "linebreak-style": 1,
     quotes: ["error", "double"],
     "@typescript-eslint/no-empty-interface": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-use-before-define": "off",
     "no-multiple-empty-lines": [2, { max: 3, maxEOF: 1 }],
+  },
+  env: {
+    browser: true,
+    node: true,
   },
 };
