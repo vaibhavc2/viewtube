@@ -1,10 +1,10 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { swaggerSpec } from "@/docs/swagger.options";
 import ApiResponse from "@/common/utils/api-response.util";
 import { Application, NextFunction, Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
 
-const { isProd } = envConfig;
+const { isProd } = env;
 
 class Docs {
   static swaggerUi = swaggerUi.serve;

@@ -1,5 +1,5 @@
 import { asyncHandler } from "@/common/utils/async-handler.util";
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import { db } from "@/common/db.client";
 import { cloudinaryService } from "@/common/services/cloudinary.service";
 import ApiError from "@/common/utils/api-error.util";
@@ -45,9 +45,7 @@ export class VideoController {
     }
     if (
       // some: returns true if at least one element in the array satisfies the provided testing function
-      appConstants.videoCategories.some(
-        (category) => !videoCategories.includes(category)
-      )
+      ct.videoCategories.some((category) => !videoCategories.includes(category))
     ) {
       throw new ApiError(400, "Invalid video category!");
     }
@@ -165,11 +163,11 @@ export class VideoController {
   public getAllVideos = asyncHandler(async (req: Request, res: Response) => {
     // Destructure the query parameters from the request
     const {
-      page = appConstants.pagination.page,
-      limit = appConstants.pagination.pageLimit,
+      page = ct.pagination.page,
+      limit = ct.pagination.pageLimit,
       query,
-      sortBy = appConstants.pagination.sortBy,
-      sortType = appConstants.pagination.sortType,
+      sortBy = ct.pagination.sortBy,
+      sortType = ct.pagination.sortType,
       userId,
     } = req.query;
 
@@ -226,7 +224,7 @@ export class VideoController {
   });
 
   public getRandomVideos = asyncHandler(async (req: Request, res: Response) => {
-    const { pagination } = appConstants;
+    const { pagination } = ct;
     const { page: _page, pageLimit } = pagination;
     // Destructure the page and limit query parameters from the request
     const { page = _page, limit = pageLimit } = req.query;
@@ -467,7 +465,7 @@ export class VideoController {
       }
       if (
         // some: returns true if at least one element in the array satisfies the provided testing function
-        appConstants.videoCategories.some(
+        ct.videoCategories.some(
           (category) => !videoCategories.includes(category)
         )
       ) {

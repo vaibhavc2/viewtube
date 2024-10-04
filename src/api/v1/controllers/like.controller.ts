@@ -7,7 +7,7 @@ import {
 } from "@/common/utils/api-response.util";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 
 export class LikeController {
   public addLike = asyncHandler(async (req: Request, res: Response) => {
@@ -135,7 +135,7 @@ export class LikeController {
   });
 
   public getLikeHistory = asyncHandler(async (req: Request, res: Response) => {
-    const { pagination } = appConstants;
+    const { pagination } = ct;
     // get userId, page, limit, sortBy, sortType, query, commentId, videoId, tweetId, from req.query
     const {
       page = pagination.page,

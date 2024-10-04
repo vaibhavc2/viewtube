@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import envConfig from "./env.config";
+import env from "./env.config";
 import { CorsOptions } from "cors";
 
 const corsMethods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"];
@@ -108,7 +108,7 @@ class Constants {
   );
   public readonly validMimeTypesRegexStr = `(${this.validMimeTypes.join("|")})`;
   public readonly base_url =
-    `${envConfig.HOST === "localhost" ? `http://${envConfig.HOST}:${envConfig.PORT}` : `https://${envConfig.HOST}`}` as const;
+    `${env.HOST === "localhost" ? `http://${env.HOST}:${env.PORT}` : `https://${env.HOST}`}` as const;
   public readonly webSocketUrl =
     `${this.base_url}${this.webSocketRoutePath}` as const;
   public readonly appName = "ViewTube" as const;
@@ -126,7 +126,7 @@ class Constants {
     },
   };
   public readonly corsOptions = {
-    origin: [envConfig.FRONTEND_URI],
+    origin: [env.FRONTEND_URI],
     credentials: true,
     methods: corsMethods,
   } as CorsOptions;
@@ -135,4 +135,6 @@ class Constants {
   };
 }
 
-export const appConstants = new Constants();
+const ct = new Constants();
+
+export default ct;

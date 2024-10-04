@@ -1,4 +1,4 @@
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import mongoose, { AggregatePaginateModel, Document, Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
@@ -30,7 +30,7 @@ const likeSchema: Schema<ILike> = new Schema(
     },
     value: {
       type: Number,
-      enum: appConstants.likeValues,
+      enum: ct.likeValues,
       required: true,
     },
     owner: {

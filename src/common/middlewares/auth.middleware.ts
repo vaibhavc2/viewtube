@@ -1,4 +1,4 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { db } from "@/common/db.client";
 import ApiError from "@/common/utils/api-error.util";
 import { asyncHandler } from "@/common/utils/async-handler.util";
@@ -6,7 +6,7 @@ import { jwtCallback } from "@/common/utils/jwt-callback.util";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-const { ACCESS_TOKEN_SECRET } = envConfig;
+const { ACCESS_TOKEN_SECRET } = env;
 
 class Auth {
   public user = asyncHandler(

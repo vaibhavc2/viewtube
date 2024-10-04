@@ -1,5 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
-import { appConstants as ct } from "@/common/constants";
+import ct from "@/common/constants";
 
 export const swaggerDefinition: swaggerJSDoc.OAS3Definition = {
   openapi: "3.0.0",

@@ -1,4 +1,4 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { deleteLocalFile } from "@/common/utils/delete-local-file.util";
 import { getErrorMessage } from "@/common/utils/error-message.util";
 import { logger } from "@/common/utils/logger.util";
@@ -76,7 +76,7 @@ class CloudinaryService {
 }
 
 export const cloudinaryService = new CloudinaryService(
-  envConfig.CLOUDINARY_CLOUD_NAME,
-  envConfig.CLOUDINARY_API_KEY,
-  envConfig.CLOUDINARY_API_SECRET
+  env.CLOUDINARY_CLOUD_NAME,
+  env.CLOUDINARY_API_KEY,
+  env.CLOUDINARY_API_SECRET
 );

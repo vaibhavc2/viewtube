@@ -1,4 +1,4 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { AdminController } from "@/api/v1/controllers/admin.controller";
 import { Router } from "express";
 import auth from "@/common/middlewares/auth.middleware";
@@ -17,7 +17,7 @@ class AdminRouter {
     this.router.use(auth.user, auth.admin);
 
     // safety check: the environment must be development
-    if (envConfig.isDev) {
+    if (env.isDev) {
       // seed fake data: users, videos
       this.router.post("/db-seed/users", this.controller.seedFakeUsers);
       this.router.post(

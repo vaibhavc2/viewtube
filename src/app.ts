@@ -3,8 +3,8 @@ import cors from "cors";
 import express, { Application } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import envConfig from "@/common/env.config";
-import { appConstants as ct } from "@/common/constants";
+import env from "@/common/env.config";
+import ct from "@/common/constants";
 import Docs from "@/common/middlewares/docs.middleware";
 import errorMiddleware from "@/common/middlewares/error.middleware";
 import versionMiddleware from "@/common/middlewares/version.middleware";
@@ -12,7 +12,7 @@ import requestLogger from "@/common/middlewares/request-logger.middleware";
 import apiRouter from "./global.routes";
 import { errorEmitter } from "@/common/utils/error-extras.util";
 
-const { isDev } = envConfig;
+const { isDev } = env;
 
 export class App {
   private app: Application;

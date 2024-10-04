@@ -1,8 +1,8 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { createLogger, format, transports } from "winston";
 import "winston-daily-rotate-file";
 
-const { isProd } = envConfig;
+const { isProd } = env;
 
 export const logger = createLogger({
   transports: [

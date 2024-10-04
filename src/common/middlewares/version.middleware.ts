@@ -1,4 +1,4 @@
-import { appConstants as ct } from "@/common/constants";
+import ct from "@/common/constants";
 import { NextFunction, Request, Response } from "express";
 import { wrapAsyncMethodsOfClass } from "@/common/utils/async-errors.util";
 

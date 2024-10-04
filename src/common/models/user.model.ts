@@ -1,5 +1,5 @@
-import envConfig from "@/common/env.config";
-import { appConstants } from "@/common/constants";
+import env from "@/common/env.config";
+import ct from "@/common/constants";
 import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import mongoose, { Document, Model, Schema } from "mongoose";
@@ -10,7 +10,7 @@ const {
   REFRESH_TOKEN_EXPIRY,
   ACCESS_TOKEN_EXPIRY,
   ACCESS_TOKEN_SECRET,
-} = envConfig;
+} = env;
 
 export interface IUser extends Document {
   _id: string | Schema.Types.ObjectId;
@@ -60,7 +60,7 @@ const UserSchema: Schema<IUser> = new Schema(
       lowercase: true,
       trim: true,
       validate: {
-        validator: (v: string) => appConstants.emailRegex.test(v),
+        validator: (v: string) => ct.emailRegex.test(v),
         message: (props) => `${props.value} is not a valid email!`,
       },
       index: true,
@@ -83,8 +83,8 @@ const UserSchema: Schema<IUser> = new Schema(
     },
     role: {
       type: String,
-      enum: appConstants.userRoles,
-      default: appConstants.defaultUserRole,
+      enum: ct.userRoles,
+      default: ct.defaultUserRole,
     },
     disabled: {
       type: Boolean,

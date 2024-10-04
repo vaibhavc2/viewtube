@@ -1,4 +1,4 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { faker } from "@faker-js/faker";
 import * as argon2 from "argon2";
 import mongoose from "mongoose";
@@ -12,7 +12,7 @@ class GenerateFakeData {
       const username = `${fullName.toLowerCase().trim()}_${Math.floor(Math.random() * 1000)}`;
       const _password = "abcdefgh@#123";
       const password = await argon2.hash(_password, {
-        secret: Buffer.from(envConfig.SECRET_KEY),
+        secret: Buffer.from(env.SECRET_KEY),
       });
       const email = faker.internet.email();
       const avatar = faker.image.avatar();

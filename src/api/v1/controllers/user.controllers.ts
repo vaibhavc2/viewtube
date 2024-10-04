@@ -10,14 +10,14 @@ import ApiResponse, {
   SuccessResponse,
 } from "@/common/utils/api-response.util";
 import { Request, Response } from "express";
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import { generateTokens } from "@/common/utils/generate-tokens.util";
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { jwtCallback } from "@/common/utils/jwt-callback.util";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const { REFRESH_TOKEN_SECRET } = envConfig;
+const { REFRESH_TOKEN_SECRET } = env;
 
 export class UserController {
   /**
@@ -129,8 +129,8 @@ export class UserController {
     // send response and cookies
     return res
       .status(200)
-      .cookie("accessToken", accessToken, appConstants.authCookieOptions)
-      .cookie("refreshToken", refreshToken, appConstants.authCookieOptions)
+      .cookie("accessToken", accessToken, ct.authCookieOptions)
+      .cookie("refreshToken", refreshToken, ct.authCookieOptions)
       .json(
         new SuccessResponse("User logged in successfully!", {
           user: {
@@ -172,8 +172,8 @@ export class UserController {
     // clear cookies and send response
     return res
       .status(200)
-      .clearCookie("accessToken", appConstants.authCookieOptions)
-      .clearCookie("refreshToken", appConstants.authCookieOptions)
+      .clearCookie("accessToken", ct.authCookieOptions)
+      .clearCookie("refreshToken", ct.authCookieOptions)
       .json(new SuccessResponse("User logged out successfully!", {}));
   });
 
@@ -210,16 +210,8 @@ export class UserController {
     // send response and cookies
     return res
       .status(200)
-      .cookie(
-        "accessToken",
-        newTokens.accessToken,
-        appConstants.authCookieOptions
-      )
-      .cookie(
-        "refreshToken",
-        newTokens.refreshToken,
-        appConstants.authCookieOptions
-      )
+      .cookie("accessToken", newTokens.accessToken, ct.authCookieOptions)
+      .cookie("refreshToken", newTokens.refreshToken, ct.authCookieOptions)
       .json(
         new SuccessResponse("Tokens refreshed successfully!", {
           user: {
@@ -267,7 +259,7 @@ export class UserController {
     }
 
     // check if email is valid
-    if (email && !appConstants.emailRegex.test(email)) {
+    if (email && !ct.emailRegex.test(email)) {
       return res
         .status(400)
         .json(new ApiResponse(400, "Please enter a valid email address."));
@@ -680,11 +672,8 @@ export class UserController {
     user.watchHistory.unshift({ videoId, watchedAt: new Date() });
 
     // limit the watch history to a const no of videos
-    if (user.watchHistory.length > appConstants.limitWatchHistory)
-      user.watchHistory = user.watchHistory.slice(
-        0,
-        appConstants.limitWatchHistory
-      );
+    if (user.watchHistory.length > ct.limitWatchHistory)
+      user.watchHistory = user.watchHistory.slice(0, ct.limitWatchHistory);
 
     //? => no need to sort the watch history as we are adding the video to the beginning of the array
     // sort the watch history by the date of watchedAt field

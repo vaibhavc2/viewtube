@@ -1,13 +1,13 @@
 import { Application } from "express";
 import { IncomingMessage, Server, ServerResponse } from "http";
 import { App } from "./app";
-import envConfig from "./common/env.config";
-import { appConstants as ct } from "./common/constants";
-import { logger } from "./common/utils/logger.util";
+import env from "@/common/env.config";
+import ct from "@/common/constants";
+import { logger } from "@/common/utils/logger.util";
 import mongoose from "mongoose";
-import database from "./common/database";
+import database from "@/common/database";
 
-const { PORT, NODE_ENV, isDev, isProd } = envConfig;
+const { PORT, NODE_ENV, isDev, isProd } = env;
 
 type ExpressServer = Server<typeof IncomingMessage, typeof ServerResponse>;
 

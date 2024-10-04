@@ -1,4 +1,4 @@
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import { db } from "@/common/db.client";
 import ApiError from "@/common/utils/api-error.util";
 import { SuccessResponse } from "@/common/utils/api-response.util";
@@ -154,7 +154,7 @@ export class DashboardController {
 
   public getChannelVideos = asyncHandler(
     async (req: Request, res: Response) => {
-      const { pagination } = appConstants;
+      const { pagination } = ct;
       // Destructure the query parameters from the request
       const {
         page = pagination.page,

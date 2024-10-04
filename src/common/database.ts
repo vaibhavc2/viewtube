@@ -1,9 +1,9 @@
-import envConfig from "@/common/env.config";
+import env from "@/common/env.config";
 import { logger } from "@/common/utils/logger.util";
 import { printErrorMessage } from "@/common/utils/print-error-message.util";
 import mongoose from "mongoose";
 
-const { MONGO_URI, DB_NAME } = envConfig;
+const { MONGO_URI, DB_NAME } = env;
 class Database {
   public init() {
     // connecting to database

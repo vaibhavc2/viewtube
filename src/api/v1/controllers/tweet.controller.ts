@@ -6,7 +6,7 @@ import {
   SuccessResponse,
 } from "@/common/utils/api-response.util";
 import { Request, Response } from "express";
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import mongoose from "mongoose";
 
 export class TweetController {
@@ -126,7 +126,7 @@ export class TweetController {
   });
 
   getUserTweets = asyncHandler(async (req: Request, res: Response) => {
-    const { pagination } = appConstants;
+    const { pagination } = ct;
     const {
       page: __page,
       pageLimit: __page_limit,

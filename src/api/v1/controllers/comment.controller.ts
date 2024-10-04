@@ -3,7 +3,7 @@ import { db } from "@/common/db.client";
 import ApiError from "@/common/utils/api-error.util";
 import { SuccessResponse } from "@/common/utils/api-response.util";
 import { Request, Response } from "express";
-import { appConstants } from "@/common/constants";
+import ct from "@/common/constants";
 import mongoose from "mongoose";
 
 export class CommentController {
@@ -65,7 +65,7 @@ export class CommentController {
 
   public getCommentHistory = asyncHandler(
     async (req: Request, res: Response) => {
-      const { pagination } = appConstants;
+      const { pagination } = ct;
       // get userId, page, limit, sortBy, sortType, query from req.query
       const {
         page = pagination.page,
@@ -126,7 +126,7 @@ export class CommentController {
   );
 
   public getComments = asyncHandler(async (req: Request, res: Response) => {
-    const { pagination } = appConstants;
+    const { pagination } = ct;
     const {
       page: __page,
       pageLimit: __page_limit,
