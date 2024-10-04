@@ -6,6 +6,8 @@ import { jwtCallback } from "@/common/utils/jwt-callback.util";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
+const { ACCESS_TOKEN_SECRET } = envConfig;
+
 class Auth {
   public user = asyncHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +24,7 @@ class Auth {
       // if yes, verify token
       const decodedToken: any = jwt.verify(
         token,
-        envConfig.accessTokenSecret(),
+        ACCESS_TOKEN_SECRET,
         jwtCallback
       );
 
