@@ -30,7 +30,7 @@ class HTTPServer {
 
       if (isDev) {
         logger.info(`API available at '${ct.base_url}'`);
-        logger.info(`Swagger UI available at '${ct.base_url}/docs'`);
+        logger.info(`Swagger UI available at '${ct.base_url}/api-docs'`);
       }
     });
 

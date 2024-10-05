@@ -29,6 +29,7 @@ class Docs {
     // Only enable in non-production environments
     // if (!isProd) next();
     // else return new ApiResponse(403, "Access denied!");
+    next();
   }
 
   static serveDocs(app: Application) {
