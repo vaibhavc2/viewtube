@@ -6,11 +6,12 @@ import { swaggerDefinition } from "./swagger.def";
 export const swaggerOptions: swaggerJSDoc.Options = {
   failOnErrors: true,
   definition: swaggerDefinition,
-  apis: [
-    path.join(__dirname, "../router/**/*.ts"), // Matches all files in 'routes' folders and subfolders
-    path.join(__dirname, "../api/v1/**/*routes.ts"), // Matches any 'routes.ts' files in 'v1' folders and subfolders
-    path.join(__dirname, "../api/v2/**/*routes.ts"), // Matches any 'routes.ts' files in 'v2' folders and subfolders
-  ],
+  apis: [path.join(__dirname, "../**/*.{ts,js}")],
+  // apis: [
+  //   path.join(__dirname, "../router/**/*.ts"), // Matches all files in 'routes' folders and subfolders
+  //   path.join(__dirname, "../api/v1/**/*routes.ts"), // Matches any 'routes.ts' files in 'v1' folders and subfolders
+  //   path.join(__dirname, "../api/v2/**/*routes.ts"), // Matches any 'routes.ts' files in 'v2' folders and subfolders
+  // ],
 };
 
 export const swaggerSpec = swaggerJSDoc(swaggerOptions);

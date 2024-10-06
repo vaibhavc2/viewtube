@@ -29,7 +29,7 @@ export const swaggerDefinition: swaggerJSDoc.OAS3Definition = {
     },
     {
       url: `${ct.base_url}/api/v2`,
-      description: "Api Version 1 - V2",
+      description: "Api Version 2 - V2",
     },
   ],
 };
