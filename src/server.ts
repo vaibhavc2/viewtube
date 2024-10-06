@@ -20,7 +20,7 @@ class HTTPServer {
   constructor(appInstance: App) {
     this.app = appInstance.init();
 
-    this.connection = database.init();
+    this.connection = database.connect();
 
     // adding connection to express app
     this.app.set("connection", this.connection);

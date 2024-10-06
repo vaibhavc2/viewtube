@@ -20,20 +20,20 @@ class ApiV1Router {
 
   private routes() {
     // using routes
-    this.router.use(`/users`, usersRouter);
-    this.router.use(`/videos`, videosRouter);
-    this.router.use(`/subscriptions`, subscriptionsRouter);
-    this.router.use(`/tweets`, tweetsRouter);
-    this.router.use(`/likes`, likesRouter);
-    this.router.use(`/comments`, commentsRouter);
-    this.router.use(`/playlists`, playlistsRouter);
-    this.router.use(`/dashboard`, dashboardRouter);
+    this.router.use("/users", usersRouter);
+    this.router.use("/videos", videosRouter);
+    this.router.use("/subscriptions", subscriptionsRouter);
+    this.router.use("/tweets", tweetsRouter);
+    this.router.use("/likes", likesRouter);
+    this.router.use("/comments", commentsRouter);
+    this.router.use("/playlists", playlistsRouter);
+    this.router.use("/dashboard", dashboardRouter);
 
     // admin routes
-    this.router.use(`/admin`, adminRouter);
+    this.router.use("/admin", adminRouter);
 
     // app health route
-    this.router.use(`/health`, appHealthRouter);
+    this.router.use("/health", appHealthRouter);
   }
 }
 

@@ -114,7 +114,7 @@ class Constants {
   public readonly appName = "ViewTube" as const;
   public readonly appVersion = "1.0.0" as const;
   public readonly appDescription =
-    "ViewTube is a platform for viewing videos and works similar to YouTube." as const;
+    "ViewTube is a platform for viewing videos and works similar to YouTube built on Express and MongoDB using TypeScript." as const;
   public readonly rateLimiter = {
     global: {
       requests: 100, // 100 requests

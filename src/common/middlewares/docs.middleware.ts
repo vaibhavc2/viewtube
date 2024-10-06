@@ -3,6 +3,7 @@ import { swaggerSpec } from "@/docs/swagger.options";
 import ApiResponse from "@/common/utils/api-response.util";
 import { Application, NextFunction, Request, Response } from "express";
 import swaggerUi from "swagger-ui-express";
+import ct from "../constants";
 
 const { isProd } = env;
 
@@ -12,6 +13,8 @@ class Docs {
   static swaggerUiSetup = swaggerUi.setup(swaggerSpec, {
     // ??? extend the Swagger UI with custom CSS and JS if needed
     customCss: ".swagger-ui .topbar { display: none; }",
+    // change the browser title to custom text
+    customSiteTitle: `${ct.appName} - API Documentation`,
     // customCssUrl: '/swagger.css',
     // customJs: '/swagger.js',
   });

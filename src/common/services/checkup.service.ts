@@ -37,13 +37,13 @@ class CheckupService {
   async dbCheck() {
     try {
       const db = new Database();
-      db.init();
-      db.disconnect();
+      await db.connectAsync();
+      await db.disconnect();
 
       return {
         success: true,
         message: "Database connection successful.",
-        info: "MongoDB is up and running! Both are working correctly.",
+        info: "MongoDB is up and running!",
       };
     } catch (error) {
       logger.error(
@@ -52,7 +52,7 @@ class CheckupService {
 
       return {
         success: false,
-        message: `Database connection failed!`,
+        message: "Database connection failed!",
         info: `MongoDB connection failed! Errors: ${getErrorMessage(error)}`,
       };
     }

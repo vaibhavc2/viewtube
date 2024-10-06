@@ -5,12 +5,7 @@ import mongoose from "mongoose";
 
 const { MONGO_URI, DB_NAME } = env;
 export class Database {
-  public init() {
-    // connecting to database
-    return this.connect();
-  }
-
-  private connect() {
+  public connect() {
     const connectionInstance = mongoose.createConnection(MONGO_URI, {
       dbName: DB_NAME,
     });
@@ -37,7 +32,7 @@ export class Database {
     return connectionInstance;
   }
 
-  private connectAsync() {
+  public async connectAsync() {
     return new Promise<typeof mongoose>((resolve, reject) => {
       mongoose
         .connect(MONGO_URI, {
@@ -59,9 +54,9 @@ export class Database {
     });
   }
 
-  public disconnect() {
+  public async disconnect() {
     logger.info("Closing database connection...");
-    return mongoose.connection.close();
+    await mongoose.connection.close();
   }
 }
 
