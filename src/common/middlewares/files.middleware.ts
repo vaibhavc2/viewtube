@@ -1,5 +1,5 @@
 import ct from "@/common/constants";
-import { cloudinaryService } from "@/common/services/cloudinary.service";
+import cloudinaryService from "@/common/services/cloudinary.service";
 import ApiError from "@/common/utils/api-error.util";
 import { asyncHandler } from "@/common/utils/async-handler.util";
 import { convertToMp4 } from "@/common/utils/convert-to-mp4.util";

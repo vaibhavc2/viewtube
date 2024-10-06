@@ -1,6 +1,6 @@
 import { asyncHandler } from "@/common/utils/async-handler.util";
 import { db } from "@/common/db.client";
-import { cloudinaryService } from "@/common/services/cloudinary.service";
+import cloudinaryService from "@/common/services/cloudinary.service";
 import ApiError, {
   UnauthorizedError,
   UserNotFoundError,

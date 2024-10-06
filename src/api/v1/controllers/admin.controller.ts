@@ -6,7 +6,7 @@ import {
   SuccessResponse,
 } from "@/common/utils/api-response.util";
 import { Request, Response } from "express";
-import { generateFakeData } from "@/common/services/fake-data.service";
+import { generateFakeData } from "@/common/services/external/fake-data.service";
 
 export class AdminController {
   changeRole = asyncHandler(async (req: Request, res: Response) => {
@@ -65,16 +65,22 @@ export class AdminController {
     );
   });
 
-  disableUser = asyncHandler(async (req: Request, res: Response) => {
+  updateUserStatus = asyncHandler(async (req: Request, res: Response) => {
     // get user id
     const userId = req.params.userId;
+    // get status
+    const status = req.body.status; // "enabled" or "disabled"
+
+    if (!status || !["enabled", "disabled"].includes(status)) {
+      throw new ApiError(400, "Status must be either 'enabled' or 'disabled'.");
+    }
 
     // find user and update
     const user = await db.User.findByIdAndUpdate(
       userId,
       {
         $set: {
-          disabled: true,
+          disabled: status === "disabled" ? true : false,
         },
       },
       { new: true }
@@ -89,29 +95,7 @@ export class AdminController {
       .json(new SuccessResponse("User disabled successfully!", { user }));
   });
 
-  enableUser = asyncHandler(async (req: Request, res: Response) => {
-    // get user id
-    const userId = req.params.userId;
-
-    // find user and update
-    const user = await db.User.findByIdAndUpdate(
-      userId,
-      {
-        $set: {
-          disabled: true,
-        },
-      },
-      { new: true }
-    );
-
-    // check if user exists
-    if (!user) throw new UserNotFoundError();
-
-    // return success response
-    res
-      .status(200)
-      .json(new SuccessResponse("User enabled successfully!", { user }));
-  });
+  //! only for testing in development | Don't use in production
 
   seedFakeUsers = asyncHandler(async (req: Request, res: Response) => {
     const { num = 50, drop = 0 } = req.query;

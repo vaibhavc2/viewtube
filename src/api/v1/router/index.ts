@@ -33,7 +33,7 @@ class ApiV1Router {
     this.router.use(`/admin`, adminRouter);
 
     // app health route
-    this.router.use(``, appHealthRouter);
+    this.router.use(`/health`, appHealthRouter);
   }
 }
 

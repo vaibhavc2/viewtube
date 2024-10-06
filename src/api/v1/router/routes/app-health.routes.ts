@@ -12,8 +12,21 @@ class AppHealthRouter {
   }
 
   public routes() {
-    this.router.get("/test", this.controller.testAppHealth);
-    this.router.get("/health", this.controller.testAppHealth);
+    /**
+     * @openapi
+     * /health:
+     *   get:
+     *     tags:
+     *       - Health
+     *     summary: Check the health of the API - http, db, disk, memory
+     *     description: Check the health of the API - http, db, disk, memory
+     *     responses:
+     *       200:
+     *         description: Health check passed
+     *       503:
+     *         description: Health check failed
+     */
+    this.router.get("/", this.controller.testAppHealth);
   }
 }
 

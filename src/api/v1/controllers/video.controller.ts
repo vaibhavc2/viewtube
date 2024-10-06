@@ -1,7 +1,7 @@
 import { asyncHandler } from "@/common/utils/async-handler.util";
 import ct from "@/common/constants";
 import { db } from "@/common/db.client";
-import { cloudinaryService } from "@/common/services/cloudinary.service";
+import cloudinaryService from "@/common/services/cloudinary.service";
 import ApiError from "@/common/utils/api-error.util";
 import {
   CreatedResponse,

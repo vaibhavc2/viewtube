@@ -4,13 +4,13 @@ import { printErrorMessage } from "@/common/utils/print-error-message.util";
 import mongoose from "mongoose";
 
 const { MONGO_URI, DB_NAME } = env;
-class Database {
+export class Database {
   public init() {
     // connecting to database
-    return this.connectDB();
+    return this.connect();
   }
 
-  private connectDB() {
+  private connect() {
     const connectionInstance = mongoose.createConnection(MONGO_URI, {
       dbName: DB_NAME,
     });
@@ -37,7 +37,7 @@ class Database {
     return connectionInstance;
   }
 
-  private connectDBAsync() {
+  private connectAsync() {
     return new Promise<typeof mongoose>((resolve, reject) => {
       mongoose
         .connect(MONGO_URI, {
@@ -57,6 +57,11 @@ class Database {
           reject(error);
         });
     });
+  }
+
+  public disconnect() {
+    logger.info("Closing database connection...");
+    return mongoose.connection.close();
   }
 }
 

@@ -133,6 +133,19 @@ class Constants {
   public readonly morganOptions = {
     skip: (req: Request, res: Response) => res.statusCode === 304, // skip logging for 304 responses (Not Modified): swagger-ui
   };
+  public readonly checkup = {
+    http: {
+      url: "https://google.com",
+    },
+    disk: {
+      warningThreshold: 75, // 75% disk space warning
+      criticalThreshold: 90, // 90% disk space critical
+    },
+    memory: {
+      warningThreshold: 75, // 75% memory warning
+      criticalThreshold: 90, // 90% memory critical
+    },
+  };
 }
 
 const ct = new Constants();
