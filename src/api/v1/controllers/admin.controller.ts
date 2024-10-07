@@ -44,6 +44,32 @@ export class AdminController {
       );
   });
 
+  changeUserStatus = asyncHandler(async (req: Request, res: Response) => {
+    // get user id
+    const userId = req.params.userId;
+
+    // get status
+    const status = req.body.status; // "enabled" or "disabled"
+    const disabled = status === "disabled" ? true : false;
+
+    // find user and update
+    const user = await db.User.findByIdAndUpdate(
+      userId,
+      {
+        $set: { disabled },
+      },
+      { new: true }
+    );
+
+    // check if user exists
+    if (!user) throw new UserNotFoundError();
+
+    // return success response
+    res
+      .status(200)
+      .json(new SuccessResponse("User status changed successfully!", { user }));
+  });
+
   deleteUser = asyncHandler(async (req: Request, res: Response) => {
     // get user id
     const userId = req.params.userId;

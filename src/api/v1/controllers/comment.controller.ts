@@ -80,8 +80,9 @@ export class CommentController {
 
       // validate comments, videos, tweets: each of them must be either 0 or 1, and only one of them should be provided
       if (
-        [comments, videos, tweets].filter((val) => val === "0" || val === "1")
-          .length !== 1
+        [comments, videos, tweets].filter(
+          (val) => Number(val) === 0 || Number(val) === 1
+        ).length !== 1
       ) {
         throw new ApiError(
           400,
@@ -182,6 +183,7 @@ export class CommentController {
     }
 
     // Use the aggregatePaginate function from the mongoose-aggregate-paginate-v2 plugin to retrieve the comments.
+    //? this automatically gets the total no of comments (comments?.totalDocs) & comments?.docs - paginated no.)
     const comments = await db.Comment.aggregatePaginate(
       db.Comment.aggregate([{ $match: match }]),
       options
@@ -194,6 +196,38 @@ export class CommentController {
       })
     );
   });
+
+  public getTotalCommentsCount = asyncHandler(
+    async (req: Request, res: Response) => {
+      // get overall total comments count for a video/tweet/comment
+      const { videoId, tweetId, commentId } = req.query;
+
+      // validate videoId, tweetId, commentId
+      // if (
+      //   (videoId && !mongoose.Types.ObjectId.isValid(String(videoId))) ||
+      //   (tweetId && !mongoose.Types.ObjectId.isValid(String(tweetId))) ||
+      //   (commentId && !mongoose.Types.ObjectId.isValid(String(commentId)))
+      // ) {
+      //   throw new ApiError(400, "Invalid videoId, tweetId, commentId!");
+      // }
+
+      // get total comments count
+      const totalCommentsCount = await db.Comment.countDocuments({
+        ...(videoId && { video: new mongoose.Types.ObjectId(String(videoId)) }),
+        ...(tweetId && { tweet: new mongoose.Types.ObjectId(String(tweetId)) }),
+        ...(commentId && {
+          comment: new mongoose.Types.ObjectId(String(commentId)),
+        }),
+      });
+
+      // send response
+      res.status(200).json(
+        new SuccessResponse("Total comments count fetched successfully!", {
+          totalCommentsCount,
+        })
+      );
+    }
+  );
 
   public updateComment = asyncHandler(async (req: Request, res: Response) => {
     // get id of comment

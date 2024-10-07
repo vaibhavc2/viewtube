@@ -18,8 +18,8 @@ class AppHealthRouter {
      *   get:
      *     tags:
      *       - Health
-     *     summary: Check the health of the API - http, db, disk, memory
-     *     description: Check the health of the API - http, db, disk, memory
+     *     summary: Check the health of the API
+     *     description: Check the health of the API
      *     responses:
      *       200:
      *         description: Health check passed
@@ -98,15 +98,15 @@ class AppHealthRouter {
      *   get:
      *     tags:
      *       - Health
-     *     summary: Check the health of the all
-     *     description: Check the health of the all
+     *     summary: Check the health of the server - http, db, disk, memory
+     *     description: Check the health of the server - http, db, disk, memory
      *     responses:
      *       200:
      *         description: Health check passed
      *       503:
      *         description: Health check failed
      */
-    this.router.get("/all", this.controller.testAppHealth);
+    this.router.get("/all", this.controller.testAllHealth);
   }
 }
 
