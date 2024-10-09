@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import ct from "@/common/constants";
 import { db } from "@/common/db.client";
 import ApiError from "@/common/utils/api-error.util";
@@ -161,6 +162,7 @@ export class DashboardController {
         limit = pagination.pageLimit,
         isPublished, // isPublished is optional, send 1 for true, 0 for false
         isPrivate, // isPrivate is optional, send 1 for true, 0 for false
+        query,
         sortBy = pagination.sortBy,
         sortType = pagination.sortType,
       } = req.query;
@@ -193,6 +195,28 @@ export class DashboardController {
               owner: new mongoose.Types.ObjectId(req.user?._id as string),
               ...(isPublished && { isPublished: Boolean(Number(isPublished)) }),
               ...(isPrivate && { private: Boolean(Number(isPrivate)) }),
+              ...(query
+                ? {
+                    // $or: [
+                    //   { title: { $regex: String(query), $options: "i" } },
+                    //   { description: { $regex: String(query), $options: "i" } },
+                    // ],
+                    $or: [
+                      {
+                        title: {
+                          $regex: new RegExp(query as string, "i"),
+                          $options: "i",
+                        },
+                      },
+                      {
+                        description: {
+                          $regex: new RegExp(query as string, "i"),
+                          $options: "i",
+                        },
+                      },
+                    ],
+                  }
+                : {}),
             },
           },
         ]),

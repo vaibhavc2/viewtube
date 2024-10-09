@@ -13,20 +13,15 @@ class AdminRouter {
     this.routes();
   }
 
-  /**
-   * Description placeholder
-   *
-   * @public
-   */
   public routes() {
     this.router.use(auth.user, auth.admin);
 
     // safety check: the environment must be development
     if (env.isDev) {
       // seed fake data: users, videos
-      this.router.post("/db-seed/users", this.controller.seedFakeUsers);
+      this.router.post("/db/seed/users", this.controller.seedFakeUsers);
       this.router.post(
-        "/db-seed/videos/:userId",
+        "/db/seed/videos/:userId",
         this.controller.seedFakeVideos
       );
     }
@@ -69,71 +64,7 @@ class AdminRouter {
 
     /**
      * @openapi
-     * /admin/users/{userId}/change-status:
-     *   patch:
-     *     tags: [Admin]
-     *     summary: Change user status
-     *     description: Change user status
-     *     parameters:
-     *       - in: path
-     *         name: userId
-     *         required: true
-     *         type: string
-     *         description: User ID
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *               type: object
-     *               properties:
-     *                   status:
-     *                     type: string
-     *                     description: User status
-     *                     enum: ["enabled", "disabled"]
-     *     responses:
-     *       200:
-     *         description: Success
-     *       400:
-     *         description: Bad request
-     *       401:
-     *         description: Unauthorized
-     *       500:
-     *         description: Internal server error
-     * */
-    this.router.patch(
-      "/users/:userId/change-status",
-      this.controller.changeUserStatus
-    );
-
-    /**
-     * @openapi
-     * /admin/users/{userId}:
-     *   delete:
-     *     tags: [Admin]
-     *     summary: Delete user
-     *     description: Delete user
-     *     parameters:
-     *       - in: path
-     *         name: userId
-     *         required: true
-     *         type: string
-     *         description: User ID
-     *     responses:
-     *       200:
-     *         description: Success
-     *       400:
-     *         description: Bad request
-     *       401:
-     *         description: Unauthorized
-     *       500:
-     *         description: Internal server error
-     */
-    this.router.delete("/users/:userId", this.controller.deleteUser);
-
-    /**
-     * @openapi
-     * /admin/users/{userId}:
+     * /admin/users/{userId}/status:
      *   patch:
      *     tags: [Admin]
      *     summary: Update user status
@@ -165,7 +96,35 @@ class AdminRouter {
      *       500:
      *         description: Internal server error
      * */
-    this.router.patch("/users/:userId", this.controller.updateUserStatus);
+    this.router.patch(
+      "/users/:userId/status",
+      this.controller.updateUserStatus
+    );
+
+    /**
+     * @openapi
+     * /admin/users/{userId}:
+     *   delete:
+     *     tags: [Admin]
+     *     summary: Delete user
+     *     description: Delete user
+     *     parameters:
+     *       - in: path
+     *         name: userId
+     *         required: true
+     *         type: string
+     *         description: User ID
+     *     responses:
+     *       200:
+     *         description: Success
+     *       400:
+     *         description: Bad request
+     *       401:
+     *         description: Unauthorized
+     *       500:
+     *         description: Internal server error
+     */
+    this.router.delete("/users/:userId", this.controller.deleteUser);
   }
 }
 

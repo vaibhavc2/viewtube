@@ -211,7 +211,7 @@ class CommentRouter {
 
     /**
      * @openapi
-     * /comments/update/{commentId}:
+     * /comments/{commentId}:
      *   patch:
      *     tags:
      *       - Comments
@@ -243,11 +243,11 @@ class CommentRouter {
      *         required: true
      *         type: string
      * */
-    this.router.patch("/update/:commentId", this.controller.updateComment);
+    this.router.patch("/:commentId", this.controller.updateComment);
 
     /**
      * @openapi
-     * /comments/delete/{commentId}:
+     * /comments/{commentId}:
      *   delete:
      *     tags:
      *       - Comments
@@ -268,7 +268,7 @@ class CommentRouter {
      *         required: true
      *         type: string
      * */
-    this.router.delete("/delete/:commentId", this.controller.deleteComment);
+    this.router.delete("/:commentId", this.controller.deleteComment);
   }
 }
 

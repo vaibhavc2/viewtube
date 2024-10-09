@@ -7,31 +7,24 @@ import { Request, Response } from "express";
 export class PlaylistController {
   createPlaylist = asyncHandler(async (req: Request, res: Response) => {
     // get details from request body
-    const { name, description, videos } = req.body;
-
-    // get playlist id from request params
-    const { playlistId } = req.params;
+    const { name, description, videos, privacy = 0 } = req.body;
 
     // validate that atleast one field is being updated
-    if (!name && !description && !videos) {
-      throw new ApiError(400, "Atleast one field is required to update!");
+    if (!name && !videos) {
+      throw new ApiError(
+        400,
+        "Both 'name' and 'videos' are required to create a playlist!"
+      );
     }
 
-    // update playlist
-    const playlist = await db.Playlist.findOneAndUpdate(
-      {
-        _id: playlistId,
-        owner: req.user?._id,
-      },
-      {
-        $set: {
-          ...(name && { name }),
-          ...(description && { description }),
-          ...(videos && { videos }),
-        },
-      },
-      { new: true }
-    );
+    // create playlist
+    const playlist = await db.Playlist.create({
+      ...(name && { name }),
+      ...(description && { description }),
+      ...(videos && { videos }),
+      ...(privacy && { private: Number(privacy) === 1 ? true : false }),
+      owner: req.user?._id,
+    });
 
     // send response
     res.status(200).json(
